@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, ImageBackground, Image, StyleSheet, TextInput, TouchableOpacity, Picker } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, TextInput } from 'react-native';
+import AuthTemplate from './../components/authTemplate';
 
 export default class SignUp2 extends React.Component {
     static navigationOptions = {
@@ -12,20 +12,16 @@ export default class SignUp2 extends React.Component {
             data: this.props.navigation.state.params
         };
     }
-    signIn= ()=>{
-        console.log("signin...");
-    };
 
     render() {
         return (
-            <ImageBackground source={require("./../images/background.webp")} style={{width: "100%", height: "100%"}}>
-                <View style={styles.container}>
-                    <Image source={require("./../images/logo-sm.png")} style={{width: 120, height: 110}} />
-                    <Text style={styles.title}>Sign Up (Step 2)</Text>
+            <AuthTemplate next="SignUp3" title="Sign Up (Step 2)" navigation={this.props.navigation} error={this.state.error}>
+
                     <TextInput
                         placeholderTextColor="#d2d2d2"
                         style={styles.input}
                         placeholder="Name......"
+                        textContentType="name"
                         onChangeText={(name) => this.setState(prevState => (
                             {
                                 data: {
@@ -38,6 +34,8 @@ export default class SignUp2 extends React.Component {
                         placeholderTextColor="#d2d2d2"
                         style={styles.input}
                         placeholder="Email......"
+                        textContentType="emailAddress"
+                        keyboardType='email-address'
                         onChangeText={(email) => this.setState(prevState => (
                             {
                                 data: {
@@ -60,40 +58,12 @@ export default class SignUp2 extends React.Component {
                                 }
                             }))}
                     />
-                    <View style={styles.navigation}>
-                        <TouchableOpacity
-                            style={styles.leftArrow}
-                            onPress={() => this.props.navigation.navigate('SignUp1', this.state.data)}
-                        >
-                            <Icon name="arrow-circle-left" size={50} color="#FFFFFF" />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.rightArrow}
-                            onPress={() => this.props.navigation.navigate('SignUp3', this.state.data)}
-                        >
-                            <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ImageBackground>
+            </AuthTemplate>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: '100%',
-        justifyContent: "center",
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 30,
-        textAlign: 'center',
-        color: "#FFFFFF",
-        marginTop: 20,
-        marginBottom: 20,
-    },
     input: {
         height: 70,
         width: "70%",
@@ -106,28 +76,4 @@ const styles = StyleSheet.create({
         fontSize: 23,
         color: "#FFFFFF",
     },
-    button: {
-        backgroundColor: "#344955",
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 25,
-        paddingRight: 25,
-        borderRadius: 10,
-        marginTop: 20,
-    },
-    navigation: {
-        width: "75%",
-        flexDirection: 'row',
-        marginTop: 30
-    },
-    rightArrow:{
-        width: "50%",
-        alignItems: 'flex-end',
-        marginTop: 20,
-    },
-    leftArrow:{
-        width: "50%",
-        alignItems: 'flex-start',
-        marginTop: 20,
-    }
 });
