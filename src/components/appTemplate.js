@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Content, Drawer, Button } from 'native-base';
+import { Container, Content, Drawer, Button, Icon, Fab } from 'native-base';
 import SideBar from './sidebar'
 import Header from './header'
-import Footer from './footer'
-import Icon from 'react-native-vector-icons/Entypo';
+import {TouchableOpacity} from "react-native";
 
 export default class AppTemplate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            test: "asfd"
+            test: "asfd",
         };
     }
     closeDrawer() {
@@ -28,14 +27,27 @@ export default class AppTemplate extends Component {
                     onClose={() => this.closeDrawer()}
                 >
                     <Header title={this.props.title} navigation={this.props.navigation} >
-                        <Button transparent onPress={() => this.openDrawer()}>
-                            <Icon name="menu" size={35} color="#000000"/>
-                        </Button>
+                        {this.props.backButton ? (
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
+                            </Button>
+                        ) : (
+                            <Button transparent onPress={() => this.openDrawer()}>
+                                <Icon type="Entypo" name="menu" style={{color: "#000000", fontSize: 35}}/>
+                            </Button>
+                        )}
                     </Header>
-                        <Content style={{ backgroundColor: "#FDF5F5", padding: 20 }}>
+                        <Content style={{ backgroundColor: "#FDF5F5", width: "100%" }}>
                                 {this.props.children}
                         </Content>
                 </Drawer>
+                <Fab
+                    active={true}
+                    style={{ backgroundColor: '#000000' }}
+                    position="bottomRight"
+                    onPress={() => this.props.navigation.navigate('AddProject')}>
+                    <Icon name="ios-add-circle" style={{color: "#FFFFFF", fontSize: 35}} />
+                </Fab>
             </Container>
         );
     }

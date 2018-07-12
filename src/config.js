@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.1.2/'; // dev
+const SERVER_URL = 'http://192.168.1.4/'; // dev
 // const SERVER_URL = 'https://my-staging-server.com'; // staging
 // const SERVER URL = 'https://my-prod-server.com'; // production
 const GOOGLE_API_KEY = '1234'; // dev

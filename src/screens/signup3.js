@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignUp3 extends React.Component {
     static navigationOptions = {
@@ -17,42 +18,57 @@ export default class SignUp3 extends React.Component {
         return (
             <AuthTemplate next="SignUp4" title="Sign Up (Step 3)" navigation={this.props.navigation} error={this.state.error}>
 
-                    <TextInput
-                        placeholderTextColor="#d2d2d2"
-                        style={styles.input}
-                        placeholder="Facebook......"
-                        onChangeText={(facebook) => this.setState(prevState => (
-                            {
-                                data: {
-                                    ...prevState.data,
-                                    facebook
-                                }
-                            }))}
-                    />
-                    <TextInput
-                        placeholderTextColor="#d2d2d2"
-                        style={styles.input}
-                        placeholder="Twitter......"
-                        onChangeText={(twitter) => this.setState(prevState => (
-                            {
-                                data: {
-                                    ...prevState.data,
-                                    twitter
-                                }
-                            }))}
-                    />
-                    <TextInput
-                        placeholderTextColor="#d2d2d2"
-                        style={styles.input}
-                        placeholder="Linkedin......"
-                        onChangeText={(linkedin) => this.setState(prevState => (
-                            {
-                                data: {
-                                    ...prevState.data,
-                                    linkedin
-                                }
-                            }))}
-                    />
+                <TextInput
+                    placeholderTextColor="#d2d2d2"
+                    style={styles.input}
+                    placeholder="Facebook......"
+                    onChangeText={(facebook) => this.setState(prevState => (
+                        {
+                            data: {
+                                ...prevState.data,
+                                facebook
+                            }
+                        }))}
+                />
+                <TextInput
+                    placeholderTextColor="#d2d2d2"
+                    style={styles.input}
+                    placeholder="Twitter......"
+                    onChangeText={(twitter) => this.setState(prevState => (
+                        {
+                            data: {
+                                ...prevState.data,
+                                twitter
+                            }
+                        }))}
+                />
+                <TextInput
+                    placeholderTextColor="#d2d2d2"
+                    style={styles.input}
+                    placeholder="Linkedin......"
+                    onChangeText={(linkedin) => this.setState(prevState => (
+                        {
+                            data: {
+                                ...prevState.data,
+                                linkedin
+                            }
+                        }))}
+                />
+                <View style={styles.navigation}>
+                    <TouchableOpacity
+                        style={styles.leftArrow}
+                        onPress={() => this.props.navigation.goBack()}
+                    >
+                        <Icon name="arrow-circle-left" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.rightArrow}
+                        onPress={() => this.props.navigation.navigate("SignUp4", this.state.data)}
+                    >
+                        <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                </View>
+
             </AuthTemplate>
         );
     }
@@ -71,4 +87,20 @@ const styles = StyleSheet.create({
         fontSize: 23,
         color: "#FFFFFF",
     },
+    navigation: {
+        width: "75%",
+        flexDirection: 'row',
+        marginTop: 30
+    },
+    rightArrow:{
+        width: "50%",
+        alignItems: 'flex-end',
+        marginTop: 20,
+    },
+    leftArrow:{
+        width: "50%",
+        alignItems: 'flex-start',
+        marginTop: 20,
+    }
+
 });

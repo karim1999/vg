@@ -19,11 +19,6 @@ export default class authTemplate extends React.Component {
                 <View style={styles.container}>
                     <Logo title={this.props.title} error={this.props.error} />
                     { this.props.children }
-                    {!this.props.next ? (
-                        <Text></Text>
-                    ) : (
-                        <Arrows data={this.state.data} next={this.props.next} navigation={this.props.navigation} />
-                    )}
                 </View>
             </ImageBackground>
         );

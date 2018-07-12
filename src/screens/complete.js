@@ -18,31 +18,31 @@ export default class Complete extends React.Component {
         };
     }
     componentDidMount(){
-        // return axios.post(this.state.data, 'http://192.168.1.5/'+'api/register').then((response) => {
-        //     this.setState({
-        //         isLoading: true,
-        //         done: false,
-        //         error: false,
-        //     });
-        // }).catch((error) => {
-        //     this.setState({
-        //
-        //     });
-        // })
+        return axios.post(SERVER_URL+'api/auth/register', this.state.data).then((response) => {
+            this.setState({
+                isLoading: false,
+                done: true,
+                error: false,
+            });
+        }).catch((error) => {
+            this.setState({
+                isLoading: false,
+                done: false,
+                error: "An error has occurred.",
+            });
+        })
     }
     render() {
         if(this.state.isLoading){
             return (
                 <AuthTemplate title="Signing Up..." navigation={this.props.navigation} error={this.state.error}>
                     <ActivityIndicator size="large" color="#344955" />
-                    <Text>{ JSON.stringify(this.state.data) }</Text>
                 </AuthTemplate>
             );
         }else{
             return (
                 <AuthTemplate title="Signing Up..." navigation={this.props.navigation} error={this.state.error}>
-                    <ActivityIndicator size="large" color="#344955" />
-                    <Text>{ JSON.stringify(this.state.data) }</Text>
+                    <Text style={{ fontSize: 25, color: "#FFFFFF" }}>Done</Text>
                 </AuthTemplate>
             );
         }

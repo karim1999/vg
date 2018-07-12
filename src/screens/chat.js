@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {ListItem, List, Left, Thumbnail, Body, Text, Right} from 'native-base';
 import AppTemplate from './../components/appTemplate';
 import {Transition} from "react-navigation-fluid-transitions";
-import {TouchableOpacity} from "react-native";
+import {View} from "react-native";
 
 export default class Chat extends Component {
     constructor(props) {
@@ -20,12 +20,13 @@ export default class Chat extends Component {
 
         return (
             <AppTemplate title="Messages" navigation={this.props.navigation} activeTab="Chat">
-                <Transition appear="horizontal" disappear="horizontal">
-                    <List>
-                        {/*<ListItem itemDivider style={{justifyContent: "center", alignItems: "center", backgroundColor: "#D0D0D0", marginBottom: 10 }}>*/}
-                        {/*</ListItem>*/}
-                        <TouchableOpacity style={{backgroundColor: "#FFFFFF", marginBottom: 10}}>
-                            <ListItem avatar>
+                <View style={{padding: 20}}>
+                    <Transition appear="horizontal" disappear="horizontal">
+                        <List>
+                            <ListItem avatar
+                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat1"})}
+                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
+                            >
                                 <Left>
                                     <Thumbnail source={require("./../images/profile.jpg")} />
                                 </Left>
@@ -37,9 +38,11 @@ export default class Chat extends Component {
                                     <Text note>3:43 pm</Text>
                                 </Right>
                             </ListItem>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor: "#FFFFFF", marginBottom: 10}}>
-                            <ListItem avatar>
+
+                            <ListItem avatar
+                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat2"})}
+                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
+                            >
                                 <Left>
                                     <Thumbnail source={require("./../images/profile.jpg")} />
                                 </Left>
@@ -51,9 +54,10 @@ export default class Chat extends Component {
                                     <Text note>3:43 pm</Text>
                                 </Right>
                             </ListItem>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor: "#FFFFFF", marginBottom: 10}}>
-                            <ListItem avatar>
+                            <ListItem avatar
+                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
+                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat3"})}
+                            >
                                 <Left>
                                     <Thumbnail source={require("./../images/profile.jpg")} />
                                 </Left>
@@ -65,9 +69,9 @@ export default class Chat extends Component {
                                     <Text note>3:43 pm</Text>
                                 </Right>
                             </ListItem>
-                        </TouchableOpacity>
-                    </List>
-                </Transition>
+                        </List>
+                    </Transition>
+                </View>
             </AppTemplate>
         );
     }

@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, TextInput, Picker } from 'react-native';
+import { StyleSheet, TextInput, Picker, View, TouchableOpacity } from 'react-native';
 import countries from './../countries.json';
 import AuthTemplate from './../components/authTemplate';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignUp1 extends React.Component {
     static navigationOptions = {
@@ -36,7 +37,6 @@ export default class SignUp1 extends React.Component {
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
                     placeholder="City......"
-                    keyboardType='phone-pad'
                     onChangeText={(city) => this.setState(prevState => (
                         {
                             data: {
@@ -49,6 +49,7 @@ export default class SignUp1 extends React.Component {
                     style={styles.input}
                     placeholderTextColor="#d2d2d2"
                     placeholder="Phone......"
+                    keyboardType='phone-pad'
                     onChangeText={(phone) => this.setState(prevState => (
                         {
                             data: {
@@ -57,6 +58,20 @@ export default class SignUp1 extends React.Component {
                             }
                         }))}
                 />
+                <View style={styles.navigation}>
+                    <TouchableOpacity
+                        style={styles.leftArrow}
+                        onPress={() => this.props.navigation.goBack()}
+                    >
+                        <Icon name="arrow-circle-left" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.rightArrow}
+                        onPress={() => this.props.navigation.navigate("SignUp2", this.state.data)}
+                    >
+                        <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                </View>
             </AuthTemplate>
         );
     }
@@ -79,5 +94,20 @@ const styles = StyleSheet.create({
         marginLeft: "17%",
         color: "#FFFFFF",
     },
+    navigation: {
+        width: "75%",
+        flexDirection: 'row',
+        marginTop: 30
+    },
+    rightArrow:{
+        width: "50%",
+        alignItems: 'flex-end',
+        marginTop: 20,
+    },
+    leftArrow:{
+        width: "50%",
+        alignItems: 'flex-start',
+        marginTop: 20,
+    }
 
 });

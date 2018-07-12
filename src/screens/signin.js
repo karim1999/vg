@@ -13,6 +13,7 @@ let data= {
     phone: '',
     name: '',
     email: '',
+    password: '',
     description: '',
     facebook: '',
     twitter: '',

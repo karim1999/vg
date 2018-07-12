@@ -1,8 +1,8 @@
 import React from 'react';
 import { Root } from "native-base";
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import { currentUser } from './src/reducers'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { currentUser } from './src/reducers';
 import { createStackNavigator, createSwitchNavigator, createTabNavigator } from 'react-navigation';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 
@@ -17,12 +17,17 @@ import SignUp5 from './src/screens/signup5';
 import Forget from './src/screens/forget';
 import Complete from './src/screens/complete';
 import Home from './src/screens/home';
+import Project from './src/screens/project';
+import AddProject from './src/screens/addProject';
 import Chat from './src/screens/chat';
+import SingleChat from './src/screens/singleChat';
 import Settings from './src/screens/settings';
 import Favorite from './src/screens/favorite';
-import Header from './src/components/header';
+import {StyleSheet} from "react-native";
 const HomeStack = createStackNavigator({
-    Home: Home
+    Home: Home,
+    Project: Project,
+    AddProject: AddProject
 },{
     headerMode: 'none',
 });
@@ -35,12 +40,13 @@ const SettingsStack = createStackNavigator({
 
 const ChatStack = createStackNavigator({
     Chat: Chat,
+    SingleChat: SingleChat,
 },{
     headerMode: 'none',
 });
 
 const FavoriteStack = createStackNavigator({
-    Favorite: Favorite
+    Favorite: Favorite,
 },{
     headerMode: 'none',
 });
@@ -61,16 +67,16 @@ const AppStack = createTabNavigator(
                 <Footer
                 >
                     <FooterTab style={{ backgroundColor: '#FFFFFF' }}>
-                        <Button active={props.navigationState.index === 0} onPress={() => props.navigation.navigate('Home')}>
+                        <Button style={[props.navigationState.index === 0 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Home')}>
                             <Icon size={25} name="home" color="#000000" />
                         </Button>
-                        <Button active={props.navigationState.index === 1} onPress={() => props.navigation.navigate('Favorite')}>
+                        <Button style={[props.navigationState.index === 1 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Favorite')}>
                             <Icon size={25} name="heart" color="#000000" />
                         </Button>
-                        <Button active={props.navigationState.index === 2} onPress={() => props.navigation.navigate('Chat')}>
+                        <Button style={[props.navigationState.index === 2 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Chat')}>
                             <Icon size={25} active name="chatbubbles" color="#000000" />
                         </Button>
-                        <Button active={props.navigationState.index === 3} onPress={() => props.navigation.navigate('Settings')}>
+                        <Button style={[props.navigationState.index === 3 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Settings')}>
                             <Icon size={25} name="cog" color="#000000" />
                         </Button>
                     </FooterTab>
@@ -119,3 +125,8 @@ export default class App extends React.Component {
         );
     }
 }
+const styles = StyleSheet.create({
+    activeTab: {
+        backgroundColor: "#5a5a5a"
+    }
+});

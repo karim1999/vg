@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, TextInput, Picker, Slider, Text } from 'react-native';
+import { StyleSheet, TextInput, Picker, Slider, Text, View, TouchableOpacity } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
 import NumericInput from 'react-native-numeric-input'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignUp4 extends React.Component {
     static navigationOptions = {
@@ -68,6 +69,21 @@ export default class SignUp4 extends React.Component {
                         })
                     )}
                 />
+                <View style={styles.navigation}>
+                    <TouchableOpacity
+                        style={styles.leftArrow}
+                        onPress={() => this.props.navigation.goBack()}
+                    >
+                        <Icon name="arrow-circle-left" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.rightArrow}
+                        onPress={() => this.props.navigation.navigate("SignUp5", this.state.data)}
+                    >
+                        <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
+                    </TouchableOpacity>
+                </View>
+
             </AuthTemplate>
         );
     }
@@ -96,5 +112,20 @@ const styles = StyleSheet.create({
         fontSize: 23,
         color: "#FFFFFF",
     },
+    navigation: {
+        width: "75%",
+        flexDirection: 'row',
+        marginTop: 30
+    },
+    rightArrow:{
+        width: "50%",
+        alignItems: 'flex-end',
+        marginTop: 20,
+    },
+    leftArrow:{
+        width: "50%",
+        alignItems: 'flex-start',
+        marginTop: 20,
+    }
 
 });
