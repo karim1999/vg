@@ -3,8 +3,11 @@ import {ListItem, List, Left, Thumbnail, Body, Text, Right} from 'native-base';
 import AppTemplate from './../components/appTemplate';
 import {Transition} from "react-navigation-fluid-transitions";
 import {View} from "react-native";
+import {setUser} from "../reducers";
+import {connect} from "react-redux";
+import {SERVER_URL} from "../config";
 
-export default class Chat extends Component {
+class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,59 +23,59 @@ export default class Chat extends Component {
 
         return (
             <AppTemplate title="Messages" navigation={this.props.navigation} activeTab="Chat">
-                <View style={{padding: 20}}>
+                <View style={{padding: 10}}>
                     <Transition appear="horizontal" disappear="horizontal">
-                        <List>
+                        <View>
                             <ListItem avatar
-                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat1"})}
-                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
+                                      onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: "Public Chat", user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                      style={{padding: 10, marginLeft: 0}}
                             >
                                 <Left>
                                     <Thumbnail source={require("./../images/profile.jpg")} />
                                 </Left>
                                 <Body>
-                                <Text>Kumar Pratik</Text>
-                                <Text note>Doing what you like will always keep you happy . .</Text>
+                                <Text>Public Chat</Text>
+                                <Text note>Chat for everybody</Text>
                                 </Body>
                                 <Right>
-                                    <Text note>3:43 pm</Text>
+                                    <Text note></Text>
                                 </Right>
                             </ListItem>
+                            {this.props.jointProjects.map((project) => (
+                                <ListItem avatar
+                                          key={project.id}
+                                          onPress={() => this.props.navigation.navigate("SingleChat", {...project, user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                          style={{padding: 10, marginLeft: 0}}
+                                >
+                                    <Left>
+                                        <Thumbnail source={{uri: SERVER_URL+"storage/"+project.img}} />
+                                    </Left>
+                                    <Body>
+                                    <Text>{project.title}</Text>
+                                    <Text note>created by: {project.user.name}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Text note>{project.created_at}</Text>
+                                    </Right>
+                                </ListItem>
+                            ))}
 
-                            <ListItem avatar
-                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat2"})}
-                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
-                            >
-                                <Left>
-                                    <Thumbnail source={require("./../images/profile.jpg")} />
-                                </Left>
-                                <Body>
-                                <Text>Kumar Pratik</Text>
-                                <Text note>Doing what you like will always keep you happy . .</Text>
-                                </Body>
-                                <Right>
-                                    <Text note>3:43 pm</Text>
-                                </Right>
-                            </ListItem>
-                            <ListItem avatar
-                                      style={{backgroundColor: "#FFFFFF", marginBottom: 10}}
-                                      onPress={() => this.props.navigation.navigate("SingleChat", {title: "Chat3"})}
-                            >
-                                <Left>
-                                    <Thumbnail source={require("./../images/profile.jpg")} />
-                                </Left>
-                                <Body>
-                                <Text>Kumar Pratik</Text>
-                                <Text note>Doing what you like will always keep you happy . .</Text>
-                                </Body>
-                                <Right>
-                                    <Text note>3:43 pm</Text>
-                                </Right>
-                            </ListItem>
-                        </List>
+                        </View>
                     </Transition>
                 </View>
             </AppTemplate>
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user,
+    jointProjects: user.jointprojects
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Chat);

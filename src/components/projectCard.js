@@ -21,7 +21,7 @@ class ProjectCard extends React.Component {
             isLoading: true,
         });
         AsyncStorage.getItem('token').then(userToken => {
-            return axios.post(SERVER_URL+'api/favorites/add/'+this.props.id+'?token='+userToken).then(response => {
+            return axios.post(SERVER_URL+'api/favorites/'+this.props.id+'?token='+userToken).then(response => {
                 this.setState({
                     isLoading: false,
                     isFavored: true,
@@ -44,7 +44,7 @@ class ProjectCard extends React.Component {
             isLoading: true,
         });
         AsyncStorage.getItem('token').then(userToken => {
-            return axios.post(SERVER_URL+'api/favorites/remove/'+this.props.id+'?token='+userToken).then(response => {
+            return axios.delete(SERVER_URL+'api/favorites/'+this.props.id+'?token='+userToken).then(response => {
                 this.setState({
                     isLoading: false,
                     isFavored: false,

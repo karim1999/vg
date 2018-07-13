@@ -38,7 +38,7 @@ export default class Home extends Component {
     render() {
 
         return (
-            <AppTemplate title="Home" navigation={this.props.navigation} activeTab="Home">
+            <AppTemplate fab={true} title="Home" navigation={this.props.navigation} activeTab="Home">
                 <View style={{padding: 20}}>
                     <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
                         <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start' }}>

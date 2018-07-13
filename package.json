@@ -8,11 +8,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "firebase": "^5.2.0",
     "lodash": "^4.17.10",
     "native-base": "^2.6.1",
     "react": "16.3.1",
     "react-native": "0.55.4",
     "react-native-chooser": "^1.7.0",
+    "react-native-gifted-chat": "^0.4.3",
     "react-native-i18n": "^2.0.12",
     "react-native-image-picker": "^0.26.10",
     "react-native-numeric-input": "^1.3.1",
