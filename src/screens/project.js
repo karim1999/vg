@@ -19,6 +19,11 @@ class Project extends Component {
             isLoading: false
         };
     }
+    showInvestmentPanel(){
+        this.setState({
+            isInvesting: !this.state.isInvesting,
+        })
+    }
     investInProject(){
         this.setState({
             isLoading: true,
@@ -27,7 +32,7 @@ class Project extends Component {
             return axios.post(SERVER_URL+'api/invest/'+this.state.id+'?token='+userToken, {amount: this.state.investmentAmount}).then(response => {
                 this.setState({
                     isLoading: false,
-                    isInvesting: true
+                    isInvesting: false
                 });
                 this.props.setUser(response.data);
             }).catch(error => {
@@ -64,17 +69,43 @@ class Project extends Component {
             })
         });
     }
+    deleteProject(){
+        this.setState({
+            isLoading: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            return axios.delete(SERVER_URL+'api/projects/'+this.state.id+'?token='+userToken).then(response => {
+                this.setState({
+                    isLoading: false,
+                });
+                this.props.setUser(response.data);
+                this.props.navigation.navigate("Home");
+            }).catch(error => {
+                this.setState({
+                    isLoading: false,
+                });
+                Toast.show({
+                    text: "Error reaching the server.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            })
+        });
+    }
+    openChat(){
+        this.props.navigation.navigate("SingleChat", {id: this.state.id, amount: this.state.amount, title: this.state.title, user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img});
+    }
     render() {
         return (
-            <AppTemplate right={true} title={this.state.title} backButton={true} navigation={this.props.navigation} activeTab="Home">
+            <AppTemplate right={true} title={this.state.title} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()}>
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
-                        onPress={() => this.props.navigation.navigate("SingleChat", {id: this.state.id, amount: this.state.amount, title: this.state.title, user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
-                        style={{width: "100%", alignItems: "center"}} light><Text style={{flex: 1}}> Open this project chat now. </Text>
+                        onPress={() => this.openChat()}
+                        style={{width: "100%", alignItems: "center"}} light={true}><Text style={{flex: 1}}> Open this project chat now. </Text>
                         <Icon name="ios-chatboxes" style={{color: "#000000", fontSize: 25}}/>
                     </Button>
                 ) : (
-                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} primary><Text style={{flex: 1}}> Invest in this project now. </Text>
+                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} dark><Text style={{flex: 1}}> Invest in this project now. </Text>
                         <Icon name={this.state.isInvesting? "ios-arrow-dropup-circle": "ios-arrow-dropdown-circle"} style={{color: "#FFFFFF", fontSize: 25}}/>
                     </Button>
                 )}

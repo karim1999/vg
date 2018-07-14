@@ -3,6 +3,9 @@ import {TouchableOpacity, View, ImageBackground, TouchableNativeFeedback} from "
 import { Container, Content, Text, List, ListItem, Left, Body, Right, Thumbnail, H2 } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
+import {SERVER_URL} from "../config";
 
 const routes = [
     {
@@ -32,7 +35,7 @@ const routes = [
     },
 ];
 
-export default class SideBar extends React.Component {
+class SideBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,8 +46,8 @@ export default class SideBar extends React.Component {
             <Container style={{ backgroundColor: "#FFFFFF" }}>
                 <ImageBackground source={require("./../images/img1.jpg")} style={{ width: "100%", height: 200 }}>
                     <View style={{  width: "100%", height: 200, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
-                        <Thumbnail large source={require("./../images/profile.jpg")} />
-                        <H2 style={{ color: "#FFFFFF" }}>Karim Mahmoud</H2>
+                        <Thumbnail large source={{uri: SERVER_URL+"storage/"+this.props.user.img}} />
+                        <H2 style={{ color: "#FFFFFF" }}>{this.props.user.name}</H2>
                     </View>
                 </ImageBackground>
                 <Content style={{ marginTop: 20 }}>
@@ -74,3 +77,14 @@ export default class SideBar extends React.Component {
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SideBar);

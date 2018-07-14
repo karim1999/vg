@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import AppTemplate from './../components/appTemplate';
-import {ScrollView, Text, View} from "react-native";
-import {Body, Button, Card, CardItem, Container, Content, Icon, Input, Item} from "native-base";
+import { Text, View } from "react-native";
+import { Button, Container, Icon, List, ListItem } from "native-base";
 import firebaseDb from "./../firebaseDb";
 import _ from "lodash";
 import {Bubble, GiftedChat} from 'react-native-gifted-chat';
@@ -15,7 +14,8 @@ export default class SingleChat extends Component {
             ...this.props.navigation.state.params,
             message: "",
             logs: [],
-            ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id)
+            ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id),
+            menu: false
         };
     }
     renderBubble (props) {
@@ -34,7 +34,11 @@ export default class SingleChat extends Component {
             />
         )
     }
-
+    toggleMenu() {
+        this.setState({
+            menu: !this.state.menu
+        })
+    }
     addNewMessage(data){
         let newPostKey = firebaseDb.ref('/chat/').child(this.state.id).push().key;
         let updates = {};
@@ -53,17 +57,27 @@ export default class SingleChat extends Component {
             })
         });
     }
-    componentDidUnMount() {
-        this.state.ref.off('value');
-    }
+    // componentDidUnMount() {
+    //     this.state.ref.off('value');
+    // }
     render() {
         return (
             <Container style={{backgroundColor: "#FDF5F5"}}>
-                <Header title={this.state.title} navigation={this.props.navigation} right>
+                <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation} right={this.state.id != 0}>
                     <Button transparent onPress={() => this.props.navigation.goBack()}>
                         <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
                     </Button>
                 </Header>
+                {this.state.menu && (
+                    <List style={{backgroundColor: "#FFFFFF", right: 0}}>
+                        <ListItem onPress={() => {
+                            this.setState({menu: false});
+                            this.props.navigation.navigate("Project", {...this.props.navigation.state.params});
+                        }}>
+                            <Text>Open Project</Text>
+                        </ListItem>
+                    </List>
+                )}
                 {this.state.amount && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
                         <Text style={{padding: 10, fontSize: 15}}>Total investments in this project: <Text style={{color: "#FFFFFF"}}>{this.state.amount}$</Text></Text>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Picker, Form, Icon } from 'native-base';
-import {ActivityIndicator, TouchableOpacity, View} from 'react-native';
+import {Picker, Form, Icon, Toast, Item, Input, Content} from 'native-base';
+import {ActivityIndicator, FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
 import {Transition} from "react-navigation-fluid-transitions";
@@ -11,30 +11,94 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: "key1",
+            selected: 0,
+            categories: [],
             projects: [],
+            refreshing: false,
+            search: "",
+            data: [],
             isLoading: true,
             error: false
         };
     }
-    onValueChange(value: string) {
-        this.setState({
-            selected: value
+    async getData(){
+        if(this.state.selected === 0){
+            this.state.data= this.state.projects;
+        }else{
+            this.state.data= await _.filter(this.state.projects, project => project.category_id == this.state.selected);
+        }
+        if(this.state.search !== ""){
+            this.state.data= await _.filter(this.state.data, project => project.title.toLowerCase().indexOf(this.state.search) > -1);
+        }
+
+    }
+    async onValueChange(category) {
+        await this.setState({
+            selected: category,
+            isLoading: true
+        });
+        this.getData().then(()=> {
+            this.setState({
+                isLoading: false
+            });
         });
     }
-    componentDidMount(){
+    async onSearchChange(search) {
+        await this.setState({
+            search,
+            isLoading: true
+        });
+        this.getData().then(()=> {
+            this.setState({
+                isLoading: false
+            });
+        });
+    }
+    _onRefresh(){
+        this.setState({
+            refreshing: true
+        });
+        this.onLoad().then(() => {
+            this.setState({
+                refreshing: false
+            });
+        })
+    }
+    onLoad(){
         return axios.get(SERVER_URL+"api/projects").then(response => {
             this.setState({
                 projects: response.data,
-                isLoading: false
+            });
+            return axios.get(SERVER_URL+"api/categories").then(response2 => {
+                this.setState({
+                    categories: response2.data,
+                });
+                this.getData();
+            }).catch(error => {
+                this.setState({
+                    isLoading: false,
+                });
+                Toast.show({
+                    text: "No internet connection",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
             });
         }).catch(error => {
             this.setState({
                 isLoading: false,
-                error: "No internet connection"
             });
+            Toast.show({
+                text: "No internet connection",
+                buttonText: "Ok",
+                type: "danger"
+            })
         });
     }
+    async componentDidMount(){
+        await this.onLoad();
+    }
+
     render() {
 
         return (
@@ -49,18 +113,20 @@ export default class Home extends Component {
                                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                                     style={{ width: 130 }}
                                     selectedValue={this.state.selected}
-                                    onValueChange={this.onValueChange.bind(this)}
+                                    onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
-                                    <Picker.Item label="Wallet" value="key0" />
-                                    <Picker.Item label="ATM Card" value="key1" />
-                                    <Picker.Item label="Debit Card" value="key2" />
-                                    <Picker.Item label="Credit Card" value="key3" />
-                                    <Picker.Item label="Net Banking" value="key4" />
+                                    <Picker.Item label="All" value={0} />
+                                    {this.state.categories.map((category) => (
+                                        <Picker.Item key={category.id} label={category.name} value={category.id} />
+                                    ))}
                                 </Picker>
                             </Form>
                         </View>
-                        <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, padding: 5, alignItems: 'flex-end', width: 200 }}>
-                            <Icon style={{fontSize: 35}} name='ios-search' />
+                        <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', width: 200 }}>
+                            <Item rounded>
+                                <Icon style={{fontSize: 35}} name='ios-search' />
+                                <Input onChangeText={(search) => this.onSearchChange(search)} placeholder='Search...'/>
+                            </Item>
                         </View>
                     </View>
                     <Transition appear="horizontal" disappear="horizontal">
@@ -69,19 +135,26 @@ export default class Home extends Component {
                                 <ActivityIndicator size="large" color="#000000" />
                             </View>
                         ) : (
-                            <View>
-                                {this.state.projects.map((project) => (
+                            <FlatList
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={this.state.refreshing}
+                                        onRefresh={() => this._onRefresh()}
+                                    />
+                                }
+                                data={this.state.data}
+                                renderItem={({item}) => (
                                     <TouchableOpacity
-                                        key={project.id}
-                                        onPress={() => this.props.navigation.navigate("Project", {...project, user_name: project.user.name, user_img: project.user.img})}
+                                        key={item.id}
+                                        onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img})}
                                     >
-                                        <ProjectCard key={project.id} {...project} user_name={project.user.name} />
+                                        <ProjectCard key={item.id} {...item} user_name={item.user.name} />
                                     </TouchableOpacity>
-                                ))}
-                            </View>
+                                )}
+                                keyExtractor = { (item, index) => index.toString() }
+                            />
                         )}
                     </Transition>
-
                 </View>
             </AppTemplate>
         );

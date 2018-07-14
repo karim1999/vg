@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import {Container, Content, Drawer, Button, Icon, Fab, List, ListItem, Text} from 'native-base';
+import {Container, Content, Drawer, Button, Icon, Fab, List, ListItem, Text } from 'native-base';
 import SideBar from './sidebar'
 import Header from './header'
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
+import _ from "lodash";
+import {Alert, View} from "react-native";
 
-export default class AppTemplate extends Component {
+class AppTemplate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            test: "asfd",
             menu: false
         };
     }
@@ -22,8 +25,56 @@ export default class AppTemplate extends Component {
             menu: !this.state.menu
         })
     }
-    render() {
+    investInProject(){
+        this.setState({
+            menu: false
+        });
+        this.props.investInProject();
+    }
+    deleteProject(){
+        Alert.alert(
+            'Are you sure?',
+            'The project will be removed completely after this action.',
+            [
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+                {text: 'OK', onPress: () => {
+                        this.setState({
+                            menu: false
+                        });
+                        this.props.deleteProject();
+                    }},
+            ],
+            { cancelable: false }
+        )
+    }
+    editProject(){
+        this.setState({
+            menu: false
+        });
+    }
+    leaveProject(){
+        Alert.alert(
+            'Are you sure?',
+            'By leaving the project you won\'t be able to access the project chat.',
+            [
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+                {text: 'OK', onPress: () => {
+                        this.setState({
+                            menu: false
+                        });
+                        this.props.cancelInvestmentInProject();
+                    }},
+            ],
+        )
 
+    }
+    changeInvestment(){
+        this.setState({
+            menu: false
+        });
+        this.props.investInProject();
+    }
+    render() {
         return (
             <Container>
                 <Drawer
@@ -42,26 +93,43 @@ export default class AppTemplate extends Component {
                             </Button>
                         )}
                     </Header>
-                        <Content style={{ backgroundColor: "#FDF5F5", width: "100%" }}>
-                            {this.state.menu && (
-                                <List style={{backgroundColor: "#FFFFFF", right: 0}}>
-                                    <ListItem>
+                    <Content style={{ backgroundColor: "#FDF5F5", flex: 1 }}>
+                        {this.state.menu && (
+                            <List style={{backgroundColor: "#FFFFFF", right: 0}}>
+                                {_.find(this.props.jointProjects, project => project.id == this.props.project) && (
+                                    <ListItem onPress={() => this.props.openChat()}>
+                                        <Text>Open Chat</Text>
+                                    </ListItem>
+                                )}
+                                {_.find(this.props.jointProjects, project => project.id == this.props.project)? (
+                                    <ListItem onPress={() => this.changeInvestment()}>
                                         <Text>Change Investment Value</Text>
                                     </ListItem>
-                                    <ListItem>
+                                ) : (
+                                    <ListItem onPress={() => this.investInProject()}>
+                                        <Text>Invest In the project</Text>
+                                    </ListItem>
+                                )}
+                                {_.find(this.props.myProjects, project => project.id == this.props.project) && (
+                                    <ListItem onPress={() => this.props.navigation.navigate("AddProject", {project: this.props.project})}>
                                         <Text>Edit Project</Text>
                                     </ListItem>
-                                    <ListItem>
+                                )}
+                                {_.find(this.props.myProjects, project => project.id == this.props.project) && (
+                                    <ListItem onPress={() => this.deleteProject()}>
                                         <Text>Delete Project</Text>
                                     </ListItem>
-                                    <ListItem>
+                                )}
+                                {(!_.find(this.props.myProjects, project => project.id == this.props.project) && _.find(this.props.jointProjects, project => project.id == this.props.project)) && (
+                                    <ListItem onPress={() => this.leaveProject()}>
                                         <Text>Leave Project</Text>
                                     </ListItem>
-                                </List>
-                            )}
+                                )}
+                            </List>
+                        )}
 
-                            {this.props.children}
-                        </Content>
+                        {this.props.children}
+                    </Content>
                 </Drawer>
                 {this.props.fab && (
                     <Fab
@@ -76,3 +144,17 @@ export default class AppTemplate extends Component {
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user,
+    favorites: user.favorites,
+    jointProjects: user.jointprojects,
+    myProjects: user.projects
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AppTemplate);
