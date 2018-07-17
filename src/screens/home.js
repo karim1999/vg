@@ -109,7 +109,7 @@ export default class Home extends Component {
                             <Form>
                                 <Picker
                                     mode="dropdown"
-                                    iosHeader="Select your SIM"
+                                    iosHeader="Categories"
                                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                                     style={{ width: 130 }}
                                     selectedValue={this.state.selected}

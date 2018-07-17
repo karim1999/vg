@@ -41,8 +41,11 @@ export default class Complete extends React.Component {
             );
         }else{
             return (
-                <AuthTemplate title="Signing Up..." navigation={this.props.navigation} error={this.state.error}>
+                <AuthTemplate title="Signing Up" navigation={this.props.navigation} error={this.state.error}>
                     <Text style={{ fontSize: 25, color: "#FFFFFF" }}>Done</Text>
+                    <Button onPress={() => this.props.navigation.navigate("SignIn")}>
+                        Sign in now
+                    </Button>
                 </AuthTemplate>
             );
         }

@@ -22,6 +22,7 @@ import AddProject from './src/screens/addProject';
 import Chat from './src/screens/chat';
 import SingleChat from './src/screens/singleChat';
 import Settings from './src/screens/settings';
+import Profile from './src/screens/profile';
 import Favorite from './src/screens/favorite';
 import {StyleSheet} from "react-native";
 const HomeStack = createStackNavigator({
@@ -34,6 +35,7 @@ const HomeStack = createStackNavigator({
 
 const SettingsStack = createStackNavigator({
     Settings: Settings,
+    Profile: Profile
 },{
     headerMode: 'none',
 });

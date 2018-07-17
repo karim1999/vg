@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, View, ImageBackground, TouchableNativeFeedback} from "react-native";
+import {View, ImageBackground, AsyncStorage} from "react-native";
 import { Container, Content, Text, List, ListItem, Left, Body, Right, Thumbnail, H2 } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
@@ -27,12 +27,7 @@ const routes = [
         text: "Settings",
         icon: "cogs",
         name: "Settings"
-    },
-    {
-        text: "About",
-        icon: "info-circle",
-        name: "info-circle"
-    },
+    }
 ];
 
 class SideBar extends React.Component {
@@ -40,6 +35,11 @@ class SideBar extends React.Component {
         super(props);
         this.state = {
         };
+    }
+    logout(){
+        return AsyncStorage.removeItem('token').then(()=>{
+            this.props.navigation.navigate('Auth');
+        });
     }
     render() {
         return (
@@ -55,22 +55,36 @@ class SideBar extends React.Component {
                         {
                             routes.map((route) => {
                                 return (
-                                    <TouchableNativeFeedback key={route.name} onPress={() => this.props.navigation.navigate(route.name)}>
-                                        <ListItem style={{ marginTop: 20 }} icon>
-                                            <Left>
-                                                <Icon size={25} color="#000000" active name={route.icon} />
-                                            </Left>
-                                            <Body>
-                                            <Text>{route.text}</Text>
-                                            </Body>
-                                            <Right>
-                                                <IonicIcon size={25} name="ios-arrow-forward" />
-                                            </Right>
-                                        </ListItem>
-                                    </TouchableNativeFeedback>
+                                    <ListItem style={{ marginTop: 10, marginBottom: 10 }}
+                                              key={route.name}
+                                              onPress={() => this.props.navigation.navigate(route.name)}
+                                              icon>
+                                        <Left>
+                                            <Icon size={25} color="#000000" active name={route.icon} />
+                                        </Left>
+                                        <Body>
+                                        <Text>{route.text}</Text>
+                                        </Body>
+                                        <Right>
+                                            <IonicIcon size={25} name="ios-arrow-forward" />
+                                        </Right>
+                                    </ListItem>
                                 );
                             })
                         }
+                        <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                  onPress={() => this.logout()}
+                        >
+                            <Left>
+                                <IonicIcon size={25} color="#000000" active name="ios-log-out" />
+                            </Left>
+                            <Body>
+                            <Text>Logout</Text>
+                            </Body>
+                            <Right>
+                                <IonicIcon size={25} name="ios-arrow-forward" />
+                            </Right>
+                        </ListItem>
                     </List>
                 </Content>
             </Container>
