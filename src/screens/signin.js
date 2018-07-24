@@ -111,6 +111,13 @@ class SignIn extends React.Component {
             console.log(error.message);
         }
     }
+    componentDidMount(){
+      fetch('http://talbatk.net:90/api/all-offers').then(response => {
+        alert(JSON.stringify(response.response));
+      }).catch(error => {
+        alert(error);
+      })
+    }
     render() {
         return (
             <ImageBackground source={require("./../images/background.webp")} style={{width: "100%", height: "100%"}}>
