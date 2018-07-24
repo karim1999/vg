@@ -8,10 +8,10 @@
     "title": "Your Profile"
   },
   "home": {
-    "home": "",
-    "search": "",
-    "all": "",
-    "notFound": ""
+    "home": "Home",
+    "search": "Search",
+    "all": "All",
+    "notFound": "No data was found."
   },
   "favorites": {
 
@@ -23,8 +23,8 @@
 
   },
   "messages": {
-    "noInternet": "",
-    "unknownError": "",
-    "ok": ""
+    "noInternet": "No internet connection.",
+    "unknownError": "Unknown error has occurred.",
+    "ok": "Ok"
   }
 }
