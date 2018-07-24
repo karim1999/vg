@@ -3,7 +3,6 @@ import {Picker, Form, Icon, Toast, Item, Input, Content} from 'native-base';
 import {ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View} from 'react-native';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
-import {Transition} from "react-navigation-fluid-transitions";
 import axios from "axios";
 import {ONESIGNAL_APP_ID, SERVER_URL} from "../config";
 import OneSignal from "react-native-onesignal";
@@ -80,14 +79,15 @@ class Home extends Component {
                 });
                 this.getData();
             }).catch(error => {
-                this.setState({
-                    isLoading: false,
-                });
                 Toast.show({
                     text: strings("messages.noInternet"),
                     buttonText: strings("messages.noInternet"),
                     type: "danger"
                 })
+            }).finally(() => {
+                this.setState({
+                    isLoading: false,
+                });
             });
         }).catch(error => {
             this.setState({
@@ -183,7 +183,7 @@ class Home extends Component {
                             </Item>
                         </View>
                     </View>
-                    <Transition appear="horizontal" disappear="horizontal">
+                    <View>
                         {this.state.isLoading? (
                             <View>
                                 <ActivityIndicator size="large" color="#000000" />
@@ -211,7 +211,7 @@ class Home extends Component {
                                 keyExtractor = { (item, index) => index.toString() }
                             />
                         )}
-                    </Transition>
+                    </View>
                 </View>
             </AppTemplate>
         );

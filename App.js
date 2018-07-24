@@ -24,7 +24,7 @@ import SingleChat from './src/screens/singleChat';
 import Settings from './src/screens/settings';
 import Profile from './src/screens/profile';
 import Favorite from './src/screens/favorite';
-import {StyleSheet, NetInfo} from "react-native";
+import {StyleSheet} from "react-native";
 
 const HomeStack = createStackNavigator({
     Home: Home,
@@ -121,33 +121,9 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isConnected: true
         };
     }
 
-    componentDidMount() {
-        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
-    }
-    componentWillUnmount() {
-        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
-    }
-    handleConnectivityChange = isConnected => {
-        if (isConnected) {
-            Toast.show({
-                text: "Internet connection",
-                buttonText: strings("messages.noInternet"),
-                type: "success"
-            });
-            this.setState({ isConnected });
-        } else {
-            Toast.show({
-                text: "no Internet connection",
-                buttonText: strings("messages.noInternet"),
-                type: "danger"
-            });
-            this.setState({ isConnected });
-        }
-    };
     render() {
         return (
             <Root>

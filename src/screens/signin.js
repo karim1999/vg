@@ -113,7 +113,7 @@ class SignIn extends React.Component {
     }
     render() {
         return (
-            <ImageBackground source={require("./../images/background.webp")} style={{width: "100%", height: "100%"}}>
+            <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
                 <View style={styles.container}>
                     <Logo title="SignIn" error={this.props.error} />
 
