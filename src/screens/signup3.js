@@ -21,7 +21,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Facebook......"
+                    placeholder="Facebook Link......"
                     onChangeText={(facebook) => this.setState(prevState => (
                         {
                             data: {
@@ -33,7 +33,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Twitter......"
+                    placeholder="Twitter Link......"
                     onChangeText={(twitter) => this.setState(prevState => (
                         {
                             data: {
@@ -45,7 +45,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Linkedin......"
+                    placeholder="Linkedin Link......"
                     onChangeText={(linkedin) => this.setState(prevState => (
                         {
                             data: {

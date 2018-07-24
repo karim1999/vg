@@ -4,7 +4,27 @@
     "login_button": "Login",
     "signup_button": "Sign Up"
   },
-  "user_profile": {
+  "signup": {
     "title": "Your Profile"
+  },
+  "home": {
+    "home": "",
+    "search": "",
+    "all": "",
+    "notFound": ""
+  },
+  "favorites": {
+
+  },
+  "settings": {
+
+  },
+  "project": {
+
+  },
+  "messages": {
+    "noInternet": "",
+    "unknownError": "",
+    "ok": ""
   }
 }

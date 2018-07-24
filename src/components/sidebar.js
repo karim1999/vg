@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
-import {SERVER_URL} from "../config";
+import {SERVER_URL, STORAGE_URL} from "../config";
 
 const routes = [
     {
@@ -46,7 +46,7 @@ class SideBar extends React.Component {
             <Container style={{ backgroundColor: "#FFFFFF" }}>
                 <ImageBackground source={require("./../images/img1.jpg")} style={{ width: "100%", height: 200 }}>
                     <View style={{  width: "100%", height: 200, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
-                        <Thumbnail large source={{uri: SERVER_URL+"storage/"+this.props.user.img}} />
+                        <Thumbnail large source={{uri: STORAGE_URL+this.props.user.img}} />
                         <H2 style={{ color: "#FFFFFF" }}>{this.props.user.name}</H2>
                     </View>
                 </ImageBackground>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {Form, Item, Input, Label, Icon, Picker, Button, Text, Toast} from 'native-base';
-import {AsyncStorage, Slider, View} from "react-native";
+import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
 import countries from './../countries.json';
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
@@ -23,6 +23,10 @@ class Profile extends Component {
         });
     }
     submit(){
+        this.setState({
+            isLoading: true,
+        });
+
         AsyncStorage.getItem('token').then(userToken => {
             return axios.post(SERVER_URL+'api/user/edit?token='+userToken, {
                 country: this.state.country,
@@ -35,22 +39,25 @@ class Profile extends Component {
                 linkedin: this.state.linkedin,
                 money: this.state.money
             }).then(response => {
-                this.setState({
-                    isLoading: false,
-                });
                 this.props.setUser(response.data);
+                Toast.show({
+                    text: "Your Profile has been edited successfully.",
+                    buttonText: "Ok",
+                    type: "success"
+                });
                 console.log(response.data);
             }).catch(error => {
                 console.log(error);
-                this.setState({
-                    isLoading: false,
-                });
                 Toast.show({
                     text: "Error reaching the server.",
                     buttonText: "Ok",
                     type: "danger"
                 })
             })
+        }).finally(() => {
+            this.setState({
+                isLoading: false,
+            });
         });
     }
     render() {
@@ -143,8 +150,12 @@ class Profile extends Component {
                         </Item>
                         <Button
                             onPress={() => this.submit()}
+                            style={{flexDirection: "row"}}
                             block light>
                             <Text>Save</Text>
+                            {this.state.isLoading && (
+                                <ActivityIndicator style={{}} size="small" color="#000000" />
+                            )}
                         </Button>
                     </Form>
                 </View>

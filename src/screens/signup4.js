@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, Picker, Slider, Text, View, TouchableOpacity } f
 import AuthTemplate from './../components/authTemplate';
 import NumericInput from 'react-native-numeric-input'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Toast} from "native-base";
 
 export default class SignUp4 extends React.Component {
     static navigationOptions = {
@@ -14,31 +15,50 @@ export default class SignUp4 extends React.Component {
             data: this.props.navigation.state.params
         };
     }
+    check(){
+        if(this.state.data.amount == ""){
+            Toast.show({
+                text: "The amount field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else{
+            this.props.navigation.navigate("SignUp5", this.state.data);
+        }
+    }
+
     render() {
         return (
             <AuthTemplate next="SignUp5" title="Sign Up (Step 4)" navigation={this.props.navigation} error={this.state.error}>
-                <NumericInput
-                    style={{ marginBottom: 20 }}
-                    onChange={amount => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                amount
-                            }
-                        })
-                    )}
-                    minValue={50000}
-                    maxValue={1000000000}
-                    totalWidth={240}
-                    totalHeight={50}
-                    iconSize={25}
-                    step={50000}
-                    valueType='real'
-                    rounded
-                    textColor='#FFFFFF'
-                    iconStyle={{ color: 'white' }}
-                    rightButtonBackgroundColor='#344955'
-                    leftButtonBackgroundColor='#344955'/>
+                <View style={{flexDirection: "row", width: "70%", marginBottom: 20}}>
+                    <Text style={{color: "white", fontSize: 22, textAlign: "left", alignSelf: "center", flex: 1}}>Money: </Text>
+                    <NumericInput
+                        type='up-down'
+                        style={{marginTop: 20, justifySelf: "center", alignSelf: "center" }}
+                        onChange={amount => this.setState(prevState => (
+                            {
+                                data: {
+                                    ...prevState.data,
+                                    amount
+                                }
+                            })
+                        )}
+                        minValue={50000}
+                        maxValue={1000000000}
+                        totalWidth={120}
+                        totalHeight={45}
+                        iconSize={20}
+                        step={50000}
+                        value={this.state.data.amount}
+                        valueType='real'
+                        rounded
+                        textColor='#FFFFFF'
+                        iconStyle={{ color: 'white' }}
+                        borderColor='#344955'
+                        rightButtonBackgroundColor='#344955'
+                        leftButtonBackgroundColor='#344955'
+                        upDownButtonsBackgroundColor='#344955'/>
+                </View>
                 <Picker
                     selectedValue={this.state.data.type}
                     style={styles.select}
@@ -50,6 +70,7 @@ export default class SignUp4 extends React.Component {
                                 type: itemValue
                             }
                         }))}>
+                    <Picker.Item key={0} label="Prefered investment type" value={0} />
                     <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
                     <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
                     <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
@@ -78,7 +99,7 @@ export default class SignUp4 extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.rightArrow}
-                        onPress={() => this.props.navigation.navigate("SignUp5", this.state.data)}
+                        onPress={() => this.check()}
                     >
                         <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
                     </TouchableOpacity>

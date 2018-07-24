@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {Form, Item, Input, Label, Icon, Picker, Toast, Button, Text} from 'native-base';
-import {AsyncStorage, Slider, View} from "react-native";
+import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios";
 import ImagePicker from "react-native-image-picker";
 import RNFetchBlob from "rn-fetch-blob";
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
 
-export default class AddProject extends Component {
+class AddProject extends Component {
     constructor(props) {
         super(props);
         let data= {};
@@ -20,68 +22,192 @@ export default class AddProject extends Component {
                 amount: 0,
                 report: "",
                 presentation: "",
-                category: ""
-            }
+                category: 1,
+            };
         }
         this.state = {
             selected2: undefined,
             isLoading: false,
             ...data,
             image_data: null,
-            image_url: "",
             categories: []
         };
     }
-    onValueChange2(value: string) {
-        this.setState({
-            selected2: value
-        });
-    }
-    submit(){
-        AsyncStorage.getItem('token').then(userToken => {
-            return axios.post(SERVER_URL+'api/projects?token='+userToken, {
-                title: this.state.title,
-                description: this.state.description,
-                amount: this.state.amount,
-                report: this.state.report,
-                presentation: this.state.presentation,
-                category: this.state.category
-            }).then(response => {
-                AsyncStorage.getItem('token').then(userToken => {
-                    RNFetchBlob.fetch('POST', SERVER_URL+'api/project/'+response.data.id+'/img'+'?token='+userToken, {
-                        'Content-Type' : 'multipart/form-data',
-                    }, [
-                        { name : 'img', filename : 'img.png', type:'image/png', data: response.data},
-                    ]).then((resp) => {
-                        this.setState({
-                            isLoading: false,
+    submit() {
+        if (this.state.image_data && this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
+            this.setState({
+                isLoading: true,
+            });
+            AsyncStorage.getItem('token').then(userToken => {
+                return axios.post(SERVER_URL + 'api/projects?token=' + userToken, {
+                    title: this.state.title,
+                    description: this.state.description,
+                    amount: this.state.amount,
+                    report: this.state.report,
+                    presentation: this.state.presentation,
+                    category_id: this.state.category
+                }).then(response => {
+                    if (this.state.image_data) {
+                        console.log(response.data);
+                        return AsyncStorage.getItem('token').then(userToken => {
+                            return RNFetchBlob.fetch('POST', SERVER_URL + 'api/projects/' + response.data.id + '/img' + '?token=' + userToken, {
+                                'Content-Type': 'multipart/form-data',
+                            }, [
+                                {name: 'img', filename: 'img.png', type: 'image/png', data: this.state.image_data},
+                            ]).then((resp) => {
+                                this.props.setUser(JSON.parse(resp.data));
+                                console.log(JSON.parse(resp.data));
+                                Toast.show({
+                                    text: "Project was added successfully.",
+                                    buttonText: "Ok",
+                                    type: "success"
+                                });
+                                this.props.navigation.navigate("Home", {data: "refresh"});
+                            })
                         });
-                        this.props.setUser(resp.data);
-                        console.log(resp.data);
-                    }).catch((err) => {
-                        this.setState({
-                            isLoading: false,
-                        });
+                    } else {
                         Toast.show({
-                            text: "Error reaching the server.",
+                            text: "Project was added successfully.",
                             buttonText: "Ok",
-                            type: "danger"
+                            type: "success"
                         })
-                    })
-                });
+                    }
 
-            }).catch(error => {
-                console.log(error);
+                }).catch(error => {
+                    console.log(error);
+                    Toast.show({
+                        text: "Error reaching the server.",
+                        buttonText: "Ok",
+                        type: "danger"
+                    })
+                })
+            }).finally(() => {
                 this.setState({
                     isLoading: false,
                 });
+            });
+        }else {
+            if(this.state.title == ""){
                 Toast.show({
-                    text: "Error reaching the server.",
+                    text: "Title field is required.",
                     buttonText: "Ok",
                     type: "danger"
                 })
-            })
-        });
+            }else if(this.state.description == ""){
+                Toast.show({
+                    text: "description field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else if(this.state.amount == 0){
+                Toast.show({
+                    text: "Amount field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else if(this.state.category == 0){
+                Toast.show({
+                    text: "Category field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else{
+                Toast.show({
+                    text: "Image field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }
+        }
+    }
+    submit2() {
+        if (this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
+            this.setState({
+                isLoading: true,
+            });
+            AsyncStorage.getItem('token').then(userToken => {
+                return axios.put(SERVER_URL + 'api/projects/'+this.props.navigation.state.params.id+'?token=' + userToken, {
+                    title: this.state.title,
+                    description: this.state.description,
+                    amount: this.state.amount,
+                    report: this.state.report,
+                    presentation: this.state.presentation,
+                    category_id: this.state.category
+                }).then(response => {
+                    this.props.setUser(JSON.parse(JSON.stringify(response.data)));
+                    if (this.state.image_data) {
+                        console.log(response.data);
+                        return AsyncStorage.getItem('token').then(userToken => {
+                            return RNFetchBlob.fetch('POST', SERVER_URL + 'api/projects/' + this.props.navigation.state.params.id + '/img' + '?token=' + userToken, {
+                                'Content-Type': 'multipart/form-data',
+                            }, [
+                                {name: 'img', filename: 'img.png', type: 'image/png', data: this.state.image_data},
+                            ]).then((resp) => {
+                                this.props.setUser(JSON.parse(resp.data));
+                                console.log(JSON.parse(resp.data));
+                                Toast.show({
+                                    text: "Project was edited successfully.",
+                                    buttonText: "Ok",
+                                    type: "success"
+                                });
+                                this.props.navigation.navigate("Home", {data: "refresh"});
+                            })
+                        });
+                    } else {
+                        Toast.show({
+                            text: "Project was edited successfully.",
+                            buttonText: "Ok",
+                            type: "success"
+                        })
+                        this.props.navigation.navigate("Home", {data: "refresh"});
+                    }
+
+                }).catch(error => {
+                    console.log(error);
+                    Toast.show({
+                        text: "Error reaching the server.",
+                        buttonText: "Ok",
+                        type: "danger"
+                    })
+                })
+            }).finally(() => {
+                this.setState({
+                    isLoading: false,
+                });
+            });
+        }else {
+            if(this.state.title == ""){
+                Toast.show({
+                    text: "Title field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else if(this.state.description == ""){
+                Toast.show({
+                    text: "description field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else if(this.state.amount == 0){
+                Toast.show({
+                    text: "Amount field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else if(this.state.category == 0){
+                Toast.show({
+                    text: "Category field is required.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }else{
+                Toast.show({
+                    text: "Something went wrong.",
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            }
+        }
     }
     selectImage(){
         let options = {
@@ -105,11 +231,17 @@ export default class AddProject extends Component {
             else {
                 console.log(response.data);
                 this.setState({
-                    isLoading: true,
                     image_data: response.data
                 });
             }
         });
+    }
+    addOrEdit(){
+        if(this.props.navigation.state.params){
+            this.submit2();
+        }else{
+            this.submit();
+        }
     }
     componentDidMount(){
         return axios.get(SERVER_URL+"api/categories").then(response => {
@@ -165,7 +297,7 @@ export default class AddProject extends Component {
                                 placeholderStyle={{ color: "#bfc6ea" }}
                                 placeholderIconColor="#007aff"
                                 selectedValue={this.state.category}
-                                onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
+                                onValueChange={(itemValue, itemIndex) => this.setState({ category: itemValue})}
                             >
                                 {this.state.categories.map((category) => (
                                     <Picker.Item key={category.id} label={category.name} value={category.id} />
@@ -176,13 +308,13 @@ export default class AddProject extends Component {
                             <Icon type="FontAwesome" name='money' />
                             <Label>Amount Needed:</Label>
                             <Slider
-                                value={Number(this.state.money)}
-                                onValueChange={(money) => this.setState({money})}
+                                value={Number(this.state.amount)}
+                                onValueChange={(amount) => this.setState({amount})}
                                 style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="MaterialCommunityIcons" name='presentation-play' />
-                            <Label>Presentation:</Label>
+                            <Label>Presentation Link:</Label>
                             <Input
                                 onChangeText={(presentation) => this.setState({presentation})}
                                 value={this.state.presentation}
@@ -190,16 +322,20 @@ export default class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='file-text' />
-                            <Label>Report:</Label>
+                            <Label>Report Link:</Label>
                             <Input
                                 onChangeText={(report) => this.setState({report})}
                                 value={this.state.report}
                             />
                         </Item>
                         <Button
-                            onPress={() => this.submit()}
+                            onPress={() => this.addOrEdit()}
+                            style={{flexDirection: "row"}}
                             block light>
                             <Text>Save</Text>
+                            {this.state.isLoading && (
+                                <ActivityIndicator style={{}} size="small" color="#000000" />
+                            )}
                         </Button>
                     </Form>
                 </View>
@@ -207,3 +343,17 @@ export default class AddProject extends Component {
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user,
+    favorites: user.favorites,
+    jointProjects: user.jointprojects,
+    myProjects: user.projects
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddProject);

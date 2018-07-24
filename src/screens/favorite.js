@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {Picker, Form, Segment, Button, Text, Content} from 'native-base';
-import {TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
-import {Transition} from "react-navigation-fluid-transitions";
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
 
@@ -32,32 +31,41 @@ class Favorite extends Component {
                         <Button active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: "#000000"}}>My Projects</Text></Button>
                     </Segment>
                     {this.state.tab === 2? (
-                        <Transition appear="horizontal" disappear="horizontal">
                             <View>
-                                {this.props.favorites.map((project) => (
-                                    <TouchableOpacity
-                                        key={project.id}
-                                        onPress={() => this.props.navigation.navigate("Project", {...project, user_name: project.user.name, user_img: project.user.img})}
-                                    >
-                                        <ProjectCard key={project.id} {...project} user_name={project.user.name} />
-                                    </TouchableOpacity>
-                                ))}
+                                <FlatList
+                                    ListEmptyComponent={
+                                        <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>No elements was found.</Text>
+                                    }
+                                    data={this.props.favorites}
+                                    renderItem={({item}) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img})}
+                                        >
+                                            <ProjectCard key={item.id} {...item} user_name={item.user.name} />
+                                        </TouchableOpacity>
+                                    )}
+                                    keyExtractor = { (item, index) => index.toString() }
+                                />
                             </View>
-                        </Transition>
                     ) : (
-                        <Transition appear="horizontal" disappear="horizontal">
                             <View>
-                                {this.props.myProjects.map((project) => (
-                                    <TouchableOpacity
-                                        key={project.id}
-                                        onPress={() => this.props.navigation.navigate("Project", {...project, user_name: project.user.name, user_img: project.user.img})}
-                                    >
-                                        <ProjectCard key={project.id} {...project} user_name={project.user.name} />
-                                    </TouchableOpacity>
-
-                                ))}
+                                <FlatList
+                                    ListEmptyComponent={
+                                        <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>No elements was found.</Text>
+                                    }
+                                    data={this.props.myProjects}
+                                    renderItem={({item}) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img})}
+                                        >
+                                            <ProjectCard key={item.id} {...item} user_name={item.user.name} />
+                                        </TouchableOpacity>
+                                    )}
+                                    keyExtractor = { (item, index) => index.toString() }
+                                />
                             </View>
-                        </Transition>
                     )}
                 </View>
             </AppTemplate>

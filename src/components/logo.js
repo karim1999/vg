@@ -8,7 +8,7 @@ export default class Logo extends React.Component {
     render() {
         return (
                 <View style={styles.container}>
-                    <Image source={require("../images/logo-sm.png")} style={{width: 120, height: 110}} />
+                    <Image source={require("../images/logo-edited.png")} style={{width: 120, height: 130}} />
                     <Text style={styles.title}>{this.props.title}</Text>
                 </View>
         );

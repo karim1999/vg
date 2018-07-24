@@ -13,6 +13,7 @@ export default class SignUp5 extends React.Component {
             data: this.props.navigation.state.params
         };
     }
+
     render() {
         return (
             <AuthTemplate data={this.state.data} next="Complete" title="Sign Up (Step 5)" navigation={this.props.navigation} error={this.state.error}>

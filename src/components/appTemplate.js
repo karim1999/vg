@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import {Container, Content, Drawer, Button, Icon, Fab, List, ListItem, Text } from 'native-base';
+import {Container, Content, Drawer, Button, Icon, Fab, List, ListItem, Text, Toast} from 'native-base';
 import SideBar from './sidebar'
 import Header from './header'
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import _ from "lodash";
-import {Alert, View} from "react-native";
+import {Alert, AsyncStorage, RefreshControl, View} from "react-native";
+import {SERVER_URL} from "../config";
+import axios from "axios/index";
 
 class AppTemplate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menu: false
+            menu: false,
+            refreshing: false,
         };
     }
     closeDrawer() {
@@ -74,6 +77,36 @@ class AppTemplate extends Component {
         });
         this.props.investInProject();
     }
+    _onRefresh(){
+        this.setState({
+            refreshing: true
+        });
+        if(this.props.pullToRefresh){
+            this.props.onLoad().then(() => {
+                this.setState({
+                    refreshing: false
+                });
+            })
+        }else{
+            AsyncStorage.getItem('token').then(userToken => {
+                return axios.post(SERVER_URL+'api/auth/me?token='+userToken).then(response => {
+                    this.props.setUser(response.data);
+                    this.setState({
+                        refreshing: false
+                    });
+                }).catch(error => {
+                    Toast.show({
+                        text: "No internet connection",
+                        buttonText: "Ok",
+                        type: "danger"
+                    });
+                    this.setState({
+                        refreshing: false
+                    });
+                })
+            });
+        }
+    }
     render() {
         return (
             <Container>
@@ -93,7 +126,15 @@ class AppTemplate extends Component {
                             </Button>
                         )}
                     </Header>
-                    <Content style={{ backgroundColor: "#FDF5F5", flex: 1 }}>
+                    <Content
+                        refreshing={this.state.refreshing}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={() => this._onRefresh()}
+                            />
+                        }
+                        style={{ backgroundColor: "#FDF5F5", flex: 1 }}>
                         {this.state.menu && (
                             <List style={{backgroundColor: "#FFFFFF", right: 0}}>
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project) && (
@@ -111,7 +152,15 @@ class AppTemplate extends Component {
                                     </ListItem>
                                 )}
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
-                                    <ListItem onPress={() => this.props.navigation.navigate("AddProject", {project: this.props.project})}>
+                                    <ListItem onPress={() => this.props.navigation.navigate("AddProject", {
+                                        id: this.props.id,
+                                        title: this.props.title,
+                                        description: this.props.description,
+                                        amount: this.props.amount,
+                                        report: this.props.report,
+                                        presentation: this.props.presentation,
+                                        category: this.props.category_id
+                                    })}>
                                         <Text>Edit Project</Text>
                                     </ListItem>
                                 )}

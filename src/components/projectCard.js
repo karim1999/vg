@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity, AsyncStorage, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {Button, Text, Left, Body, Card, CardItem, Right, Toast} from 'native-base';
-import {SERVER_URL} from "../config";
+import {SERVER_URL, STORAGE_URL} from "../config";
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
 import _ from "lodash";
@@ -96,7 +96,7 @@ class ProjectCard extends React.Component {
                 </CardItem>
                 <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
                     <Body>
-                    <Image source={{uri: SERVER_URL+"storage/"+this.props.img}} style={{height: 200, width: '100%'}}/>
+                    <Image source={{uri: STORAGE_URL+this.props.img}} style={{height: 200, width: '100%'}}/>
                     <View style={{ paddingLeft: 20, paddingRight: 20 }}>
                         <Text style={{ fontSize: 20, marginTop: 10 }}>
                             {this.props.title}

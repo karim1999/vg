@@ -3,12 +3,22 @@ import { connect } from 'react-redux';
 import { setUser } from './../reducers';
 import axios from 'axios';
 import { SERVER_URL } from './../config';
-import { View, Text, ImageBackground, Image, StyleSheet, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import {
+    View,
+    Text,
+    ImageBackground,
+    Image,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    AsyncStorage,
+    ActivityIndicator
+} from 'react-native';
 import { Container, Header, Content, Button, Toast } from "native-base";
 import Logo from './../components/logo';
 
 let data= {
-    country: '',
+    country: 'Afghanistan',
     city: '',
     phone: '',
     name: '',
@@ -18,7 +28,7 @@ let data= {
     facebook: '',
     twitter: '',
     linkedin: '',
-    amount: 0,
+    amount: 50000,
     idea: '',
     type: '',
     referral: '',
@@ -34,10 +44,14 @@ class SignIn extends React.Component {
             username: '',
             password: '',
             showToast: false,
+            isLoading: false,
             token: ""
         };
     }
     signIn= ()=>{
+        this.setState({
+            isLoading: true
+        });
         let type= "default";
         let text= "Unknown error";
         if(this.state.username == "" || this.state.password == ""){
@@ -54,23 +68,38 @@ class SignIn extends React.Component {
                 password: this.state.password
             }).then((response)=>{
 
-                this.setState({
-                    token: response.data.access_token
-                });
-                this.props.setUser(response.data.user, response.data.access_token);
-                let item= this.storeItem('token', response.data.access_token);
-                Toast.show({
-                    text: "You have signed in successfully.",
-                    buttonText: "Ok",
-                    type: "success"
-                });
-                this.props.navigation.navigate('App');
+                if(response.data.user.active == 1){
+                    this.setState({
+                        token: response.data.access_token
+                    });
+                    this.props.setUser(response.data.user, response.data.access_token);
+                    let item= this.storeItem('token', response.data.access_token);
+                    Toast.show({
+                        text: "You have signed in successfully.",
+                        buttonText: "Ok",
+                        type: "success",
+                        duration: 5000
+                    });
+                    this.props.navigation.navigate('App');
+                }else{
+                    Toast.show({
+                        text: "Your account has not been activated yet.",
+                        buttonText: "Ok",
+                        type: "danger",
+                        duration: 5000
+                    })
+                }
             }).catch((error)=>{
                 Toast.show({
                     text: "Wrong username or password",
                     buttonText: "Ok",
-                    type: "danger"
+                    type: "danger",
+                    duration: 5000
                 })
+            }).finally(() => {
+                this.setState({
+                    isLoading: false
+                });
             })
         }
     };
@@ -102,16 +131,19 @@ class SignIn extends React.Component {
                         placeholder="Password......"
                         onChangeText={(password) => this.setState({password})}
                     />
-                    <View style={{width: "70%"}}>
+                    {/*<View style={{width: "70%"}}>*/}
 
-                        <Text style={{color: "#FFFFFF", fontSize: 20, textAlign: 'left'}}> Forgot your password? </Text>
-                    </View>
+                        {/*<Text style={{color: "#FFFFFF", fontSize: 20, textAlign: 'left'}}> Forgot your password? </Text>*/}
+                    {/*</View>*/}
 
                     <TouchableOpacity
-                        style={styles.button}
+                        style={[styles.button, {flexDirection: "row"}]}
                         onPress={this.signIn}
                     >
                         <Text style={{color: "#FFFFFF", fontSize: 20}}> Sign In </Text>
+                        {this.state.isLoading && (
+                            <ActivityIndicator style={{}} size="small" color="#FFFFFF" />
+                        )}
                     </TouchableOpacity>
                     <Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> OR </Text>
                     <TouchableOpacity

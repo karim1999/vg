@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {AsyncStorage, Image, View} from 'react-native';
 import {Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Toast} from 'native-base';
-import {SERVER_URL} from "../config";
+import {SERVER_URL, STORAGE_URL} from "../config";
 import NumericInput from 'react-native-numeric-input'
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
@@ -93,11 +93,11 @@ class Project extends Component {
         });
     }
     openChat(){
-        this.props.navigation.navigate("SingleChat", {id: this.state.id, amount: this.state.amount, title: this.state.title, user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img});
+        this.props.navigation.navigate("SingleChat", {...this.props.navigation.state.params});
     }
     render() {
         return (
-            <AppTemplate right={true} title={this.state.title} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()}>
+            <AppTemplate right={true} {...this.props.navigation.state.params} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()}>
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
                         onPress={() => this.openChat()}
@@ -135,7 +135,7 @@ class Project extends Component {
                     <Card style={{flex: 0}}>
                         <CardItem style={{ paddingBottom: 5 }}>
                             <Left>
-                                <Thumbnail source={{uri: SERVER_URL+"storage/"+this.state.user_img}} />
+                                <Thumbnail source={{uri: STORAGE_URL+this.state.user_img}} />
                                 <Body>
                                 <Text>{this.state.user_name}</Text>
                                 <Text note>{this.state.created_at}</Text>
@@ -150,30 +150,34 @@ class Project extends Component {
                             <Text style={{ fontSize: 15, marginBottom: 10 }}>
                                 {this.state.description}
                                 </Text>
-                            <Image source={{uri: SERVER_URL+"storage/"+this.state.img}} style={{height: 250, width: "100%", flex: 1}}/>
+                            <Image source={{uri: STORAGE_URL+this.state.img}} style={{height: 250, width: "100%", flex: 1}}/>
                             <View style={{ marginTop: 10, flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                                 <Text style={{ fontSize: 17 }}> Total Money Needed: </Text>
                                 <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 13, fontWeight: "bold" }}> {this.state.amount}$ </Text></Button>
                             </View>
                             <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
-                                <Text style={{ fontSize: 17 }}> Total Money Collected: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 13, fontWeight: "bold" }}> {this.state.amount}$ </Text></Button>
+                                <Text style={{ fontSize: 17 }}> Total Money Invested: </Text>
+                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 13, fontWeight: "bold" }}> {this.state.total_amount_invested}$ </Text></Button>
                             </View>
                             </Body>
                         </CardItem>
                         <CardItem>
-                            <Left>
-                                <Button transparent textStyle={{color: '#87838B'}}>
-                                    <Icon type="MaterialCommunityIcons" name="presentation-play"  />
-                                    <Text>Presentation</Text>
-                                </Button>
-                            </Left>
-                            <Right>
-                                <Button transparent textStyle={{color: '#87838B'}}>
-                                    <Icon type="FontAwesome" name="file-text-o" />
-                                    <Text>Report</Text>
-                                </Button>
-                            </Right>
+                            {this.state.presentation && (
+                                <Left>
+                                    <Button onPress={ ()=>{ Linking.openURL(this.state.presentation)}} transparent textStyle={{color: '#87838B'}}>
+                                        <Icon type="MaterialCommunityIcons" name="presentation-play"  />
+                                        <Text>Presentation</Text>
+                                    </Button>
+                                </Left>
+                            )}
+                            {this.state.report && (
+                                <Right>
+                                    <Button onPress={ ()=>{ Linking.openURL(this.state.report)}}  transparent textStyle={{color: '#87838B'}}>
+                                        <Icon type="FontAwesome" name="file-text-o" />
+                                        <Text>Report</Text>
+                                    </Button>
+                                </Right>
+                            )}
                         </CardItem>
                     </Card>
                 </View>

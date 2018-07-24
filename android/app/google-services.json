@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "675347929204",
+    "firebase_url": "https://vgksa-f20ae.firebaseio.com",
+    "project_id": "vgksa-f20ae",
+    "storage_bucket": "vgksa-f20ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675347929204:android:49f803c954802169",
+        "android_client_info": {
+          "package_name": "com.vg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675347929204-la33rn7jbef9uoqj807pc31djr4oupsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDp4N1sZg0wHNTkopiy1SMrsNwP9EsZDA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

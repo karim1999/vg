@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Toast} from "native-base";
 
 export default class SignUp2 extends React.Component {
     static navigationOptions = {
@@ -12,6 +13,38 @@ export default class SignUp2 extends React.Component {
         this.state = {
             data: this.props.navigation.state.params
         };
+    }
+    check(){
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(this.state.data.name == ""){
+            Toast.show({
+                text: "Name field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else if(this.state.data.email == ""){
+            Toast.show({
+                text: "Email field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else if(!this.state.data.email.match(mailformat)){
+            Toast.show({
+                text: "This is not a valid Email.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else if(this.state.data.password == ""){
+            Toast.show({
+                text: "Password field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else{
+            this.props.navigation.navigate("SignUp3", this.state.data);
+        }
     }
 
     render() {
@@ -82,7 +115,7 @@ export default class SignUp2 extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.rightArrow}
-                        onPress={() => this.props.navigation.navigate("SignUp3", this.state.data)}
+                        onPress={() => this.check()}
                     >
                         <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
                     </TouchableOpacity>

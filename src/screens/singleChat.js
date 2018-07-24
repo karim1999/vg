@@ -4,10 +4,14 @@ import { Button, Container, Icon, List, ListItem } from "native-base";
 import firebaseDb from "./../firebaseDb";
 import _ from "lodash";
 import {Bubble, GiftedChat} from 'react-native-gifted-chat';
-import {SERVER_URL} from "../config";
+import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
 import Header from './../components/header'
+import OneSignal from "react-native-onesignal";
+import axios from "axios";
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
 
-export default class SingleChat extends Component {
+class SingleChat extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +47,34 @@ export default class SingleChat extends Component {
         let newPostKey = firebaseDb.ref('/chat/').child(this.state.id).push().key;
         let updates = {};
         updates['/chat/'+this.state.id+'/' + newPostKey] = data[0];
-        return firebaseDb.ref().update(updates);
+        firebaseDb.ref().update(updates);
+        if(this.state.id != 0){
+            OneSignal.getPermissionSubscriptionState((status) => {
+                let userId= status.userId;
+            });
+            let notification= {
+                app_id: ONESIGNAL_APP_ID,
+                contents: {"en": "New Message"},
+                data: {
+                    project: {...this.props.navigation.state.params},
+                    type : 1,
+                    title : this.state.title+" Chat",
+                    body : "A new message was sent.",
+                },
+                included_segments: ["All"],
+                filters: [
+                    {[this.state.id]: true}
+                ]
+            };
+            fetch('https://onesignal.com/api/v1/notifications', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": ONESIGNAL_API_KEY
+                },
+                body: JSON.stringify(notification),
+            });
+        }
     }
     componentDidMount(){
         this.state.ref.once('value').then(data => {
@@ -78,9 +109,9 @@ export default class SingleChat extends Component {
                         </ListItem>
                     </List>
                 )}
-                {this.state.amount && (
+                {this.state.total_amount_invested && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 15}}>Total investments in this project: <Text style={{color: "#FFFFFF"}}>{this.state.amount}$</Text></Text>
+                        <Text style={{padding: 10, fontSize: 15}}>Total investments in this project: <Text style={{color: "#FFFFFF"}}>{this.state.total_amount_invested}$</Text></Text>
                     </View>
                 )}
                 <GiftedChat
@@ -91,12 +122,23 @@ export default class SingleChat extends Component {
                     showUserAvatar={true}
                     renderBubble={this.renderBubble}
                     user={{
-                        _id: this.state.user_id,
-                        name: this.state.user_name,
-                        avatar: SERVER_URL+"storage/"+this.state.user_img
+                        _id: this.props.user.id,
+                        name: this.props.user.name,
+                        avatar: STORAGE_URL+this.props.user.img
                     }}
                 />
             </Container>
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SingleChat);

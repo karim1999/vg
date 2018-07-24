@@ -5,7 +5,7 @@ import {Transition} from "react-navigation-fluid-transitions";
 import {View} from "react-native";
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
-import {SERVER_URL} from "../config";
+import {SERVER_URL, STORAGE_URL} from "../config";
 
 class Chat extends Component {
     constructor(props) {
@@ -44,11 +44,11 @@ class Chat extends Component {
                             {this.props.jointProjects.map((project) => (
                                 <ListItem avatar
                                           key={project.id}
-                                          onPress={() => this.props.navigation.navigate("SingleChat", {...project, user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                          onPress={() => this.props.navigation.navigate("SingleChat", {...project})}
                                           style={{padding: 10, marginLeft: 0}}
                                 >
                                     <Left>
-                                        <Thumbnail source={{uri: SERVER_URL+"storage/"+project.img}} />
+                                        <Thumbnail source={{uri: STORAGE_URL+project.img}} />
                                     </Left>
                                     <Body>
                                     <Text>{project.title}</Text>

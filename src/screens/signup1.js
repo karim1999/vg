@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, Picker, View, TouchableOpacity } from 'react-nat
 import countries from './../countries.json';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Toast} from "native-base";
 
 export default class SignUp1 extends React.Component {
     static navigationOptions = {
@@ -15,7 +16,29 @@ export default class SignUp1 extends React.Component {
             data: this.props.navigation.state.params
         };
     }
-
+    check(){
+        if(this.state.data.country == ""){
+            Toast.show({
+                text: "Country field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else if(this.state.data.city == ""){
+            Toast.show({
+                text: "City field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else if(this.state.data.phone == ""){
+            Toast.show({
+                text: "phone field is required.",
+                buttonText: "Ok",
+                type: "danger"
+            })
+        }else{
+            this.props.navigation.navigate("SignUp2", this.state.data);
+        }
+    }
     render() {
         return (
             <AuthTemplate next="SignUp2" title="Sign Up (Step 1)" navigation={this.props.navigation} error={this.state.error}>
@@ -67,7 +90,7 @@ export default class SignUp1 extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.rightArrow}
-                        onPress={() => this.props.navigation.navigate("SignUp2", this.state.data)}
+                        onPress={() => this.check()}
                     >
                         <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
                     </TouchableOpacity>

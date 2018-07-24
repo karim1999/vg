@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
-import {SERVER_URL} from "../config";
+import {SERVER_URL, STORAGE_URL} from "../config";
 import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
 import axios from "axios";
@@ -17,19 +17,19 @@ const routes = [
         text: "Profile",
         icon: "user",
         name: "Profile"
-    },
-    {
-        text: "App Settings",
-        icon: "cogs",
-        name: "AppSettings"
     }
+    // {
+    //     text: "App Settings",
+    //     icon: "cogs",
+    //     name: "AppSettings"
+    // }
 ];
 
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            source: SERVER_URL+"storage/"+this.props.user.img,
+            source: STORAGE_URL+this.props.user.img,
             isLoading: false,
             data: null
         };

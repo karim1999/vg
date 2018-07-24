@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import {Picker, Form, Icon, Toast, Item, Input, Content} from 'native-base';
-import {ActivityIndicator, FlatList, RefreshControl, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View} from 'react-native';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
 import {Transition} from "react-navigation-fluid-transitions";
 import axios from "axios";
-import {SERVER_URL} from "../config";
+import {ONESIGNAL_APP_ID, SERVER_URL} from "../config";
+import OneSignal from "react-native-onesignal";
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
+import _ from "lodash";
+import { strings } from '../i18n';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -79,8 +84,8 @@ export default class Home extends Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "No internet connection",
-                    buttonText: "Ok",
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.noInternet"),
                     type: "danger"
                 })
             });
@@ -89,20 +94,69 @@ export default class Home extends Component {
                 isLoading: false,
             });
             Toast.show({
-                text: "No internet connection",
-                buttonText: "Ok",
+                text: strings("messages.noInternet"),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         });
     }
+
     async componentDidMount(){
         await this.onLoad();
+    }
+    componentWillMount() {
+        OneSignal.init(ONESIGNAL_APP_ID);
+        OneSignal.inFocusDisplaying(2);
+
+        let results = _.map(this.props.jointProjects, function(project) { return {[project.id]: true}; });
+        for(let i= 0; i < results.length; i++){
+            OneSignal.sendTag("key", "value");
+        }
+
+        OneSignal.addEventListener('received', (notification) => this.onReceived(notification));
+        OneSignal.addEventListener('opened', (openResult) => this.onOpened(openResult));
+        OneSignal.addEventListener('ids', () => this.onIds);
+    }
+
+    componentWillUnmount() {
+        OneSignal.removeEventListener('received', () => this.onReceived);
+        OneSignal.removeEventListener('opened', () => this.onOpened);
+        OneSignal.removeEventListener('ids', (device) => this.onIds(device));
+    }
+
+    onReceived(notification) {
+        // console.log("Notification received: ", notification);
+        // Toast.show({
+        //     text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
+        //     buttonText: "Ok",
+        //     type: "success"
+        // })
+    }
+
+    onOpened(openResult) {
+        // console.log('Message: ', openResult.notification.payload.body);
+        // console.log('Data: ', openResult.notification.payload.additionalData);
+        // console.log('isActive: ', openResult.notification.isAppInFocus);
+        // console.log('openResult: ', openResult);
+        // alert(openResult.notification.payload.additionalData.name);
+        if(openResult.notification.payload.additionalData.type == 1){
+            this.props.navigation.navigate("SingleChat", {...openResult.notification.payload.additionalData.project})
+        }
+        // Toast.show({
+        //     text: openResult.notification.payload.body+" from "+openResult.notification.payload.title,
+        //     buttonText: "Ok",
+        //     type: "success"
+        // })
+    }
+
+    onIds(device) {
+        // console.log('Device info: ', device);
     }
 
     render() {
 
         return (
-            <AppTemplate fab={true} title="Home" navigation={this.props.navigation} activeTab="Home">
+            <AppTemplate pullToRefresh={true} onLoad={() => this.onLoad()} fab={true} title={strings("home.home")} navigation={this.props.navigation} activeTab="Home">
                 <View style={{padding: 20}}>
                     <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
                         <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start' }}>
@@ -115,7 +169,7 @@ export default class Home extends Component {
                                     selectedValue={this.state.selected}
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
-                                    <Picker.Item label="All" value={0} />
+                                    <Picker.Item label={strings("home.all")} value={0} />
                                     {this.state.categories.map((category) => (
                                         <Picker.Item key={category.id} label={category.name} value={category.id} />
                                     ))}
@@ -125,7 +179,7 @@ export default class Home extends Component {
                         <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', width: 200 }}>
                             <Item rounded>
                                 <Icon style={{fontSize: 35}} name='ios-search' />
-                                <Input onChangeText={(search) => this.onSearchChange(search)} placeholder='Search...'/>
+                                <Input onChangeText={(search) => this.onSearchChange(search)} placeholder={strings("home.search")}/>
                             </Item>
                         </View>
                     </View>
@@ -136,6 +190,9 @@ export default class Home extends Component {
                             </View>
                         ) : (
                             <FlatList
+                                ListEmptyComponent={
+                                    <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>strings("home.notFound")</Text>
+                                }
                                 refreshControl={
                                     <RefreshControl
                                         refreshing={this.state.refreshing}
@@ -160,3 +217,17 @@ export default class Home extends Component {
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+    user,
+    favorites: user.favorites,
+    jointProjects: user.jointprojects,
+    myProjects: user.projects
+});
+
+const mapDispatchToProps = {
+    setUser
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);

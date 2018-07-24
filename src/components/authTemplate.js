@@ -15,7 +15,6 @@ export default class authTemplate extends React.Component {
 
         return (
             <ImageBackground source={require("./../images/background.webp")} style={{width: "100%", height: "100%"}}>
-                <Text>name {this.state.data.name}</Text>
                 <View style={styles.container}>
                     <Logo title={this.props.title} error={this.props.error} />
                     { this.props.children }
