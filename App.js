@@ -64,7 +64,8 @@ const AppStack = createTabNavigator(
     {
         initialRouteName: 'Home',
         tabBarPosition: 'bottom',
-        swipeEnabled: true,
+        animationEnabled: false,
+        swipeEnabled: false,
         tabBarComponent: props => {
             return (
                 <Footer

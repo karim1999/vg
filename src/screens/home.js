@@ -191,7 +191,7 @@ class Home extends Component {
                         ) : (
                             <FlatList
                                 ListEmptyComponent={
-                                    <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>strings("home.notFound")</Text>
+                                    <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>{strings("home.notFound")}</Text>
                                 }
                                 refreshControl={
                                     <RefreshControl

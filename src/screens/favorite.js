@@ -7,6 +7,7 @@ import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
+import { strings } from '../i18n';
 
 class Favorite extends Component {
     constructor(props) {
@@ -24,17 +25,17 @@ class Favorite extends Component {
     render() {
 
         return (
-            <AppTemplate title="Favorite" navigation={this.props.navigation} activeTab="Favorite">
+            <AppTemplate title={strings("favorite.favorites")} navigation={this.props.navigation} activeTab="Favorite">
                 <View style={{padding: 20}}>
                     <Segment>
-                        <Button active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: "#000000"}}>Favorites</Text></Button>
-                        <Button active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: "#000000"}}>My Projects</Text></Button>
+                        <Button active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: "#000000"}}>{strings("favorite.favorites")}</Text></Button>
+                        <Button active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: "#000000"}}>{strings("favorite.myProjects")}</Text></Button>
                     </Segment>
                     {this.state.tab === 2? (
                             <View>
                                 <FlatList
                                     ListEmptyComponent={
-                                        <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>No elements was found.</Text>
+                                        <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>{strings("favorite.notFound")}</Text>
                                     }
                                     data={this.props.favorites}
                                     renderItem={({item}) => (

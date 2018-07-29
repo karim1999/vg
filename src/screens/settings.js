@@ -10,11 +10,12 @@ import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
 import axios from "axios";
 import RNFetchBlob from 'rn-fetch-blob'
+import { strings } from '../i18n';
 
 
 const routes = [
     {
-        text: "Profile",
+        text: strings("settings.profile"),
         icon: "user",
         name: "Profile"
     }
@@ -41,7 +42,7 @@ class Settings extends React.Component {
     }
     getImage(){
         let options = {
-            title: 'Select Avatar',
+            title: strings("settings.avatar"),
             storageOptions: {
                 skipBackup: true,
                 path: 'images'
@@ -82,7 +83,7 @@ class Settings extends React.Component {
                             isLoading: false,
                         });
                         Toast.show({
-                            text: "Error reaching the server.",
+                            text: strings("messages.noInternet"),
                             buttonText: "Ok",
                             type: "danger"
                         })
@@ -96,7 +97,7 @@ class Settings extends React.Component {
     }
     render() {
         return (
-            <AppTemplate title="Settings" navigation={this.props.navigation} activeTab="Settings">
+            <AppTemplate title={strings("settings.settings")} navigation={this.props.navigation} activeTab="Settings">
                 <ImageBackground source={require("./../images/img1.jpg")} style={{ width: "100%", height: 300 }}>
                     <View style={{  width: "100%", height: 300, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity
@@ -136,7 +137,7 @@ class Settings extends React.Component {
                                 <IonicIcon size={25} color="#000000" active name="ios-log-out" />
                             </Left>
                             <Body>
-                            <Text>Logout</Text>
+                            <Text>{strings("settings.logout")}</Text>
                             </Body>
                             <Right>
                                 <IonicIcon size={25} name="ios-arrow-forward" />

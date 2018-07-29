@@ -13,14 +13,25 @@
     "all": "All",
     "notFound": "No data was found."
   },
-  "favorites": {
-
+  "favorite": {
+    "favorites": "Favorites",
+    "notFound": "No data was found.",
+    "myProjects": "My Projects"
   },
   "settings": {
-
+    "settings": "Settings",
+    "avatar": "Avatar",
+    "profile": "Profile",
+    "logout": "Logout"
   },
   "project": {
 
+  },
+  "chat": {
+    "messages": "Messages",
+    "chat": "Chat",
+    "public": "Public Chat",
+    "publicDescription": "Chat for everybody"
   },
   "messages": {
     "noInternet": "No internet connection.",

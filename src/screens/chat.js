@@ -5,6 +5,7 @@ import {View} from "react-native";
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
 import {SERVER_URL, STORAGE_URL} from "../config";
+import { strings } from '../i18n';
 
 class Chat extends Component {
     constructor(props) {
@@ -21,19 +22,19 @@ class Chat extends Component {
     render() {
 
         return (
-            <AppTemplate title="Messages" navigation={this.props.navigation} activeTab="Chat">
+            <AppTemplate title={strings("chat.messages")} navigation={this.props.navigation} activeTab="Chat">
                 <View style={{padding: 10}}>
                     <View>
                         <ListItem avatar
-                                  onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: "Public Chat", user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                  onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
                                   style={{padding: 10, marginLeft: 0}}
                         >
                             <Left>
                                 <Thumbnail source={require("./../images/profile.jpg")} />
                             </Left>
                             <Body>
-                            <Text>Public Chat</Text>
-                            <Text note>Chat for everybody</Text>
+                            <Text>{strings("chat.public")}</Text>
+                            <Text note>{strings("chat.publicDescription")}</Text>
                             </Body>
                             <Right>
                                 <Text note></Text>
