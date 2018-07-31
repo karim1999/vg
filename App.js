@@ -24,7 +24,7 @@ import SingleChat from './src/screens/singleChat';
 import Settings from './src/screens/settings';
 import Profile from './src/screens/profile';
 import Favorite from './src/screens/favorite';
-import {StyleSheet} from "react-native";
+import {StyleSheet,Platform} from "react-native";
 
 const HomeStack = createStackNavigator({
     Home: Home,
@@ -72,16 +72,33 @@ const AppStack = createTabNavigator(
                 >
                     <FooterTab style={{ backgroundColor: '#FFFFFF' }}>
                         <Button style={[props.navigationState.index === 0 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Home')}>
-                            <Icon size={25} name="home" color="#000000" />
+                          {
+                            (Platform.OS === 'ios') ?
+                            <Icon size={25} type="Entypo" name="home" style={{color:'#000'}}  />:
+                            <Icon size={25} name="home" color="#00000" />
+                          }
+
                         </Button>
                         <Button style={[props.navigationState.index === 1 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Favorite')}>
-                            <Icon size={25} name="heart" color="#000000" />
+                        {
+                          (Platform.OS === 'ios') ?
+                          <Icon size={25} type="Entypo" name="heart" style={{color:'#000'}}  />:
+                          <Icon size={25} name="home" color="#00000" />
+                        }
                         </Button>
                         <Button style={[props.navigationState.index === 2 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Chat')}>
-                            <Icon size={25} active name="chatbubbles" color="#000000" />
+                        {
+                          (Platform.OS === 'ios') ?
+                          <Icon size={25} type="Entypo" name="chat" style={{color:'#000'}}  />:
+                          <Icon size={25} name="chatbubbles" color="#00000" />
+                        }
                         </Button>
                         <Button style={[props.navigationState.index === 3 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Settings')}>
-                            <Icon size={25} name="cog" color="#000000" />
+                        {
+                          (Platform.OS === 'ios') ?
+                          <Icon size={25} type="Entypo" name="cog" style={{color:'#000'}}  />:
+                          <Icon size={25} name="cog" color="#00000" />
+                        }
                         </Button>
                     </FooterTab>
                 </Footer>
@@ -121,6 +138,8 @@ const store = createStore(currentUser);
 export default class App extends React.Component {
     constructor(props) {
         super(props);
+        console.disableYellowBox = true;
+
         this.state = {
         };
     }

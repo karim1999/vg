@@ -46,7 +46,7 @@ export default class SignUp1 extends React.Component {
                 <Picker
                     selectedValue={this.state.data.country}
                     style={styles.select}
-                    itemStyle={{ fontSize:23 }}
+                    itemStyle={{ fontSize:50 }}
                     onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
                         {
                             data: {
@@ -110,12 +110,8 @@ const styles = StyleSheet.create({
     },
     select: {
         height: 50,
-        width: "70%",
-        transform: [
-            { scaleY: 1.3 },
-            { scaleX: 1.3 },
-        ],
-        marginLeft: "17%",
+        width: "100%",
+
         color: "#FFFFFF",
     },
     navigation: {

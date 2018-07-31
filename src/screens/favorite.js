@@ -28,8 +28,16 @@ class Favorite extends Component {
             <AppTemplate title={strings("favorite.favorites")} navigation={this.props.navigation} activeTab="Favorite">
                 <View style={{padding: 20}}>
                     <Segment>
-                        <Button active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: "#000000"}}>{strings("favorite.favorites")}</Text></Button>
-                        <Button active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: "#000000"}}>{strings("favorite.myProjects")}</Text></Button>
+                        <Button style={{
+									backgroundColor: this.state.tab === 2 ? "#000" : undefined,
+									borderColor: "#000",
+								}}
+                 active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: this.state.tab === 2 ? "white" : '#000'}}>{strings("favorite.favorites")}</Text></Button>
+                        <Button
+                        style={{
+									backgroundColor: this.state.tab === 1 ? "#000" : undefined,
+									borderColor: "#000",
+								}} active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: this.state.tab === 1 ? "white" : '#000'}}>{strings("favorite.myProjects")}</Text></Button>
                     </Segment>
                     {this.state.tab === 2? (
                             <View>

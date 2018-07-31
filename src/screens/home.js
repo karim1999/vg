@@ -167,9 +167,10 @@ class Home extends Component {
                                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                                     style={{ width: 130 }}
                                     selectedValue={this.state.selected}
+                                    placeholder={strings('home.all')}
+                                    placeholderStyle={{ color: "#000" }}
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
-                                    <Picker.Item label={strings("home.all")} value={0} />
                                     {this.state.categories.map((category) => (
                                         <Picker.Item key={category.id} label={category.name} value={category.id} />
                                     ))}

@@ -5,7 +5,7 @@ import Header from './header'
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import _ from "lodash";
-import {Alert, AsyncStorage, RefreshControl, View} from "react-native";
+import {Alert, AsyncStorage,Platform, RefreshControl, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios/index";
 
@@ -186,7 +186,8 @@ class AppTemplate extends Component {
                         style={{ backgroundColor: '#000000' }}
                         position="bottomRight"
                         onPress={() => this.props.navigation.navigate('AddProject')}>
-                        <Icon name="ios-add-circle" style={{color: "#FFFFFF", fontSize: 35}} />
+
+                          <Icon size={25} type="Ionicons" name="ios-add-outline" style={{color:'#FFFFFF'}}  />
                     </Fab>
                 )}
             </Container>
