@@ -89,6 +89,9 @@ class SignIn extends React.Component {
                         duration: 5000
                     })
                 }
+                this.setState({
+                    isLoading: false
+                });
             }).catch((error)=>{
                 Toast.show({
                     text: "Wrong username or password",
@@ -96,6 +99,9 @@ class SignIn extends React.Component {
                     type: "danger",
                     duration: 5000
                 })
+                this.setState({
+                    isLoading: false
+                });
             }).finally(() => {
                 this.setState({
                     isLoading: false
@@ -112,11 +118,11 @@ class SignIn extends React.Component {
         }
     }
     componentDidMount(){
-      fetch('http://talbatk.net:90/api/all-offers').then(response => {
-        alert(JSON.stringify(response.response));
-      }).catch(error => {
-        alert(error);
-      })
+      // fetch('http://talbatk.net:90/api/all-offers').then(response => {
+      //   alert(JSON.stringify(response.response));
+      // }).catch(error => {
+      //   alert(error);
+      // })
     }
     render() {
         return (

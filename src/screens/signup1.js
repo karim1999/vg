@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, TextInput, Picker, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
+import { Picker } from 'native-base';
 import countries from './../countries.json';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
