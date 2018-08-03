@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, TextInput, Picker, Slider, Text, View, TouchableOpacity } from 'react-native';
+import {StyleSheet, TextInput, Picker as Picker2, Slider, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {Picker} from 'native-base';
 import AuthTemplate from './../components/authTemplate';
 import NumericInput from 'react-native-numeric-input'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -59,22 +60,42 @@ export default class SignUp4 extends React.Component {
                         leftButtonBackgroundColor='#344955'
                         upDownButtonsBackgroundColor='#344955'/>
                 </View>
-                <Picker
-                    selectedValue={this.state.data.type}
-                    style={styles.select}
-                    itemStyle={{ fontSize:23 }}
-                    onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                type: itemValue
-                            }
-                        }))}>
-                    <Picker.Item key={0} label="Prefered investment type" value={0} />
-                    <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
-                    <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
-                    <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
-                </Picker>
+                {
+                    (Platform.OS === 'ios') ?
+                        <Picker
+                            selectedValue={this.state.data.type}
+                            style={styles.select}
+                            itemStyle={{ fontSize:23 }}
+                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        type: itemValue
+                                    }
+                                }))}>
+                            <Picker.Item key={0} label="Prefered investment type" value={0} />
+                            <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
+                            <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
+                            <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
+                        </Picker>
+                        :
+                        <Picker2
+                            selectedValue={this.state.data.type}
+                            style={styles.select2}
+                            itemStyle={{ fontSize:23 }}
+                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        type: itemValue
+                                    }
+                                }))}>
+                            <Picker.Item key={0} label="Prefered investment type" value={0} />
+                            <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
+                            <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
+                            <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
+                        </Picker2>
+                }
                 <TextInput
                     style={styles.textarea}
                     placeholderTextColor="#d2d2d2"
@@ -118,6 +139,12 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
     },
     select: {
+        height: 50,
+        width: "100%",
+
+        color: "#FFFFFF",
+    },
+    select2: {
         height: 50,
         width: "70%",
         transform: [

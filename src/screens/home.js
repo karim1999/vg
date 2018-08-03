@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Picker, Form, Icon, Toast, Item, Input, Content} from 'native-base';
-import {ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, RefreshControl, Text, TouchableOpacity, View} from 'react-native';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
 import axios from "axios";
@@ -171,6 +171,10 @@ class Home extends Component {
                                     placeholderStyle={{ color: "#000" }}
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
+                                    {
+                                        (Platform.OS === 'android') &&
+                                            <Picker.Item key={0} label={strings('home.all')} value={0} />
+                                    }
                                     {this.state.categories.map((category) => (
                                         <Picker.Item key={category.id} label={category.name} value={category.id} />
                                     ))}
