@@ -18,7 +18,7 @@ import { Container, Header, Content, Button, Toast } from "native-base";
 import Logo from './../components/logo';
 
 let data= {
-    country: 'Afghanistan',
+    country: 'Saudi Arabia',
     city: '',
     phone: '',
     name: '',
@@ -49,9 +49,6 @@ class SignIn extends React.Component {
         };
     }
     signIn= ()=>{
-        this.setState({
-            isLoading: true
-        });
         let type= "default";
         let text= "Unknown error";
         if(this.state.username == "" || this.state.password == ""){
@@ -63,6 +60,9 @@ class SignIn extends React.Component {
                 type: type
             })
         }else{
+            this.setState({
+                isLoading: true
+            });
             return axios.post(SERVER_URL+"api/auth/login", {
                 email: this.state.username,
                 password: this.state.password

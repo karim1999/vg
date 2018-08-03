@@ -77,13 +77,12 @@ const AppStack = createTabNavigator(
                             <Icon size={25} type="Entypo" name="home" style={{color:'#000'}}  />:
                             <Icon size={25} name="home" color="#00000" />
                           }
-
                         </Button>
                         <Button style={[props.navigationState.index === 1 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Favorite')}>
                         {
                           (Platform.OS === 'ios') ?
                           <Icon size={25} type="Entypo" name="heart" style={{color:'#000'}}  />:
-                          <Icon size={25} name="home" color="#00000" />
+                          <Icon size={25} name="heart" color="#00000" />
                         }
                         </Button>
                         <Button style={[props.navigationState.index === 2 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Chat')}>

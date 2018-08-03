@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, ImageBackground, StyleSheet, Text } from 'react-native';
+import {View, ImageBackground, StyleSheet, Text, Platform} from 'react-native';
 import { Content } from 'native-base';
 import Logo from './../components/logo';
-import Arrows from './../components/arrows';
 
 export default class authTemplate extends React.Component {
     constructor(props) {
@@ -16,12 +15,21 @@ export default class authTemplate extends React.Component {
 
         return (
             <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
-                <Content contentContainerStyle={{ flex: 1 }} style={{width: "100%"}}>
-                    <View style={styles.container}>
-                        <Logo title={this.props.title} error={this.props.error} />
-                        { this.props.children }
-                    </View>
-                </Content>
+                {
+                    (Platform.OS === 'ios') ?
+                        <Content contentContainerStyle={{ flex: 1 }} style={{width: "100%"}}>
+                            <View style={styles.container}>
+                                <Logo title={this.props.title} error={this.props.error} />
+                                { this.props.children }
+                            </View>
+                        </Content>
+                        :
+                        <View style={styles.container}>
+                            <Logo title={this.props.title} error={this.props.error} />
+                            { this.props.children }
+                        </View>
+                }
+
             </ImageBackground>
         );
     }
