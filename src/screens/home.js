@@ -171,10 +171,6 @@ class Home extends Component {
                                     placeholderStyle={{ color: "#000" }}
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
-                                    {
-                                        (Platform.OS === 'android') &&
-                                            <Picker.Item key={0} label={strings('home.all')} value={0} />
-                                    }
                                     {this.state.categories.map((category) => (
                                         <Picker.Item key={category.id} label={category.name} value={category.id} />
                                     ))}
