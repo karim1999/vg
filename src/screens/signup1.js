@@ -79,7 +79,7 @@ export default class SignUp1 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="City......"
+                    placeholder="City"
                     onChangeText={(city) => this.setState(prevState => (
                         {
                             data: {
@@ -91,7 +91,7 @@ export default class SignUp1 extends React.Component {
                 <TextInput
                     style={styles.input}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Phone......"
+                    placeholder="Phone"
                     keyboardType='phone-pad'
                     onChangeText={(phone) => this.setState(prevState => (
                         {
@@ -122,9 +122,9 @@ export default class SignUp1 extends React.Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 70,
+        height: 60,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     select: {

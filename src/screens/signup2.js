@@ -54,7 +54,7 @@ export default class SignUp2 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Name......"
+                    placeholder="Name"
                     textContentType="name"
                     onChangeText={(name) => this.setState(prevState => (
                         {
@@ -67,7 +67,7 @@ export default class SignUp2 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Email......"
+                    placeholder="Email"
                     textContentType="emailAddress"
                     keyboardType='email-address'
                     onChangeText={(email) => this.setState(prevState => (
@@ -82,7 +82,7 @@ export default class SignUp2 extends React.Component {
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
                     secureTextEntry={true}
-                    placeholder="Password......"
+                    placeholder="Password"
                     onChangeText={(password) => this.setState(prevState => (
                         {
                             data: {
@@ -95,7 +95,7 @@ export default class SignUp2 extends React.Component {
                 <TextInput
                     style={styles.textarea}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Write something about yourself......"
+                    placeholder="Write something about yourself"
                     multiline = {true}
                     numberOfLines = {4}
                     onChangeText={(description) => this.setState(prevState => (
@@ -128,15 +128,15 @@ export default class SignUp2 extends React.Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 70,
+        height: 60,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     textarea: {
         height: 70,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     navigation: {

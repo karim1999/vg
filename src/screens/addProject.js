@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
-import {Form, Item, Input, Label, Icon, Picker, Toast, Button, Text} from 'native-base';
+import {Form, Item, Input, Label, Icon, Picker, Toast, Button, Text, Radio, ListItem, Left, Right} from 'native-base';
 import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios";
@@ -23,6 +23,8 @@ class AddProject extends Component {
                 report: "",
                 presentation: "",
                 category: 1,
+                visibility: 1,
+                currency: "$",
             };
         }
         this.state = {
@@ -158,7 +160,7 @@ class AddProject extends Component {
                             text: "Project was edited successfully.",
                             buttonText: "Ok",
                             type: "success"
-                        })
+                        });
                         this.props.navigation.navigate("Home", {data: "refresh"});
                     }
 
@@ -256,6 +258,15 @@ class AddProject extends Component {
             })
         });
     }
+    formatMondey = function(n, c, d, t){
+        c = isNaN(c = Math.abs(c)) ? 2 : c;
+        d = d == undefined ? "." : d;
+        t = t == undefined ? "," : t;
+        let s = n < 0 ? "-" : "";
+        let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
     render() {
         return (
             <AppTemplate title="Add Project" backButton={true} navigation={this.props.navigation} activeTab="Home">
@@ -288,7 +299,7 @@ class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon name='ios-folder-open' />
-                            <Label>Category:</Label>
+                            <Label>Industry:</Label>
                             <Picker
                                 mode="dropdown"
                                 iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -306,12 +317,32 @@ class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='money' />
-                            <Label>Amount Needed:</Label>
+                            <Label>Capital Needed:</Label>
                             <Slider
                                 value={Number(this.state.amount)}
                                 onValueChange={(amount) => this.setState({amount})}
                                 style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
                         </Item>
+                        <ListItem>
+                            <Left>
+                                <Text>USD ($)</Text>
+                            </Left>
+                            <Right>
+                                <Radio selected={this.state.currency == "$"}
+                                       onPress={(currency) => {this.setState({currency: "$"})}}
+                                />
+                            </Right>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Text>SR</Text>
+                            </Left>
+                            <Right>
+                                <Radio selected={this.state.currency == "SR"}
+                                       onPress={(currency) => {this.setState({currency: "SR"})}}
+                                />
+                            </Right>
+                        </ListItem>
                         <Item style={{height: 70}}>
                             <Icon type="MaterialCommunityIcons" name='presentation-play' />
                             <Label>Presentation Link:</Label>
@@ -328,6 +359,26 @@ class AddProject extends Component {
                                 value={this.state.report}
                             />
                         </Item>
+                        <ListItem>
+                            <Left>
+                                <Text>Public</Text>
+                            </Left>
+                            <Right>
+                                <Radio selected={this.state.visibility == 1}
+                                       onPress={(visibility) => {this.setState({visibility: 1})}}
+                                />
+                            </Right>
+                        </ListItem>
+                        <ListItem>
+                            <Left>
+                                <Text>Private</Text>
+                            </Left>
+                            <Right>
+                                <Radio selected={this.state.visibility == 0}
+                                       onPress={(visibility) => {this.setState({visibility: 0})}}
+                                />
+                            </Right>
+                        </ListItem>
                         <Button
                             onPress={() => this.addOrEdit()}
                             style={{flexDirection: "row"}}

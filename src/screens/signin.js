@@ -98,7 +98,7 @@ class SignIn extends React.Component {
                     buttonText: "Ok",
                     type: "danger",
                     duration: 5000
-                })
+                });
                 this.setState({
                     isLoading: false
                 });
@@ -128,12 +128,12 @@ class SignIn extends React.Component {
         return (
             <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
                 <View style={styles.container}>
-                    <Logo title="SignIn" error={this.props.error} />
+                    <Logo title="" error={this.props.error} />
 
                     <TextInput
                         style={styles.input}
                         placeholderTextColor="#d2d2d2"
-                        placeholder="Email......"
+                        placeholder="Email"
                         keyboardType='email-address'
                         onChangeText={(username) => this.setState({username})}
                     />
@@ -141,7 +141,7 @@ class SignIn extends React.Component {
                         placeholderTextColor="#d2d2d2"
                         style={styles.input}
                         secureTextEntry={true}
-                        placeholder="Password......"
+                        placeholder="Password"
                         onChangeText={(password) => this.setState({password})}
                     />
                     {/*<View style={{width: "70%"}}>*/}
@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input: {
-        height: 70,
+        height: 60,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     button: {

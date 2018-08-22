@@ -21,7 +21,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Facebook Link......"
+                    placeholder="Facebook Link"
                     onChangeText={(facebook) => this.setState(prevState => (
                         {
                             data: {
@@ -33,7 +33,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Twitter Link......"
+                    placeholder="Twitter Link"
                     onChangeText={(twitter) => this.setState(prevState => (
                         {
                             data: {
@@ -45,7 +45,7 @@ export default class SignUp3 extends React.Component {
                 <TextInput
                     placeholderTextColor="#d2d2d2"
                     style={styles.input}
-                    placeholder="Linkedin Link......"
+                    placeholder="Linkedin Link"
                     onChangeText={(linkedin) => this.setState(prevState => (
                         {
                             data: {
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input: {
-        height: 70,
+        height: 60,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     navigation: {

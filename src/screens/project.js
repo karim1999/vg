@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
-import {AsyncStorage, Image, View} from 'react-native';
+import {ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
 import {Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Toast} from 'native-base';
 import {SERVER_URL, STORAGE_URL} from "../config";
 import NumericInput from 'react-native-numeric-input'
@@ -8,6 +8,8 @@ import {setUser} from "../reducers";
 import {connect} from "react-redux";
 import axios from "axios";
 import _ from "lodash";
+import MultiSelect from "react-native-quick-select";
+import {strings} from "../i18n";
 
 class Project extends Component {
     constructor(props) {
@@ -16,12 +18,23 @@ class Project extends Component {
             ...this.props.navigation.state.params,
             isInvesting: false,
             investmentAmount: 50000,
-            isLoading: false
+            isLoading: false,
+            isAddingPeople: false,
+            users: [],
+            selectedUsers: []
         };
     }
+    onSelectedUsersChange = selectedUsers => {
+        this.setState({ selectedUsers });
+    };
     showInvestmentPanel(){
         this.setState({
             isInvesting: !this.state.isInvesting,
+        })
+    }
+    showAddPanel(){
+        this.setState({
+            isAddingPeople: !this.state.isAddingPeople,
         })
     }
     investInProject(){
@@ -92,12 +105,84 @@ class Project extends Component {
             })
         });
     }
+
     openChat(){
         this.props.navigation.navigate("SingleChat", {...this.props.navigation.state.params});
     }
+    formatMondey = function(n, c, d, t){
+        c = isNaN(c = Math.abs(c)) ? 2 : c;
+        d = d == undefined ? "." : d;
+        t = t == undefined ? "," : t;
+        let s = n < 0 ? "-" : "";
+        let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+    componentDidMount(){
+        this.setState({
+            isLoading: true,
+        });
+        return axios.get(SERVER_URL+"api/users").then(response => {
+            this.setState({
+                users: response.data,
+            });
+            return axios.get(SERVER_URL+"api/project/"+this.state.id+'/users').then(response2 => {
+                let selectedUsers= _.map(response2.data, 'id');
+                this.setState({
+                    selectedUsers,
+                    isLoading: false,
+                });
+            }).catch(error => {
+                Toast.show({
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.noInternet"),
+                    type: "danger"
+                });
+                this.setState({
+                    isLoading: false,
+                });
+            })
+
+        }).catch(error => {
+            Toast.show({
+                text: strings("messages.noInternet"),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            });
+            this.setState({
+                isLoading: false,
+            });
+        });
+    }
+    addPeople(){
+        this.setState({
+            isLoading: true,
+        });
+        return axios.post(SERVER_URL+"api/project/"+this.state.id+'/link', {
+            users: _.join(this.state.selectedUsers, ',')
+        }).then(response2 => {
+            Toast.show({
+                text: "Users were updated successfully.",
+                buttonText: strings("messages.ok"),
+                type: "success"
+            });
+            this.setState({
+                isLoading: false,
+            });
+        }).catch(error => {
+            Toast.show({
+                text: strings("messages.noInternet"),
+                buttonText: strings("messages.noInternet"),
+                type: "danger"
+            });
+            this.setState({
+                isLoading: false,
+            });
+        })
+    }
     render() {
         return (
-            <AppTemplate right={true} {...this.props.navigation.state.params} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()}>
+            <AppTemplate right={true} {...this.props.navigation.state.params} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()} addPeople={() => this.showAddPanel()}>
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
                         onPress={() => this.openChat()}
@@ -128,6 +213,37 @@ class Project extends Component {
                             leftButtonBackgroundColor='#FFFFFF'/>
                         <Button style={{marginTop: 20}} onPress={()=> {this.investInProject()}} block light>
                             <Text>Invest in this project</Text>
+                            {this.state.isLoading && (
+                                <ActivityIndicator style={{}} size="small" color="#000000" />
+                            )}
+                        </Button>
+                    </View>
+                )}
+                {this.state.isAddingPeople && (
+                    <View style={{padding: 10, paddingTop: 20, backgroundColor: "#000000"}}>
+                        <MultiSelect
+                            items={this.state.users}
+                            uniqueKey="id"
+                            onSelectedItemsChange={this.onSelectedUsersChange}
+                            selectedItems={this.state.selectedUsers}
+                            selectText="Select Users"
+                            searchInputPlaceholderText="Search Users..."
+                            altFontFamily="ProximaNova-Light"
+                            tagRemoveIconColor="#CCC"
+                            tagBorderColor="#CCC"
+                            tagTextColor="#CCC"
+                            selectedItemTextColor="#CCC"
+                            selectedItemIconColor="#CCC"
+                            itemTextColor="#000"
+                            searchInputStyle={{ color: '#CCC' }}
+                            submitButtonColor="#CCC"
+                            submitButtonText="Select"
+                        />
+                        <Button style={{marginTop: 20}} onPress={()=> {this.addPeople()}} block light>
+                            <Text>Save</Text>
+                            {this.state.isLoading && (
+                                <ActivityIndicator style={{}} size="small" color="#000000" />
+                            )}
                         </Button>
                     </View>
                 )}
@@ -152,12 +268,12 @@ class Project extends Component {
                                 </Text>
                             <Image source={{uri: STORAGE_URL+this.state.img}} style={{height: 250, width: "100%", flex: 1}}/>
                             <View style={{ marginTop: 10, flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ fontSize: 17 }}> Total Money Needed: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 13, fontWeight: "bold" }}> {this.state.amount}$ </Text></Button>
+                                <Text style={{ fontSize: 15 }}> Total Capital Needed: </Text>
+                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.amount, 0, '.', ',')}$ </Text></Button>
                             </View>
                             <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
-                                <Text style={{ fontSize: 17 }}> Total Money Invested: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 13, fontWeight: "bold" }}> {this.state.total_amount_invested}$ </Text></Button>
+                                <Text style={{ fontSize: 15 }}> Total Capital Invested: </Text>
+                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')}$ </Text></Button>
                             </View>
                             </Body>
                         </CardItem>

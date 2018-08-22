@@ -88,12 +88,21 @@ class SingleChat extends Component {
             })
         });
     }
+   formatMondey = function(n, c, d, t){
+       c = isNaN(c = Math.abs(c)) ? 2 : c;
+       d = d == undefined ? "." : d;
+       t = t == undefined ? "," : t;
+       let s = n < 0 ? "-" : "";
+       let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+       let j = (j = i.length) > 3 ? j % 3 : 0;
+       return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
     // componentDidUnMount() {
     //     this.state.ref.off('value');
     // }
     render() {
         return (
-            <Container style={{backgroundColor: "#FDF5F5"}}>
+            <Container style={{backgroundColor: "#f3f3f3"}}>
                 <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation} right={this.state.id != 0}>
                     <Button transparent onPress={() => this.props.navigation.goBack()}>
                         <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
@@ -111,7 +120,7 @@ class SingleChat extends Component {
                 )}
                 {this.state.total_amount_invested && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 15}}>Total investments in this project: <Text style={{color: "#FFFFFF"}}>{this.state.total_amount_invested}$</Text></Text>
+                        <Text style={{padding: 10, fontSize: 13}}>Total capital available in this project: <Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')}{this.state.currency}</Text></Text>
                     </View>
                 )}
                 <GiftedChat

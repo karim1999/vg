@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 30,
+        fontSize: 27,
         textAlign: 'center',
         color: "#FFFFFF",
         marginTop: 20,

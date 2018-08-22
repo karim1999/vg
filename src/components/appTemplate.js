@@ -50,6 +50,12 @@ class AppTemplate extends Component {
             { cancelable: false }
         )
     }
+    addPeople(){
+        this.setState({
+            menu: false
+        });
+        this.props.addPeople();
+    }
     editProject(){
         this.setState({
             menu: false
@@ -134,9 +140,15 @@ class AppTemplate extends Component {
                                 onRefresh={() => this._onRefresh()}
                             />
                         }
-                        style={{ backgroundColor: "#FDF5F5", flex: 1 }}>
+                        style={{ backgroundColor: "#f3f3f3", flex: 1 }}>
                         {this.state.menu && (
                             <List style={{backgroundColor: "#FFFFFF", right: 0}}>
+                                {_.find(this.props.myProjects, project => project.id == this.props.project) && (
+                                    <ListItem onPress={() => this.addPeople()}>
+                                        <Text>Add/Remove People</Text>
+                                    </ListItem>
+                                )}
+
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project) && (
                                     <ListItem onPress={() => this.props.openChat()}>
                                         <Text>Open Chat</Text>

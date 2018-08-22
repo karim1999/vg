@@ -75,7 +75,7 @@ class Profile extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='info' />
-                            <Label>Description:</Label>
+                            <Label>Personal Info:</Label>
                             <Input multiline = {true}
                                    numberOfLines = {10}
                                    onChangeText={(description) => this.setState({description})}
@@ -118,7 +118,7 @@ class Profile extends Component {
 
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='money' />
-                            <Label>Money:</Label>
+                            <Label>Wallet:</Label>
                             <Slider
                                 value={Number(this.state.money)}
                                 onValueChange={(money) => this.setState({money})}

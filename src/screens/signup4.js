@@ -99,7 +99,7 @@ export default class SignUp4 extends React.Component {
                 <TextInput
                     style={styles.textarea}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Write about your project.."
+                    placeholder="Write about your project"
                     multiline = {true}
                     numberOfLines = {4}
                     onChangeText={(idea) => this.setState(prevState => (
@@ -133,9 +133,9 @@ export default class SignUp4 extends React.Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 70,
+        height: 60,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     select: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     textarea: {
         height: 70,
         width: "70%",
-        fontSize: 23,
+        fontSize: 20,
         color: "#FFFFFF",
     },
     navigation: {
