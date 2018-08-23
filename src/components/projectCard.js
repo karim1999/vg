@@ -102,7 +102,7 @@ class ProjectCard extends React.Component {
                             {this.props.title}
                         </Text>
                         <Text>
-                            {this.props.description}
+                            {_.truncate(this.props.description)}
                         </Text>
                     </View>
                     </Body>

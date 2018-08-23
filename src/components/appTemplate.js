@@ -171,6 +171,8 @@ class AppTemplate extends Component {
                                         amount: this.props.amount,
                                         report: this.props.report,
                                         presentation: this.props.presentation,
+                                        currency: this.props.currency,
+                                        visibility: this.props.visibility,
                                         category: this.props.category_id
                                     })}>
                                         <Text>Edit Project</Text>

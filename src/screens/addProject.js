@@ -8,6 +8,8 @@ import ImagePicker from "react-native-image-picker";
 import RNFetchBlob from "rn-fetch-blob";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+var RNFS = require('react-native-fs');
 
 class AddProject extends Component {
     constructor(props) {
@@ -32,58 +34,63 @@ class AddProject extends Component {
             isLoading: false,
             ...data,
             image_data: null,
+            presentationUri: "",
+            reportUri: "",
+            imgUri: "",
             categories: []
         };
     }
     submit() {
-        if (this.state.image_data && this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
+        if (this.state.imgUri && this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
             this.setState({
                 isLoading: true,
             });
             AsyncStorage.getItem('token').then(userToken => {
-                return axios.post(SERVER_URL + 'api/projects?token=' + userToken, {
-                    title: this.state.title,
-                    description: this.state.description,
-                    amount: this.state.amount,
-                    report: this.state.report,
-                    presentation: this.state.presentation,
-                    category_id: this.state.category
-                }).then(response => {
-                    if (this.state.image_data) {
-                        console.log(response.data);
-                        return AsyncStorage.getItem('token').then(userToken => {
-                            return RNFetchBlob.fetch('POST', SERVER_URL + 'api/projects/' + response.data.id + '/img' + '?token=' + userToken, {
-                                'Content-Type': 'multipart/form-data',
-                            }, [
-                                {name: 'img', filename: 'img.png', type: 'image/png', data: this.state.image_data},
-                            ]).then((resp) => {
-                                this.props.setUser(JSON.parse(resp.data));
-                                console.log(JSON.parse(resp.data));
-                                Toast.show({
-                                    text: "Project was added successfully.",
-                                    buttonText: "Ok",
-                                    type: "success"
-                                });
-                                this.props.navigation.navigate("Home", {data: "refresh"});
-                            })
-                        });
-                    } else {
-                        Toast.show({
-                            text: "Project was added successfully.",
-                            buttonText: "Ok",
-                            type: "success"
-                        })
-                    }
-
+                let data = new FormData();
+                data.append('title', this.state.title);
+                data.append('description', this.state.description);
+                data.append('amount', this.state.amount);
+                data.append('category_id', this.state.category);
+                data.append('visibility', this.state.visibility);
+                data.append('currency', this.state.currency);
+                if (this.state.imgUri) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.presentationUri) {
+                    data.append('presentation', {
+                        name: "presentation",
+                        uri: this.state.presentationUri,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.reportUri) {
+                    data.append('report', {
+                        name: "report",
+                        uri: this.state.reportUri,
+                        type: 'image/png',
+                    });
+                }
+                return axios.post(SERVER_URL + 'api/projects?token=' + userToken, data).then(response => {
+                    this.props.setUser(response.data);
+                    Toast.show({
+                        text: "Project was added successfully.",
+                        buttonText: "Ok",
+                        type: "success"
+                    });
+                    this.props.navigation.navigate("Home", {data: "refresh"});
                 }).catch(error => {
-                    console.log(error);
+                    console.warn(error);
                     Toast.show({
                         text: "Error reaching the server.",
                         buttonText: "Ok",
                         type: "danger"
                     })
                 })
-            }).finally(() => {
+            }).then(() => {
                 this.setState({
                     isLoading: false,
                 });
@@ -128,51 +135,53 @@ class AddProject extends Component {
                 isLoading: true,
             });
             AsyncStorage.getItem('token').then(userToken => {
-                return axios.put(SERVER_URL + 'api/projects/'+this.props.navigation.state.params.id+'?token=' + userToken, {
-                    title: this.state.title,
-                    description: this.state.description,
-                    amount: this.state.amount,
-                    report: this.state.report,
-                    presentation: this.state.presentation,
-                    category_id: this.state.category
+                let data = new FormData();
+                data.append('title', this.state.title);
+                data.append('description', this.state.description);
+                data.append('amount', this.state.amount);
+                data.append('category_id', this.state.category);
+                data.append('visibility', this.state.visibility);
+                data.append('currency', this.state.currency);
+                if (this.state.imgUri) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.presentationUri) {
+                    data.append('presentation', {
+                        name: "presentation",
+                        uri: this.state.presentationUri,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.reportUri) {
+                    data.append('report', {
+                        name: "report",
+                        uri: this.state.reportUri,
+                        type: 'image/png',
+                    });
+                }
+                return axios.post(SERVER_URL + 'api/projects/'+this.props.navigation.state.params.id+'?token=' + userToken, data, {
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' }
                 }).then(response => {
-                    this.props.setUser(JSON.parse(JSON.stringify(response.data)));
-                    if (this.state.image_data) {
-                        console.log(response.data);
-                        return AsyncStorage.getItem('token').then(userToken => {
-                            return RNFetchBlob.fetch('POST', SERVER_URL + 'api/projects/' + this.props.navigation.state.params.id + '/img' + '?token=' + userToken, {
-                                'Content-Type': 'multipart/form-data',
-                            }, [
-                                {name: 'img', filename: 'img.png', type: 'image/png', data: this.state.image_data},
-                            ]).then((resp) => {
-                                this.props.setUser(JSON.parse(resp.data));
-                                console.log(JSON.parse(resp.data));
-                                Toast.show({
-                                    text: "Project was edited successfully.",
-                                    buttonText: "Ok",
-                                    type: "success"
-                                });
-                                this.props.navigation.navigate("Home", {data: "refresh"});
-                            })
-                        });
-                    } else {
-                        Toast.show({
-                            text: "Project was edited successfully.",
-                            buttonText: "Ok",
-                            type: "success"
-                        });
-                        this.props.navigation.navigate("Home", {data: "refresh"});
-                    }
-
+                    this.props.setUser(response.data);
+                    Toast.show({
+                        text: "Project was edited successfully.",
+                        buttonText: "Ok",
+                        type: "success"
+                    });
+                    this.props.navigation.navigate("Home", {data: "refresh"});
                 }).catch(error => {
-                    console.log(error);
+                    console.warn(error);
                     Toast.show({
                         text: "Error reaching the server.",
                         buttonText: "Ok",
                         type: "danger"
                     })
                 })
-            }).finally(() => {
+            }).then(() => {
                 this.setState({
                     isLoading: false,
                 });
@@ -233,7 +242,7 @@ class AddProject extends Component {
             else {
                 console.log(response.data);
                 this.setState({
-                    image_data: response.data
+                    imgUri: response.uri
                 });
             }
         });
@@ -267,6 +276,24 @@ class AddProject extends Component {
         let j = (j = i.length) > 3 ? j % 3 : 0;
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
+    selectPresentation(){
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+        },(error,res) => {
+            this.setState({
+                presentationUri: res.uri
+            });
+        })
+    }
+    selectReport(){
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.allFiles()],
+        },(error,res) => {
+            this.setState({
+                reportUri: res.uri
+            });
+        })
+    }
     render() {
         return (
             <AppTemplate title="Add Project" backButton={true} navigation={this.props.navigation} activeTab="Home">
@@ -328,7 +355,7 @@ class AddProject extends Component {
                                 <Text>USD ($)</Text>
                             </Left>
                             <Right>
-                                <Radio selected={this.state.currency == "$"}
+                                <Radio selected={this.state.currency === "$"}
                                        onPress={(currency) => {this.setState({currency: "$"})}}
                                 />
                             </Right>
@@ -338,7 +365,7 @@ class AddProject extends Component {
                                 <Text>SR</Text>
                             </Left>
                             <Right>
-                                <Radio selected={this.state.currency == "SR"}
+                                <Radio selected={this.state.currency === "SR"}
                                        onPress={(currency) => {this.setState({currency: "SR"})}}
                                 />
                             </Right>
@@ -346,25 +373,27 @@ class AddProject extends Component {
                         <Item style={{height: 70}}>
                             <Icon type="MaterialCommunityIcons" name='presentation-play' />
                             <Label>Presentation Link:</Label>
-                            <Input
-                                onChangeText={(presentation) => this.setState({presentation})}
-                                value={this.state.presentation}
-                            />
+                            <Button
+                                style={{alignSelf: "center"}}
+                                onPress={() => this.selectPresentation()} light>
+                                <Text>Select</Text>
+                            </Button>
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='file-text' />
                             <Label>Report Link:</Label>
-                            <Input
-                                onChangeText={(report) => this.setState({report})}
-                                value={this.state.report}
-                            />
+                            <Button
+                                style={{alignSelf: "center"}}
+                                onPress={() => this.selectReport()} light>
+                                <Text>Select</Text>
+                            </Button>
                         </Item>
                         <ListItem>
                             <Left>
                                 <Text>Public</Text>
                             </Left>
                             <Right>
-                                <Radio selected={this.state.visibility == 1}
+                                <Radio selected={this.state.visibility === 1}
                                        onPress={(visibility) => {this.setState({visibility: 1})}}
                                 />
                             </Right>
@@ -374,8 +403,8 @@ class AddProject extends Component {
                                 <Text>Private</Text>
                             </Left>
                             <Right>
-                                <Radio selected={this.state.visibility == 0}
-                                       onPress={(visibility) => {this.setState({visibility: 0})}}
+                                <Radio selected={this.state.visibility === 2}
+                                       onPress={(visibility) => {this.setState({visibility: 2})}}
                                 />
                             </Right>
                         </ListItem>

@@ -10,6 +10,10 @@ target 'vg' do
   target 'vg-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+
+    pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   end
 
   target 'vgTests' do

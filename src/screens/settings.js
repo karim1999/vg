@@ -61,23 +61,21 @@ class Settings extends React.Component {
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                console.log(response.data);
                 this.setState({
                     isLoading: true
                 });
-                let source = { uri: response.data };
+                let uri = response.uri;
+                let data = new FormData();
+                data.append('img', {
+                    name: "img",
+                    uri,
+                    type: 'image/png'
+                });
                 AsyncStorage.getItem('token').then(userToken => {
-                    RNFetchBlob.fetch('POST', SERVER_URL+'api/user/img'+'?token='+userToken, {
-                        // Authorization : "Bearer access-token",
-                        // otherHeader : "foo",
-                        'Content-Type' : 'multipart/form-data',
-                    }, [
-                        { name : 'img', filename : 'img.png', type:'image/png', data: response.data},
-                    ]).then((resp) => {
+                    axios.post(SERVER_URL+'api/user/img'+'?token='+userToken, data).then((resp) => {
                         this.setState({
                             isLoading: false,
                         });
-                        console.log(resp.data);
                     }).catch((err) => {
                         this.setState({
                             isLoading: false,
