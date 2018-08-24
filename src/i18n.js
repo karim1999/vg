@@ -13,6 +13,7 @@ I18n.translations = {
     en,
     ar
 };
+I18n.locale = 'ar';
 
 const currentLocale = I18n.currentLocale();
 

@@ -9,7 +9,7 @@ import RNFetchBlob from "rn-fetch-blob";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-var RNFS = require('react-native-fs');
+import { strings } from '../i18n';
 
 class AddProject extends Component {
     constructor(props) {
@@ -77,7 +77,7 @@ class AddProject extends Component {
                 return axios.post(SERVER_URL + 'api/projects?token=' + userToken, data).then(response => {
                     this.props.setUser(response.data);
                     Toast.show({
-                        text: "Project was added successfully.",
+                        text: strings("add_project.addDone"),
                         buttonText: "Ok",
                         type: "success"
                     });
@@ -85,7 +85,7 @@ class AddProject extends Component {
                 }).catch(error => {
                     console.warn(error);
                     Toast.show({
-                        text: "Error reaching the server.",
+                        text: strings("messages.noInternet"),
                         buttonText: "Ok",
                         type: "danger"
                     })
@@ -98,32 +98,32 @@ class AddProject extends Component {
         }else {
             if(this.state.title == ""){
                 Toast.show({
-                    text: "Title field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Title"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.description == ""){
                 Toast.show({
-                    text: "description field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Description"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.amount == 0){
                 Toast.show({
-                    text: "Amount field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Amount"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.category == 0){
                 Toast.show({
-                    text: "Category field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Category"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else{
                 Toast.show({
-                    text: "Image field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Image"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }
@@ -168,7 +168,7 @@ class AddProject extends Component {
                 }).then(response => {
                     this.props.setUser(response.data);
                     Toast.show({
-                        text: "Project was edited successfully.",
+                        text: strings("add_project.editDone"),
                         buttonText: "Ok",
                         type: "success"
                     });
@@ -176,7 +176,7 @@ class AddProject extends Component {
                 }).catch(error => {
                     console.warn(error);
                     Toast.show({
-                        text: "Error reaching the server.",
+                        text: strings("messages.noInternet"),
                         buttonText: "Ok",
                         type: "danger"
                     })
@@ -189,32 +189,32 @@ class AddProject extends Component {
         }else {
             if(this.state.title == ""){
                 Toast.show({
-                    text: "Title field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Title"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.description == ""){
                 Toast.show({
-                    text: "description field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Description"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.amount == 0){
                 Toast.show({
-                    text: "Amount field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Amount"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.category == 0){
                 Toast.show({
-                    text: "Category field is required.",
-                    buttonText: "Ok",
+                    text: strings("add_project.requiredField", "Category"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else{
                 Toast.show({
-                    text: "Something went wrong.",
-                    buttonText: "Ok",
+                    text: strings("messages.unknownError"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }
@@ -222,7 +222,7 @@ class AddProject extends Component {
     }
     selectImage(){
         let options = {
-            title: 'Select Avatar',
+            title: strings("messages.image"),
             storageOptions: {
                 skipBackup: true,
                 path: 'images'
@@ -261,8 +261,8 @@ class AddProject extends Component {
             });
         }).catch(error => {
             Toast.show({
-                text: "No internet connection",
-                buttonText: "Ok",
+                text: strings("messages.noInternet"),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         });
@@ -296,19 +296,19 @@ class AddProject extends Component {
     }
     render() {
         return (
-            <AppTemplate title="Add Project" backButton={true} navigation={this.props.navigation} activeTab="Home">
+            <AppTemplate title={strings("add_project.title")} backButton={true} navigation={this.props.navigation} activeTab="Home">
                 <View style={{padding: 5, margin: 20, backgroundColor: "#FFFFFF"}}>
                     <Form>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='pencil' />
-                            <Label>Title:</Label>
+                            <Label>{strings("add_project.title_text")}</Label>
                             <Input onChangeText={(title) => this.setState({title})}
                                    value={this.state.title}
                             />
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='info' />
-                            <Label>Description:</Label>
+                            <Label>{strings("add_project.description")}</Label>
                             <Input multiline = {true}
                                    numberOfLines = {10}
                                    onChangeText={(description) => this.setState({description})}
@@ -317,16 +317,16 @@ class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon name='md-images' />
-                            <Label>Image:</Label>
+                            <Label>{strings("add_project.image")}</Label>
                             <Button
                                 style={{alignSelf: "center"}}
                                 onPress={() => this.selectImage()} light>
-                                <Text>Select</Text>
+                                <Text>{strings("add_project.select")}</Text>
                             </Button>
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon name='ios-folder-open' />
-                            <Label>Industry:</Label>
+                            <Label>{strings("add_project.industry")}:</Label>
                             <Picker
                                 mode="dropdown"
                                 iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -344,7 +344,7 @@ class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='money' />
-                            <Label>Capital Needed:</Label>
+                            <Label>{strings("add_project.capitalNeeded")}</Label>
                             <Slider
                                 value={Number(this.state.amount)}
                                 onValueChange={(amount) => this.setState({amount})}
@@ -372,7 +372,7 @@ class AddProject extends Component {
                         </ListItem>
                         <Item style={{height: 70}}>
                             <Icon type="MaterialCommunityIcons" name='presentation-play' />
-                            <Label>Presentation Link:</Label>
+                            <Label>{strings("add_project.presentation")}</Label>
                             <Button
                                 style={{alignSelf: "center"}}
                                 onPress={() => this.selectPresentation()} light>
@@ -381,16 +381,16 @@ class AddProject extends Component {
                         </Item>
                         <Item style={{height: 70}}>
                             <Icon type="FontAwesome" name='file-text' />
-                            <Label>Report Link:</Label>
+                            <Label>{strings("add_project.report")}</Label>
                             <Button
                                 style={{alignSelf: "center"}}
                                 onPress={() => this.selectReport()} light>
-                                <Text>Select</Text>
+                                <Text>{strings("add_project.select")}</Text>
                             </Button>
                         </Item>
                         <ListItem>
                             <Left>
-                                <Text>Public</Text>
+                                <Text>{strings("add_project.public")}</Text>
                             </Left>
                             <Right>
                                 <Radio selected={this.state.visibility === 1}
@@ -400,7 +400,7 @@ class AddProject extends Component {
                         </ListItem>
                         <ListItem>
                             <Left>
-                                <Text>Private</Text>
+                                <Text>{strings("add_project.private")}</Text>
                             </Left>
                             <Right>
                                 <Radio selected={this.state.visibility === 2}
@@ -412,7 +412,7 @@ class AddProject extends Component {
                             onPress={() => this.addOrEdit()}
                             style={{flexDirection: "row"}}
                             block light>
-                            <Text>Save</Text>
+                            <Text>{strings("add_project.save")}</Text>
                             {this.state.isLoading && (
                                 <ActivityIndicator style={{}} size="small" color="#000000" />
                             )}

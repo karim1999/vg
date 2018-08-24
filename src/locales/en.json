@@ -31,11 +31,31 @@
     "messages": "Messages",
     "chat": "Chat",
     "public": "Public Chat",
-    "publicDescription": "Chat for everybody"
+    "publicDescription": "Chat for everybody",
+    "created_by": ""
   },
   "messages": {
     "noInternet": "No internet connection.",
     "unknownError": "Unknown error has occurred.",
     "ok": "Ok"
+  },
+  "add_project": {
+    "addDone": "",
+    "editDone": "",
+    "requiredField": "",
+    "image": "",
+    "title": "Add Project",
+    "description": "",
+    "select": "",
+    "capitalNeeded": "",
+    "industry": "",
+    "presentation": "",
+    "report": "",
+    "save": "",
+    "public": "",
+    "private": ""
+  },
+  "profile": {
+
   }
 }

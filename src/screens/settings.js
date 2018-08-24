@@ -18,12 +18,12 @@ const routes = [
         text: strings("settings.profile"),
         icon: "user",
         name: "Profile"
+    },
+    {
+        text: "Security",
+        icon: "key",
+        name: "Security"
     }
-    // {
-    //     text: "App Settings",
-    //     icon: "cogs",
-    //     name: "AppSettings"
-    // }
 ];
 
 class Settings extends React.Component {

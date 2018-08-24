@@ -1,10 +1,41 @@
 {
   "login": {
-    "welcome": "Welcome {{name}} to our localized app!",
-    "login_button": "Login",
-    "signup_button": "Sign Up"
+    "welcome": "مرحبا بك",
+    "login_button": "تسجيل الدخول",
+    "signup_button": "التسجيل"
   },
-  "user_profile": {
-    "title": "Your Profile"
+  "signup": {
+    "title": "الملف الشخصي"
+  },
+  "home": {
+    "home": "الرئيسية",
+    "search": "بحث",
+    "all": "الكل",
+    "notFound": "لا يوجد بيانات"
+  },
+  "favorite": {
+    "favorites": "المفضل",
+    "notFound": "لا يوجد بيانات",
+    "myProjects": "مشاريعي"
+  },
+  "settings": {
+    "settings": "الاعدادات",
+    "avatar": "Avatar",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "project": {
+
+  },
+  "chat": {
+    "messages": "Messages",
+    "chat": "Chat",
+    "public": "Public Chat",
+    "publicDescription": "Chat for everybody"
+  },
+  "messages": {
+    "noInternet": "No internet connection.",
+    "unknownError": "Unknown error has occurred.",
+    "ok": "Ok"
   }
 }
