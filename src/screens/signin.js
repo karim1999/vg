@@ -160,7 +160,7 @@ class SignIn extends React.Component {
                     </TouchableOpacity>
                     <Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> OR </Text>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('SignUp1', data)}
+                        onPress={() => this.props.navigation.navigate('Terms', data)}
                         style={styles.button}
                     >
                         <Text style={{color: "#FFFFFF", fontSize: 20}}> Sign Up </Text>

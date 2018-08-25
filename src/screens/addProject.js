@@ -376,7 +376,7 @@ class AddProject extends Component {
                             <Button
                                 style={{alignSelf: "center"}}
                                 onPress={() => this.selectPresentation()} light>
-                                <Text>Select</Text>
+                                <Text>{strings("add_project.select")}</Text>
                             </Button>
                         </Item>
                         <Item style={{height: 70}}>

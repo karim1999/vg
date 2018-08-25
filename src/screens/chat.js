@@ -51,7 +51,7 @@ class Chat extends Component {
                                 </Left>
                                 <Body>
                                 <Text>{project.title}</Text>
-                                <Text note>strings("chat.created_by") {project.user.name}</Text>
+                                <Text note>{strings("chat.created_by")} {project.user.name}</Text>
                                 </Body>
                                 <Right>
                                     <Text note>{project.created_at}</Text>

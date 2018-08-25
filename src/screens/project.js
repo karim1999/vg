@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
-import {ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
+import {ActivityIndicator, AsyncStorage, Image, View, Linking} from 'react-native';
 import {Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Toast} from 'native-base';
 import {SERVER_URL, STORAGE_URL} from "../config";
 import NumericInput from 'react-native-numeric-input'
@@ -280,15 +280,15 @@ class Project extends Component {
                         <CardItem>
                             {this.state.presentation && (
                                 <Left>
-                                    <Button onPress={ ()=>{ Linking.openURL(this.state.presentation)}} transparent textStyle={{color: '#87838B'}}>
+                                    <Button onPress={ ()=>{ Linking.openURL(STORAGE_URL+ this.state.presentation)}} transparent textStyle={{color: '#87838B'}}>
                                         <Icon type="MaterialCommunityIcons" name="presentation-play"  />
                                         <Text>Presentation</Text>
                                     </Button>
                                 </Left>
                             )}
-                            {this.state.report && (
+                            {this.state.study && (
                                 <Right>
-                                    <Button onPress={ ()=>{ Linking.openURL(this.state.report)}}  transparent textStyle={{color: '#87838B'}}>
+                                    <Button onPress={ ()=>{ Linking.openURL(STORAGE_URL+this.state.study)}}  transparent textStyle={{color: '#87838B'}}>
                                         <Icon type="FontAwesome" name="file-text-o" />
                                         <Text>Report</Text>
                                     </Button>

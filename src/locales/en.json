@@ -32,7 +32,7 @@
     "chat": "Chat",
     "public": "Public Chat",
     "publicDescription": "Chat for everybody",
-    "created_by": ""
+    "created_by": "Created By"
   },
   "messages": {
     "noInternet": "No internet connection.",
@@ -40,20 +40,21 @@
     "ok": "Ok"
   },
   "add_project": {
-    "addDone": "",
-    "editDone": "",
-    "requiredField": "",
-    "image": "",
+    "addDone": "You have added a project successfully",
+    "editDone": "You have edited a project successfully",
+    "requiredField": "The {{name}} field is required",
+    "image": "Image",
     "title": "Add Project",
-    "description": "",
-    "select": "",
-    "capitalNeeded": "",
-    "industry": "",
-    "presentation": "",
-    "report": "",
-    "save": "",
-    "public": "",
-    "private": ""
+    "title_text": "Title",
+    "description": "Description",
+    "select": "select",
+    "capitalNeeded": "Capital Needed",
+    "industry": "Industry",
+    "presentation": "Presentation",
+    "report": "Report",
+    "save": "Save",
+    "public": "Public",
+    "private": "Private"
   },
   "profile": {
 

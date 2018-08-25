@@ -9,6 +9,7 @@ import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { strings } from './src/i18n';
 import AuthLoadingScreen from './src/screens/loading';
 import SignIn from './src/screens/signin';
+import Terms from './src/screens/terms';
 import SignUp1 from './src/screens/signup1';
 import SignUp2 from './src/screens/signup2';
 import SignUp3 from './src/screens/signup3';
@@ -110,6 +111,7 @@ const AppStack = createTabNavigator(
 const AuthStack = createStackNavigator(
     {
         SignIn: SignIn,
+        Terms: Terms,
         SignUp1: SignUp1,
         SignUp2: SignUp2,
         SignUp3: SignUp3,
