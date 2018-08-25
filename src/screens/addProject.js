@@ -5,7 +5,6 @@ import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios";
 import ImagePicker from "react-native-image-picker";
-import RNFetchBlob from "rn-fetch-blob";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';

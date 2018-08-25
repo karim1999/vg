@@ -3,10 +3,8 @@ package com.vg;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.facebook.react.ReactNativeHost;
@@ -29,10 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNFSPackage(),
             new ReactNativeDocumentPicker(),
             new ReactNativeOneSignalPackage(),
-            new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RNI18nPackage()
       );

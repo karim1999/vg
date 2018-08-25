@@ -9,7 +9,6 @@ import {SERVER_URL, STORAGE_URL} from "../config";
 import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
 import axios from "axios";
-import RNFetchBlob from 'rn-fetch-blob'
 import { strings } from '../i18n';
 
 

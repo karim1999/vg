@@ -37,6 +37,7 @@
   "messages": {
     "noInternet": "No internet connection.",
     "unknownError": "Unknown error has occurred.",
+    "image": "image",
     "ok": "Ok"
   },
   "add_project": {
