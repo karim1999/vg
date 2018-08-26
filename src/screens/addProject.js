@@ -349,7 +349,9 @@ class AddProject extends Component {
                                 onValueChange={(amount) => this.setState({amount})}
                                 style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
                         </Item>
-                        <ListItem>
+                        <ListItem
+                            onPress={(currency) => {this.setState({currency: "$"})}}
+                        >
                             <Left>
                                 <Text>USD ($)</Text>
                             </Left>
@@ -359,7 +361,9 @@ class AddProject extends Component {
                                 />
                             </Right>
                         </ListItem>
-                        <ListItem>
+                        <ListItem
+                            onPress={(currency) => {this.setState({currency: "SR"})}}
+                        >
                             <Left>
                                 <Text>SR</Text>
                             </Left>
@@ -387,7 +391,9 @@ class AddProject extends Component {
                                 <Text>{strings("add_project.select")}</Text>
                             </Button>
                         </Item>
-                        <ListItem>
+                        <ListItem
+                            onPress={(visibility) => {this.setState({visibility: 1})}}
+                        >
                             <Left>
                                 <Text>{strings("add_project.public")}</Text>
                             </Left>
@@ -397,7 +403,9 @@ class AddProject extends Component {
                                 />
                             </Right>
                         </ListItem>
-                        <ListItem>
+                        <ListItem
+                            onPress={(visibility) => {this.setState({visibility: 2})}}
+                        >
                             <Left>
                                 <Text>{strings("add_project.private")}</Text>
                             </Left>
