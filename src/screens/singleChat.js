@@ -120,7 +120,7 @@ class SingleChat extends Component {
                 )}
                 {this.state.total_amount_invested && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 13}}>Total capital available in this project: <Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')}{this.state.currency}</Text></Text>
+                        <Text style={{padding: 10, fontSize: 13}}>Total capital available in this project: <Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
                     </View>
                 )}
                 <GiftedChat

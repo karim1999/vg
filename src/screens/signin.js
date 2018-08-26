@@ -28,7 +28,7 @@ let data= {
     facebook: '',
     twitter: '',
     linkedin: '',
-    amount: 50000,
+    amount: 500000,
     idea: '',
     type: '',
     referral: '',
