@@ -7,13 +7,6 @@ target 'vg' do
 
   # Pods for vg
 
-  target 'vg-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-    pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
-
-
-  end
 
   target 'vgTests' do
     inherit! :search_paths
@@ -28,6 +21,9 @@ target 'vg-tvOS' do
 
   # Pods for vg-tvOS
 
-
+  target 'vg-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
 
 end
