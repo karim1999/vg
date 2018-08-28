@@ -49,31 +49,31 @@ class SingleChat extends Component {
         updates['/chat/'+this.state.id+'/' + newPostKey] = data[0];
         firebaseDb.ref().update(updates);
         if(this.state.id != 0){
-            OneSignal.getPermissionSubscriptionState((status) => {
-                let userId= status.userId;
-            });
-            let notification= {
-                app_id: ONESIGNAL_APP_ID,
-                contents: {"en": "New Message"},
-                data: {
-                    project: {...this.props.navigation.state.params},
-                    type : 1,
-                    title : this.state.title+" Chat",
-                    body : "A new message was sent.",
-                },
-                included_segments: ["All"],
-                filters: [
-                    {[this.state.id]: true}
-                ]
-            };
-            fetch('https://onesignal.com/api/v1/notifications', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": ONESIGNAL_API_KEY
-                },
-                body: JSON.stringify(notification),
-            });
+            // OneSignal.getPermissionSubscriptionState((status) => {
+            //     let userId= status.userId;
+            // });
+            // let notification= {
+            //     app_id: ONESIGNAL_APP_ID,
+            //     contents: {"en": "New Message"},
+            //     data: {
+            //         project: {...this.props.navigation.state.params},
+            //         type : 1,
+            //         title : this.state.title+" Chat",
+            //         body : "A new message was sent.",
+            //     },
+            //     included_segments: ["All"],
+            //     filters: [
+            //         {[this.state.id]: true}
+            //     ]
+            // };
+            // fetch('https://onesignal.com/api/v1/notifications', {
+            //     method: 'POST',
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "Authorization": ONESIGNAL_API_KEY
+            //     },
+            //     body: JSON.stringify(notification),
+            // });
         }
     }
     componentDidMount(){

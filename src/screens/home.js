@@ -105,23 +105,23 @@ class Home extends Component {
         await this.onLoad();
     }
     componentWillMount() {
-        OneSignal.init(ONESIGNAL_APP_ID);
-        OneSignal.inFocusDisplaying(2);
-
-        let results = _.map(this.props.jointProjects, function(project) { return {[project.id]: true}; });
-        for(let i= 0; i < results.length; i++){
-            OneSignal.sendTag("key", "value");
-        }
-
-        OneSignal.addEventListener('received', (notification) => this.onReceived(notification));
-        OneSignal.addEventListener('opened', (openResult) => this.onOpened(openResult));
-        OneSignal.addEventListener('ids', () => this.onIds);
+        // OneSignal.init(ONESIGNAL_APP_ID);
+        // OneSignal.inFocusDisplaying(2);
+        //
+        // let results = _.map(this.props.jointProjects, function(project) { return {[project.id]: true}; });
+        // for(let i= 0; i < results.length; i++){
+        //     OneSignal.sendTag("key", "value");
+        // }
+        //
+        // OneSignal.addEventListener('received', (notification) => this.onReceived(notification));
+        // OneSignal.addEventListener('opened', (openResult) => this.onOpened(openResult));
+        // OneSignal.addEventListener('ids', () => this.onIds);
     }
 
     componentWillUnmount() {
-        OneSignal.removeEventListener('received', () => this.onReceived);
-        OneSignal.removeEventListener('opened', () => this.onOpened);
-        OneSignal.removeEventListener('ids', (device) => this.onIds(device));
+        // OneSignal.removeEventListener('received', () => this.onReceived);
+        // OneSignal.removeEventListener('opened', () => this.onOpened);
+        // OneSignal.removeEventListener('ids', (device) => this.onIds(device));
     }
 
     onReceived(notification) {
