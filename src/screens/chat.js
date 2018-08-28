@@ -30,7 +30,7 @@ class Chat extends Component {
                                   style={{padding: 10, marginLeft: 0}}
                         >
                             <Left>
-                                <Thumbnail source={require("./../images/profile.jpg")} />
+                                <Thumbnail square source={require("./../images/logo-edited.png")} />
                             </Left>
                             <Body>
                             <Text>{strings("chat.public")}</Text>
