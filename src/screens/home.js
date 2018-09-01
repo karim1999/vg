@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import {Picker, Form, Icon, Toast, Item, Input, Content} from 'native-base';
-import {ActivityIndicator, FlatList, Platform, RefreshControl, Text, TouchableOpacity, View} from 'react-native';
+import {
+    ActivityIndicator,
+    AsyncStorage,
+    FlatList,
+    Platform,
+    RefreshControl,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import ProjectCard from './../components/projectCard';
 import AppTemplate from './../components/appTemplate';
 import axios from "axios";
@@ -105,32 +114,45 @@ class Home extends Component {
         await this.onLoad();
     }
     componentWillMount() {
-        // OneSignal.init(ONESIGNAL_APP_ID);
-        // OneSignal.inFocusDisplaying(2);
-        //
+        OneSignal.init(ONESIGNAL_APP_ID);
+        OneSignal.inFocusDisplaying(2);
+
+        OneSignal.getPermissionSubscriptionState((status) => {
+            AsyncStorage.getItem('token').then(userToken => {
+                return axios.post(SERVER_URL+"api/user/device?token="+userToken, { id: status.userId }).then(response => {
+                }).catch(error => {
+                    Toast.show({
+                        text: strings("messages.noInternet"),
+                        buttonText: strings("messages.ok"),
+                        type: "danger"
+                    })
+                });
+            })
+
+        });
         // let results = _.map(this.props.jointProjects, function(project) { return {[project.id]: true}; });
         // for(let i= 0; i < results.length; i++){
         //     OneSignal.sendTag("key", "value");
         // }
-        //
-        // OneSignal.addEventListener('received', (notification) => this.onReceived(notification));
-        // OneSignal.addEventListener('opened', (openResult) => this.onOpened(openResult));
-        // OneSignal.addEventListener('ids', () => this.onIds);
+
+        OneSignal.addEventListener('received', (notification) => this.onReceived(notification));
+        OneSignal.addEventListener('opened', (openResult) => this.onOpened(openResult));
+        OneSignal.addEventListener('ids', () => this.onIds);
     }
 
     componentWillUnmount() {
-        // OneSignal.removeEventListener('received', () => this.onReceived);
-        // OneSignal.removeEventListener('opened', () => this.onOpened);
-        // OneSignal.removeEventListener('ids', (device) => this.onIds(device));
+        OneSignal.removeEventListener('received', () => this.onReceived);
+        OneSignal.removeEventListener('opened', () => this.onOpened);
+        OneSignal.removeEventListener('ids', (device) => this.onIds(device));
     }
 
     onReceived(notification) {
-        // console.log("Notification received: ", notification);
-        // Toast.show({
-        //     text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
-        //     buttonText: "Ok",
-        //     type: "success"
-        // })
+        console.log("Notification received: ", notification);
+        Toast.show({
+            text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
+            buttonText: "Ok",
+            type: "success"
+        })
     }
 
     onOpened(openResult) {
@@ -150,7 +172,7 @@ class Home extends Component {
     }
 
     onIds(device) {
-        // console.log('Device info: ', device);
+        alert('Device info: '+ device);
     }
 
     render() {

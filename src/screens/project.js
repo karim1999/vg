@@ -273,7 +273,7 @@ class Project extends Component {
                             </View>
                             <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
                                 <Text style={{ fontSize: 15 }}> Total Capital Invested: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} $ </Text></Button>
+                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency} </Text></Button>
                             </View>
                             </Body>
                         </CardItem>

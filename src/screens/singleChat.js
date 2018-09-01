@@ -52,28 +52,30 @@ class SingleChat extends Component {
             // OneSignal.getPermissionSubscriptionState((status) => {
             //     let userId= status.userId;
             // });
-            // let notification= {
-            //     app_id: ONESIGNAL_APP_ID,
-            //     contents: {"en": "New Message"},
-            //     data: {
-            //         project: {...this.props.navigation.state.params},
-            //         type : 1,
-            //         title : this.state.title+" Chat",
-            //         body : "A new message was sent.",
-            //     },
-            //     included_segments: ["All"],
-            //     filters: [
-            //         {[this.state.id]: true}
-            //     ]
-            // };
-            // fetch('https://onesignal.com/api/v1/notifications', {
-            //     method: 'POST',
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": ONESIGNAL_API_KEY
-            //     },
-            //     body: JSON.stringify(notification),
-            // });
+            axios.get(SERVER_URL+"api/project/"+this.state.id+"/users").then(response => {
+                let devices= _.compact(_.map(response.data, user => user.id !== this.props.user.id && user.device_id));
+                let notification= {
+                    app_id: ONESIGNAL_APP_ID,
+                    contents: {"en": "New Message"},
+                    data: {
+                        project: {...this.props.navigation.state.params},
+                        type : 1,
+                        title : this.state.title+" Chat",
+                        body : "A new message was sent.",
+                    },
+                    include_player_ids: devices
+                };
+                fetch('https://onesignal.com/api/v1/notifications', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": ONESIGNAL_API_KEY
+                    },
+                    body: JSON.stringify(notification),
+                });
+            }).catch(error => {
+                alert(error);
+            });
         }
     }
     componentDidMount(){
