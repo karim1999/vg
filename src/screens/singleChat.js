@@ -54,27 +54,28 @@ class SingleChat extends Component {
             // });
             axios.get(SERVER_URL+"api/project/"+this.state.id+"/users").then(response => {
                 let devices= _.compact(_.map(response.data, user => user.id !== this.props.user.id && user.device_id));
+                return devices;
+            }).then(devices => {
                 let notification= {
                     app_id: ONESIGNAL_APP_ID,
-                    contents: {"en": "New Message"},
+                    contents: {"en": "New message was sent to " + this.state.title + " group chat"},
                     data: {
-                        project: {...this.props.navigation.state.params},
                         type : 1,
-                        title : this.state.title+" Chat",
-                        body : "A new message was sent.",
                     },
                     include_player_ids: devices
                 };
-                fetch('https://onesignal.com/api/v1/notifications', {
-                    method: 'POST',
+                axios.post('https://onesignal.com/api/v1/notifications', notification , {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": ONESIGNAL_API_KEY
-                    },
-                    body: JSON.stringify(notification),
+                    }
+                }).then(response => {
+                    console.log(response.data.id);
+                }).catch(error => {
+                    console.log(error);
                 });
             }).catch(error => {
-                alert(error);
+                console.log(error);
             });
         }
     }

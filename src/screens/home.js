@@ -148,11 +148,11 @@ class Home extends Component {
 
     onReceived(notification) {
         console.log("Notification received: ", notification);
-        Toast.show({
-            text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
-            buttonText: "Ok",
-            type: "success"
-        })
+        // Toast.show({
+        //     text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
+        //     buttonText: "Ok",
+        //     type: "success"
+        // })
     }
 
     onOpened(openResult) {
@@ -161,9 +161,9 @@ class Home extends Component {
         // console.log('isActive: ', openResult.notification.isAppInFocus);
         // console.log('openResult: ', openResult);
         // alert(openResult.notification.payload.additionalData.name);
-        if(openResult.notification.payload.additionalData.type == 1){
-            this.props.navigation.navigate("SingleChat", {...openResult.notification.payload.additionalData.project})
-        }
+        // if(openResult.notification.payload.additionalData.type == 1){
+        //     this.props.navigation.navigate("SingleChat", {...openResult.notification.payload.additionalData.project})
+        // }
         // Toast.show({
         //     text: openResult.notification.payload.body+" from "+openResult.notification.payload.title,
         //     buttonText: "Ok",
