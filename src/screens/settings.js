@@ -10,16 +10,17 @@ import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
 import axios from "axios";
 import { strings } from '../i18n';
+import I18n from "../i18n";
 
 
 const routes = [
     {
-        text: strings("settings.profile"),
+        text: "profile",
         icon: "user",
         name: "Profile"
     },
     {
-        text: "Security",
+        text: "security",
         icon: "key",
         name: "Security"
     }
@@ -81,7 +82,7 @@ class Settings extends React.Component {
                         });
                         Toast.show({
                             text: strings("messages.noInternet"),
-                            buttonText: "Ok",
+                            buttonText: strings("messages.ok"),
                             type: "danger"
                         })
                     })
@@ -95,7 +96,7 @@ class Settings extends React.Component {
     render() {
         return (
             <AppTemplate title={strings("settings.settings")} navigation={this.props.navigation} activeTab="Settings">
-                <ImageBackground source={require("./../images/img1.jpg")} style={{ width: "100%", height: 300 }}>
+                <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 300 }}>
                     <View style={{  width: "100%", height: 300, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity
                             onPress={() => this.getImage()}
@@ -108,8 +109,8 @@ class Settings extends React.Component {
                 <Content style={{ marginTop: 20 }}>
                     <List>
                         {
-                            routes.map((route) => {
-                                return (
+                            routes.map((route) => (
+                                (I18n.locale !== "ar") ? (
                                     <ListItem style={{ marginTop: 10, marginBottom: 10 }}
                                               key={route.name}
                                               onPress={() => this.props.navigation.navigate(route.name)}
@@ -118,28 +119,61 @@ class Settings extends React.Component {
                                             <Icon size={25} color="#000000" active name={route.icon} />
                                         </Left>
                                         <Body>
-                                        <Text>{route.text}</Text>
+                                        <Text>{ strings('settings.'+route.text) }</Text>
                                         </Body>
                                         <Right>
-                                            <IonicIcon size={25} name="ios-arrow-forward" />
+                                            <IonicIcon size={25} name="ios-arrow-back" />
                                         </Right>
                                     </ListItem>
-                                );
-                            })
+                                ) : (
+                                    <ListItem style={{ marginTop: 10, marginBottom: 10 }}
+                                              key={route.name}
+                                              onPress={() => this.props.navigation.navigate(route.name)}
+                                              icon>
+                                        <Left>
+                                            <IonicIcon size={25} name="ios-arrow-back" />
+                                        </Left>
+                                        <Body>
+                                        <Text>{ strings('settings.'+route.text) }</Text>
+                                        </Body>
+                                        <Right>
+                                            <Icon size={25} color="#000000" active name={route.icon} />
+                                        </Right>
+                                    </ListItem>
+                                    )
+                            ))
                         }
-                        <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
-                                  onPress={() => this.logout()}
-                        >
-                            <Left>
-                                <IonicIcon size={25} color="#000000" active name="ios-log-out" />
-                            </Left>
-                            <Body>
-                            <Text>{strings("settings.logout")}</Text>
-                            </Body>
-                            <Right>
-                                <IonicIcon size={25} name="ios-arrow-forward" />
-                            </Right>
-                        </ListItem>
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                          onPress={() => this.logout()}
+                                >
+                                    <Left>
+                                        <IonicIcon size={25} color="#000000" active name="ios-log-out" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("settings.logout")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <IonicIcon size={25} name="ios-arrow-forward" />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                          onPress={() => this.logout()}
+                                >
+                                    <Left>
+                                        <IonicIcon size={25} name="ios-arrow-back" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("settings.logout")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <IonicIcon size={25} color="#000000" active name="ios-log-out" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
                     </List>
                 </Content>
             </AppTemplate>

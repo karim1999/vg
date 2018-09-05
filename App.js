@@ -6,7 +6,7 @@ import { currentUser } from './src/reducers';
 import { createStackNavigator, createSwitchNavigator, createTabNavigator } from 'react-navigation';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 
-import { strings } from './src/i18n';
+import i18n, { strings } from './src/i18n';
 import AuthLoadingScreen from './src/screens/loading';
 import SignIn from './src/screens/signin';
 import Terms from './src/screens/terms';
@@ -27,6 +27,7 @@ import Profile from './src/screens/profile';
 import Security from './src/screens/security';
 import Favorite from './src/screens/favorite';
 import {StyleSheet,Platform} from "react-native";
+import I18n from "react-native-i18n";
 
 const HomeStack = createStackNavigator({
     Home: Home,
@@ -147,6 +148,9 @@ export default class App extends React.Component {
         };
     }
 
+    componentDidMount(){
+        I18n.locale = "ar";
+    }
     render() {
         return (
             <Root>

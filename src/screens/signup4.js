@@ -5,6 +5,8 @@ import AuthTemplate from './../components/authTemplate';
 import NumericInput from 'react-native-numeric-input'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Toast} from "native-base";
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class SignUp4 extends React.Component {
     static navigationOptions = {
@@ -19,8 +21,8 @@ export default class SignUp4 extends React.Component {
     check(){
         if(this.state.data.amount == ""){
             Toast.show({
-                text: "The amount field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "Wallet"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else{
@@ -39,36 +41,71 @@ export default class SignUp4 extends React.Component {
 
     render() {
         return (
-            <AuthTemplate next="SignUp5" title="Sign Up (Step 4)" navigation={this.props.navigation} error={this.state.error}>
-                <View style={{flexDirection: "row", width: "70%", marginBottom: 20}}>
-                    <Text style={{color: "white", fontSize: 22, textAlign: "left", alignSelf: "center", flex: 1}}>Money: </Text>
-                    <NumericInput
-                        type='up-down'
-                        style={{marginTop: 20, justifySelf: "center", alignSelf: "center" }}
-                        onChange={amount => this.setState(prevState => (
-                            {
-                                data: {
-                                    ...prevState.data,
-                                    amount
-                                }
-                            })
-                        )}
-                        minValue={500000}
-                        maxValue={1000000000}
-                        totalWidth={150}
-                        totalHeight={45}
-                        iconSize={20}
-                        step={50000}
-                        value={this.state.data.amount}
-                        valueType='real'
-                        rounded
-                        textColor='#FFFFFF'
-                        iconStyle={{ color: 'white' }}
-                        borderColor='#344955'
-                        rightButtonBackgroundColor='#344955'
-                        leftButtonBackgroundColor='#344955'
-                        upDownButtonsBackgroundColor='#344955'/>
-                </View>
+            <AuthTemplate next="SignUp5" title={strings("signup.signup4")} navigation={this.props.navigation} error={this.state.error}>
+                    {
+                        (I18n.locale === "ar")? (
+                            <View style={{flexDirection: "row", width: "70%", marginBottom: 20}}>
+                                <NumericInput
+                                    type='up-down'
+                                    style={{marginTop: 20, justifySelf: "center", alignSelf: "center" }}
+                                    onChange={amount => this.setState(prevState => (
+                                        {
+                                            data: {
+                                                ...prevState.data,
+                                                amount
+                                            }
+                                        })
+                                    )}
+                                    minValue={500000}
+                                    maxValue={1000000000}
+                                    totalWidth={150}
+                                    totalHeight={45}
+                                    iconSize={20}
+                                    step={50000}
+                                    value={this.state.data.amount}
+                                    valueType='real'
+                                    rounded
+                                    textColor='#FFFFFF'
+                                    iconStyle={{ color: 'white' }}
+                                    borderColor='#344955'
+                                    rightButtonBackgroundColor='#344955'
+                                    leftButtonBackgroundColor='#344955'
+                                    upDownButtonsBackgroundColor='#344955'/>
+                                <Text style={{color: "white", fontSize: 22, textAlign: "right", alignSelf: "center", flex: 1}}>{strings('profile.wallet')} </Text>
+                            </View>
+                        ):(
+                            <View style={{flexDirection: "row", width: "70%", marginBottom: 20}}>
+
+                                <Text style={{color: "white", fontSize: 22, textAlign: "left", alignSelf: "center", flex: 1}}>{strings('profile.wallet')} </Text>
+                                <NumericInput
+                                    type='up-down'
+                                    style={{marginTop: 20, justifySelf: "center", alignSelf: "center" }}
+                                    onChange={amount => this.setState(prevState => (
+                                        {
+                                            data: {
+                                                ...prevState.data,
+                                                amount
+                                            }
+                                        })
+                                    )}
+                                    minValue={500000}
+                                    maxValue={1000000000}
+                                    totalWidth={150}
+                                    totalHeight={45}
+                                    iconSize={20}
+                                    step={50000}
+                                    value={this.state.data.amount}
+                                    valueType='real'
+                                    rounded
+                                    textColor='#FFFFFF'
+                                    iconStyle={{ color: 'white' }}
+                                    borderColor='#344955'
+                                    rightButtonBackgroundColor='#344955'
+                                    leftButtonBackgroundColor='#344955'
+                                    upDownButtonsBackgroundColor='#344955'/>
+                            </View>
+                        )
+                    }
                 {
                     (Platform.OS === 'ios') ?
                         <Picker
@@ -82,10 +119,10 @@ export default class SignUp4 extends React.Component {
                                         type: itemValue
                                     }
                                 }))}>
-                            <Picker.Item key={0} label="Prefered investment type" value={0} />
-                            <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
-                            <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
-                            <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
+                            <Picker.Item key={0} label={strings('profile.prefered')} value={0} />
+                            <Picker.Item key="Short-term" label={strings('profile.short')} value="Short-term" />
+                            <Picker.Item key="Mid-term" label={strings('profile.mid')} value="Mid-term" />
+                            <Picker.Item key="Long-term" label={strings('profile.long')} value="Long-term" />
                         </Picker>
                         :
                         <Picker2
@@ -99,16 +136,16 @@ export default class SignUp4 extends React.Component {
                                         type: itemValue
                                     }
                                 }))}>
-                            <Picker.Item key={0} label="Prefered investment type" value={0} />
-                            <Picker.Item key="Short-term" label="Short-term" value="Short-term" />
-                            <Picker.Item key="Mid-term" label="Mid-term" value="Mid-term" />
-                            <Picker.Item key="Long-term" label="Long-term" value="Long-term" />
+                            <Picker.Item key={0} label={strings('profile.prefered')} value={0} />
+                            <Picker.Item key="Short-term" label={strings('profile.short')} value="Short-term" />
+                            <Picker.Item key="Mid-term" label={strings('profile.mid')} value="Mid-term" />
+                            <Picker.Item key="Long-term" label={strings('profile.long')} value="Long-term" />
                         </Picker2>
                 }
                 <TextInput
-                    style={styles.textarea}
+                    style={[styles.textarea, (I18n.locale === "ar") && styles.rtl]}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Write about your project"
+                    placeholder={strings('profile.project')}
                     multiline = {true}
                     numberOfLines = {4}
                     onChangeText={(idea) => this.setState(prevState => (
@@ -183,6 +220,9 @@ const styles = StyleSheet.create({
         width: "50%",
         alignItems: 'flex-start',
         marginTop: 20,
+    },
+    rtl: {
+        textAlign: "right"
     }
 
 });

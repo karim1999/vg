@@ -4,6 +4,8 @@ import {Form, Item, Input, Label, Icon, Button, Text, Toast} from 'native-base';
 import {ActivityIndicator, AsyncStorage, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios";
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class Security extends Component {
     constructor(props) {
@@ -26,16 +28,16 @@ export default class Security extends Component {
                         password: this.state.password
                     }).then(response => {
                         Toast.show({
-                            text: "Your Password has been edited successfully.",
-                            buttonText: "Ok",
+                            text: strings('password.done'),
+                            buttonText: strings("messages.ok"),
                             type: "success"
                         });
                         console.log(response.data);
                     }).catch(error => {
                         console.log(error);
                         Toast.show({
-                            text: "Error reaching the server.",
-                            buttonText: "Ok",
+                            text: strings("messages.noInternet"),
+                            buttonText: strings("messages.ok"),
                             type: "danger"
                         })
                     })
@@ -46,15 +48,15 @@ export default class Security extends Component {
                 });
             }else{
                 Toast.show({
-                    text: "the confirmation password should be the same as the password.",
-                    buttonText: "Ok",
+                    text: strings('password.confirmMsg'),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }
         }else{
             Toast.show({
-                text: "the password cannot be empty.",
-                buttonText: "Ok",
+                text: strings('password.empty'),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }
@@ -62,28 +64,52 @@ export default class Security extends Component {
     render() {
 
         return (
-            <AppTemplate title="Edit Password" backButton={true} navigation={this.props.navigation} activeTab="Settings">
+            <AppTemplate title={strings('password.title')} backButton={true} navigation={this.props.navigation} activeTab="Settings">
                 <View style={{padding: 5, margin: 20, backgroundColor: "#FFFFFF"}}>
                     <Form>
-                        <Item style={{height: 70}}>
-                            <Icon name='ios-key' />
-                            <Label>Password:</Label>
-                            <Input onChangeText={(password) => this.setState({password})} secureTextEntry={true}
-                                   value={this.state.password}
-                            />
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon name='ios-key' />
-                            <Label>Confirm Password:</Label>
-                            <Input onChangeText={(confirm) => this.setState({confirm})} secureTextEntry={true}
-                                   value={this.state.confirm}
-                            />
-                        </Item>
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='ios-key' />
+                                    <Label>{ strings('password.password') }</Label>
+                                    <Input onChangeText={(password) => this.setState({password})} secureTextEntry={true}
+                                           value={this.state.password}
+                                    />
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Input style={{textAlign: "right"}} onChangeText={(password) => this.setState({password})} secureTextEntry={true}
+                                           value={this.state.password}
+                                    />
+                                    <Label>{ strings('password.password') }</Label>
+                                    <Icon name='ios-key' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='ios-key' />
+                                    <Label>{ strings('password.confirmPass') }</Label>
+                                    <Input onChangeText={(confirm) => this.setState({confirm})} secureTextEntry={true}
+                                           value={this.state.confirm}
+                                    />
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Input style={{textAlign: "right"}} onChangeText={(confirm) => this.setState({confirm})} secureTextEntry={true}
+                                           value={this.state.confirm}
+                                    />
+                                    <Label>{ strings('password.confirmPass') }</Label>
+                                    <Icon name='ios-key' />
+                                </Item>
+                            )
+                        }
                         <Button
                             onPress={() => this.submit()}
                             style={{flexDirection: "row"}}
                             block light>
-                            <Text>Change</Text>
+                            <Text>{ strings('password.change') }</Text>
                             {this.state.isLoading && (
                                 <ActivityIndicator style={{}} size="small" color="#000000" />
                             )}

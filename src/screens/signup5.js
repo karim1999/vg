@@ -5,6 +5,7 @@ import {Picker} from 'native-base';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class SignUp5 extends React.Component {
     static navigationOptions = {
@@ -19,12 +20,12 @@ export default class SignUp5 extends React.Component {
 
     render() {
         return (
-            <AuthTemplate data={this.state.data} next="Complete" title="Sign Up (Step 5)" navigation={this.props.navigation} error={this.state.error}>
+            <AuthTemplate data={this.state.data} next="Complete" title={strings("signup.signup5")} navigation={this.props.navigation} error={this.state.error}>
 
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Code of referral"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.referral')}
                     onChangeText={(referral) => this.setState(prevState => (
                         {
                             data: {
@@ -38,7 +39,7 @@ export default class SignUp5 extends React.Component {
                         <Picker
                             selectedValue={this.state.data.type}
                             style={styles.select}
-                            placeholder="How did you know about us"
+                            placeholder={strings('profile.how')}
                             itemStyle={{ fontSize:23 }}
                             onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
                                 {
@@ -47,16 +48,16 @@ export default class SignUp5 extends React.Component {
                                         how: itemValue
                                     }
                                 }))}>
-                            <Picker.Item key="Social-Media" label="Social Media" value="Social Media" />
-                            <Picker.Item key="Search-Engines" label="Search Engines" value="Search Engines" />
-                            <Picker.Item key="Friend" label="Friend" value="Friend" />
+                            <Picker.Item key="Social-Media" label={strings('profile.social')} value="Social Media" />
+                            <Picker.Item key="Search-Engines" label={strings('profile.search')} value="Search Engines" />
+                            <Picker.Item key="Friend" label={strings('profile.friends')} value="Friend" />
                         </Picker>
                         :
                         <Picker2
                             selectedValue={this.state.data.type}
                             style={styles.select2}
                             itemStyle={{ fontSize:23 }}
-                            placeholder="How did you know about us"
+                            placeholder={strings('profile.how')}
                             onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
                                 {
                                     data: {
@@ -64,9 +65,9 @@ export default class SignUp5 extends React.Component {
                                         how: itemValue
                                     }
                                 }))}>
-                            <Picker.Item key="Social-Media" label="Social Media" value="Social Media" />
-                            <Picker.Item key="Search-Engines" label="Search Engines" value="Search Engines" />
-                            <Picker.Item key="Friend" label="Friend" value="Friend" />
+                            <Picker.Item key="Social-Media" label={strings('profile.social')} value="Social Media" />
+                            <Picker.Item key="Search-Engines" label={strings('profile.search')} value="Search Engines" />
+                            <Picker.Item key="Friend" label={strings('profile.friends')} value="Friend" />
                         </Picker2>
                 }
                 <View style={styles.navigation}>
@@ -126,6 +127,9 @@ const styles = StyleSheet.create({
         width: "50%",
         alignItems: 'flex-start',
         marginTop: 20,
+    },
+    rtl: {
+        textAlign: "right"
     }
 
 });

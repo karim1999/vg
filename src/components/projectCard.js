@@ -7,6 +7,7 @@ import {setUser} from "../reducers";
 import {connect} from "react-redux";
 import _ from "lodash";
 import axios from "axios";
+import {strings} from "../i18n";
 
 class ProjectCard extends React.Component {
     constructor(props) {
@@ -32,8 +33,8 @@ class ProjectCard extends React.Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "Error reaching the server.",
-                    buttonText: "Ok",
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             })
@@ -55,8 +56,8 @@ class ProjectCard extends React.Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "Error reaching the server.",
-                    buttonText: "Ok",
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             })

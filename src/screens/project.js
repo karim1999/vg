@@ -10,6 +10,7 @@ import axios from "axios";
 import _ from "lodash";
 import MultiSelect from "react-native-quick-select";
 import {strings} from "../i18n";
+import I18n from "../i18n";
 
 class Project extends Component {
     constructor(props) {
@@ -53,8 +54,8 @@ class Project extends Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "Error reaching the server.",
-                    buttonText: "Ok",
+                    text: strings("messages.unknownError"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             })
@@ -75,8 +76,8 @@ class Project extends Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "Error reaching the server.",
-                    buttonText: "Ok",
+                    text: strings("messages.unknownError"),
+                    buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             })
@@ -98,7 +99,7 @@ class Project extends Component {
                     isLoading: false,
                 });
                 Toast.show({
-                    text: "Error reaching the server.",
+                    text: strings("messages.unknownError"),
                     buttonText: "Ok",
                     type: "danger"
                 })
@@ -162,7 +163,7 @@ class Project extends Component {
             users: _.join(this.state.selectedUsers, ',')
         }).then(response2 => {
             Toast.show({
-                text: "Users were updated successfully.",
+                text: strings("project.usersUpdated"),
                 buttonText: strings("messages.ok"),
                 type: "success"
             });
@@ -172,7 +173,7 @@ class Project extends Component {
         }).catch(error => {
             Toast.show({
                 text: strings("messages.noInternet"),
-                buttonText: strings("messages.noInternet"),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             });
             this.setState({
@@ -186,11 +187,11 @@ class Project extends Component {
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
                         onPress={() => this.openChat()}
-                        style={{width: "100%", alignItems: "center"}} light={true}><Text style={{flex: 1}}> Open this project chat now. </Text>
+                        style={{width: "100%", alignItems: "center"}} light={true}><Text style={{flex: 1}}> { strings("project.openChat") } </Text>
                         <Icon name="ios-chatboxes" style={{color: "#000000", fontSize: 25}}/>
                     </Button>
                 ) : (
-                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} dark><Text style={{flex: 1}}> Invest in this project now. </Text>
+                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} dark><Text style={{flex: 1}}> { strings("project.investProject") } </Text>
                         <Icon name={this.state.isInvesting? "ios-arrow-dropup-circle": "ios-arrow-dropdown-circle"} style={{color: "#FFFFFF", fontSize: 25}}/>
                     </Button>
                 )}
@@ -212,7 +213,7 @@ class Project extends Component {
                             rightButtonBackgroundColor='#FFFFFF'
                             leftButtonBackgroundColor='#FFFFFF'/>
                         <Button style={{marginTop: 20}} onPress={()=> {this.investInProject()}} block light>
-                            <Text>Invest in this project</Text>
+                            <Text>{ strings("project.investProject") }</Text>
                             {this.state.isLoading && (
                                 <ActivityIndicator style={{}} size="small" color="#000000" />
                             )}
@@ -237,10 +238,10 @@ class Project extends Component {
                             itemTextColor="#000"
                             searchInputStyle={{ color: '#CCC' }}
                             submitButtonColor="#CCC"
-                            submitButtonText="Select"
+                            submitButtonText={strings('project.select')}
                         />
                         <Button style={{marginTop: 20}} onPress={()=> {this.addPeople()}} block light>
-                            <Text>Save</Text>
+                            <Text>{ strings("project.save") }</Text>
                             {this.state.isLoading && (
                                 <ActivityIndicator style={{}} size="small" color="#000000" />
                             )}
@@ -267,14 +268,32 @@ class Project extends Component {
                                 {this.state.description}
                                 </Text>
                             <Image source={{uri: STORAGE_URL+this.state.img}} style={{height: 250, width: "100%", flex: 1}}/>
-                            <View style={{ marginTop: 10, flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ fontSize: 15 }}> Total Capital Needed: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.amount, 0, '.', ',')} {this.state.currency} </Text></Button>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
-                                <Text style={{ fontSize: 15 }}> Total Capital Invested: </Text>
-                                <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency} </Text></Button>
-                            </View>
+                                {
+                                    (I18n.locale === "ar") ? (
+                                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10, alignSelf: "flex-end", justifySelf: "flex-end" }}>
+                                            <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.amount, 0, '.', ',')} {this.state.currency} </Text></Button>
+                                            <Text style={{ fontSize: 15, textAlign: "right", alignSelf: "flex-end" }}> { strings("project.capitalNeeded") } </Text>
+                                        </View>
+                                    ) : (
+                                        <View style={{ marginTop: 10, flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                                            <Text style={{ fontSize: 15 }}> { strings("project.capitalNeeded") } </Text>
+                                            <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.amount, 0, '.', ',')} {this.state.currency} </Text></Button>
+                                        </View>
+                                    )
+                                }
+                                {
+                                    (I18n.locale === "ar") ? (
+                                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10, alignSelf: "flex-end", justifySelf: "flex-end" }}>
+                                            <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency} </Text></Button>
+                                            <Text style={{ fontSize: 15 }}> { strings("project.capitalInvested") } </Text>
+                                        </View>
+                                    ) : (
+                                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
+                                            <Text style={{ fontSize: 15 }}> { strings("project.capitalInvested") } </Text>
+                                            <Button rounded small dark style={{padding: 4}}><Text style={{ fontSize: 12, fontWeight: "bold" }}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency} </Text></Button>
+                                        </View>
+                                    )
+                                }
                             </Body>
                         </CardItem>
                         <CardItem>
@@ -282,7 +301,7 @@ class Project extends Component {
                                 <Left>
                                     <Button onPress={ ()=>{ Linking.openURL(STORAGE_URL+ this.state.presentation)}} transparent textStyle={{color: '#87838B'}}>
                                         <Icon type="MaterialCommunityIcons" name="presentation-play"  />
-                                        <Text>Presentation</Text>
+                                        <Text>{ strings("project.presentation") }</Text>
                                     </Button>
                                 </Left>
                             )}
@@ -290,7 +309,7 @@ class Project extends Component {
                                 <Right>
                                     <Button onPress={ ()=>{ Linking.openURL(STORAGE_URL+this.state.study)}}  transparent textStyle={{color: '#87838B'}}>
                                         <Icon type="FontAwesome" name="file-text-o" />
-                                        <Text>Report</Text>
+                                        <Text>{ strings("project.report") }</Text>
                                     </Button>
                                 </Right>
                             )}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Header, Title, Left, Body, Right, Button, Icon} from 'native-base';
+import I18n from "../i18n";
 
 export default class MainHeader extends Component {
     constructor(props) {
@@ -14,18 +15,34 @@ export default class MainHeader extends Component {
                     androidStatusBarColor="#000000"
             >
                 <Left>
-                    {this.props.children}
+                    {
+                        (I18n.locale === "ar") ?
+                            this.props.right && (
+
+                                <Button transparent onPress={() => this.props.toggleMenu()}>
+                                    <Icon type="Entypo" name="dots-three-vertical" style={{color: "#000000", fontSize: 28}}/>
+                                </Button>
+                            )
+                            :
+                            this.props.children
+
+                    }
                 </Left>
                 <Body>
-                <Title style={{ color: "#000000" }}>{this.props.title}</Title>
+                <Title style={[{ color: "#000000" }, (I18n.locale === "ar") && {justifySelf: "flex-end", alignSelf: "flex-end"}]}>{this.props.title}</Title>
                 </Body>
                     <Right>
-                    {this.props.right && (
+                        {
+                            (I18n.locale === "ar") ?
+                                this.props.children
+                                :
+                                this.props.right && (
 
-                        <Button transparent onPress={() => this.props.toggleMenu()}>
-                            <Icon type="Entypo" name="dots-three-vertical" style={{color: "#000000", fontSize: 28}}/>
-                        </Button>
-                        )}
+                                    <Button transparent onPress={() => this.props.toggleMenu()}>
+                                        <Icon type="Entypo" name="dots-three-vertical" style={{color: "#000000", fontSize: 28}}/>
+                                    </Button>
+                                )
+                        }
                     </Right>
 
             </Header>

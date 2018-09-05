@@ -10,6 +10,7 @@ import OneSignal from "react-native-onesignal";
 import axios from "axios";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
+import {strings} from "../i18n";
 
 class SingleChat extends Component {
     constructor(props) {
@@ -117,13 +118,13 @@ class SingleChat extends Component {
                             this.setState({menu: false});
                             this.props.navigation.navigate("Project", {...this.props.navigation.state.params});
                         }}>
-                            <Text>Open Project</Text>
+                            <Text>{ strings('chat.openProject') }</Text>
                         </ListItem>
                     </List>
                 )}
                 {this.state.total_amount_invested && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 13}}>Total capital available in this project: <Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
+                        <Text style={{padding: 10, fontSize: 13}}>{ strings('chat.totalCapital') }<Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
                     </View>
                 )}
                 <GiftedChat

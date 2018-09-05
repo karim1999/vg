@@ -8,6 +8,8 @@ import _ from "lodash";
 import {Alert, AsyncStorage,Platform, RefreshControl, View} from "react-native";
 import {SERVER_URL} from "../config";
 import axios from "axios/index";
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 class AppTemplate extends Component {
     constructor(props) {
@@ -36,11 +38,11 @@ class AppTemplate extends Component {
     }
     deleteProject(){
         Alert.alert(
-            'Are you sure?',
-            'The project will be removed completely after this action.',
+            strings('app.sure'),
+            strings('app.removedCompletely'),
             [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-                {text: 'OK', onPress: () => {
+                {text: strings('messages.cancel'), onPress: () => console.log('Cancel Pressed')},
+                {text: strings('messages.ok'), onPress: () => {
                         this.setState({
                             menu: false
                         });
@@ -63,11 +65,11 @@ class AppTemplate extends Component {
     }
     leaveProject(){
         Alert.alert(
-            'Are you sure?',
-            'By leaving the project you won\'t be able to access the project chat.',
+            strings('app.sure'),
+            strings('app.leaveProjectMsg'),
             [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-                {text: 'OK', onPress: () => {
+                {text: strings('messages.cancel'), onPress: () => console.log('Cancel Pressed')},
+                {text: strings('messages.ok'), onPress: () => {
                         this.setState({
                             menu: false
                         });
@@ -102,8 +104,8 @@ class AppTemplate extends Component {
                     });
                 }).catch(error => {
                     Toast.show({
-                        text: "No internet connection",
-                        buttonText: "Ok",
+                        text: strings("messages.unknownError"),
+                        buttonText: strings("messages.ok"),
                         type: "danger"
                     });
                     this.setState({
@@ -122,10 +124,15 @@ class AppTemplate extends Component {
                     onClose={() => this.closeDrawer()}
                 >
                     <Header toggleMenu={() => this.toggleMenu()} title={this.props.title} navigation={this.props.navigation} right={this.props.right}>
-                        {this.props.backButton ? (
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
-                            </Button>
+                        {this.props.backButton ?
+                            (I18n.locale === "ar") ?(
+                                <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                    <Icon name="ios-arrow-forward" style={{color: "#000000", fontSize: 35}}/>
+                                </Button>
+                            ): (
+                                <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                    <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
+                                </Button>
                         ) : (
                             <Button transparent onPress={() => this.openDrawer()}>
                                 <Icon type="Entypo" name="menu" style={{color: "#000000", fontSize: 35}}/>
@@ -144,27 +151,27 @@ class AppTemplate extends Component {
                         {this.state.menu && (
                             <List style={{backgroundColor: "#FFFFFF", right: 0}}>
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
-                                    <ListItem onPress={() => this.addPeople()}>
-                                        <Text>Add/Remove People</Text>
+                                    <ListItem onPress={() => this.addPeople()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.add_remove") }</Text>
                                     </ListItem>
                                 )}
 
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project) && (
-                                    <ListItem onPress={() => this.props.openChat()}>
-                                        <Text>Open Chat</Text>
+                                    <ListItem onPress={() => this.props.openChat()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.openChat") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project)? (
-                                    <ListItem onPress={() => this.changeInvestment()}>
-                                        <Text>Change Investment Value</Text>
+                                    <ListItem onPress={() => this.changeInvestment()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.changeInvestment") }</Text>
                                     </ListItem>
                                 ) : (
-                                    <ListItem onPress={() => this.investInProject()}>
-                                        <Text>Invest In the project</Text>
+                                    <ListItem onPress={() => this.investInProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.investProject") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
-                                    <ListItem onPress={() => this.props.navigation.navigate("AddProject", {
+                                    <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => this.props.navigation.navigate("AddProject", {
                                         id: this.props.id,
                                         title: this.props.title,
                                         description: this.props.description,
@@ -175,17 +182,17 @@ class AppTemplate extends Component {
                                         visibility: this.props.visibility,
                                         category: this.props.category_id
                                     })}>
-                                        <Text>Edit Project</Text>
+                                        <Text>{ strings("app.editProject") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
-                                    <ListItem onPress={() => this.deleteProject()}>
-                                        <Text>Delete Project</Text>
+                                    <ListItem onPress={() => this.deleteProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.deleteProject") }</Text>
                                     </ListItem>
                                 )}
                                 {(!_.find(this.props.myProjects, project => project.id == this.props.project) && _.find(this.props.jointProjects, project => project.id == this.props.project)) && (
-                                    <ListItem onPress={() => this.leaveProject()}>
-                                        <Text>Leave Project</Text>
+                                    <ListItem onPress={() => this.leaveProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text>{ strings("app.leaveProject") }</Text>
                                     </ListItem>
                                 )}
                             </List>

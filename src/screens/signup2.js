@@ -3,6 +3,8 @@ import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Toast} from "native-base";
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class SignUp2 extends React.Component {
     static navigationOptions = {
@@ -20,26 +22,26 @@ export default class SignUp2 extends React.Component {
 
         if(this.state.data.name == ""){
             Toast.show({
-                text: "Name field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "Name"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else if(this.state.data.email == ""){
             Toast.show({
-                text: "Email field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "E-mail"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else if(!this.state.data.email.match(mailformat)){
             Toast.show({
-                text: "This is not a valid Email.",
-                buttonText: "Ok",
+                text: strings('signup.notEmail'),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else if(this.state.data.password == ""){
             Toast.show({
-                text: "Password field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "Password"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else{
@@ -49,12 +51,12 @@ export default class SignUp2 extends React.Component {
 
     render() {
         return (
-            <AuthTemplate next="SignUp3" title="Sign Up (Step 2)" navigation={this.props.navigation} error={this.state.error}>
+            <AuthTemplate next="SignUp3" title={strings("signup.signup2")} navigation={this.props.navigation} error={this.state.error}>
 
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Name"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.name')}
                     textContentType="name"
                     onChangeText={(name) => this.setState(prevState => (
                         {
@@ -66,8 +68,8 @@ export default class SignUp2 extends React.Component {
                 />
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Email"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.email')}
                     textContentType="emailAddress"
                     keyboardType='email-address'
                     onChangeText={(email) => this.setState(prevState => (
@@ -80,9 +82,9 @@ export default class SignUp2 extends React.Component {
                 />
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
                     secureTextEntry={true}
-                    placeholder="Password"
+                    placeholder={strings('profile.password')}
                     onChangeText={(password) => this.setState(prevState => (
                         {
                             data: {
@@ -93,9 +95,9 @@ export default class SignUp2 extends React.Component {
                 />
 
                 <TextInput
-                    style={styles.textarea}
+                    style={[styles.textarea, (I18n.locale === "ar") && styles.rtl]}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Write something about yourself"
+                    placeholder={strings('profile.something')}
                     multiline = {true}
                     numberOfLines = {4}
                     onChangeText={(description) => this.setState(prevState => (
@@ -153,6 +155,9 @@ const styles = StyleSheet.create({
         width: "50%",
         alignItems: 'flex-start',
         marginTop: 20,
+    },
+    rtl: {
+        textAlign: "right"
     }
 
 });

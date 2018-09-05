@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { Container, Header, Content, Button, Toast } from "native-base";
 import Logo from './../components/logo';
+import I18n, {strings} from "../i18n";
 
 let data= {
     country: 'Saudi Arabia',
@@ -55,8 +56,8 @@ class SignIn extends React.Component {
             text= "Username and password cannot be empty";
             type= "danger";
             Toast.show({
-                text: text,
-                buttonText: "Ok",
+                text: strings("messages.unknownError"),
+                buttonText: strings("messages.ok"),
                 type: type
             })
         }else{
@@ -75,16 +76,16 @@ class SignIn extends React.Component {
                     this.props.setUser(response.data.user, response.data.access_token);
                     let item= this.storeItem('token', response.data.access_token);
                     Toast.show({
-                        text: "You have signed in successfully.",
-                        buttonText: "Ok",
+                        text: strings("login.done"),
+                        buttonText: strings("messages.ok"),
                         type: "success",
                         duration: 5000
                     });
                     this.props.navigation.navigate('App');
                 }else{
                     Toast.show({
-                        text: "Your account has not been activated yet.",
-                        buttonText: "Ok",
+                        text: strings("login.activate"),
+                        buttonText: strings("messages.ok"),
                         type: "danger",
                         duration: 5000
                     })
@@ -94,8 +95,8 @@ class SignIn extends React.Component {
                 });
             }).catch((error)=>{
                 Toast.show({
-                    text: "Wrong username or password",
-                    buttonText: "Ok",
+                    text: strings("login.wrong"),
+                    buttonText: strings("messages.ok"),
                     type: "danger",
                     duration: 5000
                 });
@@ -118,6 +119,7 @@ class SignIn extends React.Component {
         }
     }
     componentDidMount(){
+        // alert(I18n.locale)
       // fetch('http://talbatk.net:90/api/all-offers').then(response => {
       //   alert(JSON.stringify(response.response));
       // }).catch(error => {
@@ -131,17 +133,17 @@ class SignIn extends React.Component {
                     <Logo title="" error={this.props.error} />
 
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
                         placeholderTextColor="#d2d2d2"
-                        placeholder="Email"
+                        placeholder={strings("login.email")}
                         keyboardType='email-address'
                         onChangeText={(username) => this.setState({username})}
                     />
                     <TextInput
                         placeholderTextColor="#d2d2d2"
-                        style={styles.input}
+                        style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
                         secureTextEntry={true}
-                        placeholder="Password"
+                        placeholder={strings("login.password")}
                         onChangeText={(password) => this.setState({password})}
                     />
                     {/*<View style={{width: "70%"}}>*/}
@@ -153,17 +155,17 @@ class SignIn extends React.Component {
                         style={[styles.button, {flexDirection: "row"}]}
                         onPress={this.signIn}
                     >
-                        <Text style={{color: "#FFFFFF", fontSize: 20}}> Sign In </Text>
+                        <Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.login_button")} </Text>
                         {this.state.isLoading && (
                             <ActivityIndicator style={{}} size="small" color="#FFFFFF" />
                         )}
                     </TouchableOpacity>
-                    <Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> OR </Text>
+                    <Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> {strings("login.or")} </Text>
                     <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('Terms', data)}
                         style={styles.button}
                     >
-                        <Text style={{color: "#FFFFFF", fontSize: 20}}> Sign Up </Text>
+                        <Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.signup_button")} </Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
         height: 60,
         width: "70%",
         fontSize: 20,
-        color: "#FFFFFF",
+        color: "#FFFFFF"
     },
     button: {
         backgroundColor: "#344955",
@@ -192,6 +194,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 20,
     },
+    rtl: {
+        textAlign: "right"
+    }
 
 });
 const mapStateToProps = ({ user }) => ({

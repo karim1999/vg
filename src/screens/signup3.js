@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class SignUp3 extends React.Component {
     static navigationOptions = {
@@ -16,12 +18,12 @@ export default class SignUp3 extends React.Component {
 
     render() {
         return (
-            <AuthTemplate next="SignUp4" title="Sign Up (Step 3)" navigation={this.props.navigation} error={this.state.error}>
+            <AuthTemplate next="SignUp4" title={strings("signup.signup3")} navigation={this.props.navigation} error={this.state.error}>
 
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Facebook Link"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.facebook')}
                     onChangeText={(facebook) => this.setState(prevState => (
                         {
                             data: {
@@ -32,8 +34,8 @@ export default class SignUp3 extends React.Component {
                 />
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Twitter Link"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.twitter')}
                     onChangeText={(twitter) => this.setState(prevState => (
                         {
                             data: {
@@ -44,8 +46,8 @@ export default class SignUp3 extends React.Component {
                 />
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="Linkedin Link"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.linkedin')}
                     onChangeText={(linkedin) => this.setState(prevState => (
                         {
                             data: {
@@ -101,6 +103,9 @@ const styles = StyleSheet.create({
         width: "50%",
         alignItems: 'flex-start',
         marginTop: 20,
+    },
+    rtl: {
+        textAlign: "right"
     }
 
 });

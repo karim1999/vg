@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import { strings } from '../i18n';
+import I18n from "../i18n";
 
 class AddProject extends Component {
     constructor(props) {
@@ -298,123 +299,296 @@ class AddProject extends Component {
             <AppTemplate title={strings("add_project.title")} backButton={true} navigation={this.props.navigation} activeTab="Home">
                 <View style={{padding: 5, margin: 20, backgroundColor: "#FFFFFF"}}>
                     <Form>
-                        <Item style={{height: 70}}>
-                            <Icon type="FontAwesome" name='pencil' />
-                            <Label>{strings("add_project.title_text")}</Label>
-                            <Input onChangeText={(title) => this.setState({title})}
-                                   value={this.state.title}
-                            />
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon type="FontAwesome" name='info' />
-                            <Label>{strings("add_project.description")}</Label>
-                            <Input multiline = {true}
-                                   numberOfLines = {10}
-                                   onChangeText={(description) => this.setState({description})}
-                                   value={this.state.description}
-                            />
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon name='md-images' />
-                            <Label>{strings("add_project.image")}</Label>
-                            <Button
-                                style={{alignSelf: "center"}}
-                                onPress={() => this.selectImage()} light>
-                                <Text>{strings("add_project.select")}</Text>
-                            </Button>
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon name='ios-folder-open' />
-                            <Label>{strings("add_project.industry")}:</Label>
-                            <Picker
-                                mode="dropdown"
-                                iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                style={{ width: undefined }}
-                                placeholder="Select your SIM"
-                                placeholderStyle={{ color: "#bfc6ea" }}
-                                placeholderIconColor="#007aff"
-                                selectedValue={this.state.category}
-                                onValueChange={(itemValue, itemIndex) => this.setState({ category: itemValue})}
-                            >
-                                {this.state.categories.map((category) => (
-                                    <Picker.Item key={category.id} label={category.name} value={category.id} />
-                                ))}
-                            </Picker>
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon type="FontAwesome" name='money' />
-                            <Label>{strings("add_project.capitalNeeded")}</Label>
-                            <Slider
-                                value={Number(this.state.amount)}
-                                onValueChange={(amount) => this.setState({amount})}
-                                style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
-                        </Item>
-                        <ListItem
-                            onPress={(currency) => {this.setState({currency: "$"})}}
-                        >
-                            <Left>
-                                <Text>USD ($)</Text>
-                            </Left>
-                            <Right>
-                                <Radio selected={this.state.currency === "$"}
-                                       onPress={(currency) => {this.setState({currency: "$"})}}
-                                />
-                            </Right>
-                        </ListItem>
-                        <ListItem
-                            onPress={(currency) => {this.setState({currency: "SR"})}}
-                        >
-                            <Left>
-                                <Text>SR</Text>
-                            </Left>
-                            <Right>
-                                <Radio selected={this.state.currency === "SR"}
-                                       onPress={(currency) => {this.setState({currency: "SR"})}}
-                                />
-                            </Right>
-                        </ListItem>
-                        <Item style={{height: 70}}>
-                            <Icon type="MaterialCommunityIcons" name='presentation-play' />
-                            <Label>{strings("add_project.presentation")}</Label>
-                            <Button
-                                style={{alignSelf: "center"}}
-                                onPress={() => this.selectPresentation()} light>
-                                <Text>{strings("add_project.select")}</Text>
-                            </Button>
-                        </Item>
-                        <Item style={{height: 70}}>
-                            <Icon type="FontAwesome" name='file-text' />
-                            <Label>{strings("add_project.report")}</Label>
-                            <Button
-                                style={{alignSelf: "center"}}
-                                onPress={() => this.selectReport()} light>
-                                <Text>{strings("add_project.select")}</Text>
-                            </Button>
-                        </Item>
-                        <ListItem
-                            onPress={(visibility) => {this.setState({visibility: 1})}}
-                        >
-                            <Left>
-                                <Text>{strings("add_project.public")}</Text>
-                            </Left>
-                            <Right>
-                                <Radio selected={this.state.visibility === 1}
-                                       onPress={(visibility) => {this.setState({visibility: 1})}}
-                                />
-                            </Right>
-                        </ListItem>
-                        <ListItem
-                            onPress={(visibility) => {this.setState({visibility: 2})}}
-                        >
-                            <Left>
-                                <Text>{strings("add_project.private")}</Text>
-                            </Left>
-                            <Right>
-                                <Radio selected={this.state.visibility === 2}
-                                       onPress={(visibility) => {this.setState({visibility: 2})}}
-                                />
-                            </Right>
-                        </ListItem>
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="FontAwesome" name='pencil' />
+                                    <Label>{strings("add_project.title_text")}</Label>
+                                    <Input onChangeText={(title) => this.setState({title})}
+                                           value={this.state.title}
+                                    />
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Input style={{textAlign: "right"}} onChangeText={(title) => this.setState({title})}
+                                           value={this.state.title}
+                                    />
+                                    <Label>{strings("add_project.title_text")}</Label>
+                                    <Icon type="FontAwesome" name='pencil' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="FontAwesome" name='info' />
+                                    <Label>{strings("add_project.description")}</Label>
+                                    <Input multiline = {true}
+                                           numberOfLines = {10}
+                                           onChangeText={(description) => this.setState({description})}
+                                           value={this.state.description}
+                                    />
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Input multiline = {true}
+                                           style={{textAlign: "right"}}
+                                           numberOfLines = {10}
+                                           onChangeText={(description) => this.setState({description})}
+                                           value={this.state.description}
+                                    />
+                                    <Label>{strings("add_project.description")}</Label>
+                                    <Icon type="FontAwesome" name='info' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='md-images' />
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Icon name='md-images' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='ios-folder-open' />
+                                    <Label>{strings("add_project.industry")}:</Label>
+                                    <Picker
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                        style={{ width: undefined }}
+                                        placeholder={strings('add_project.industry')}
+                                        placeholderStyle={{ color: "#bfc6ea" }}
+                                        placeholderIconColor="#007aff"
+                                        selectedValue={this.state.category}
+                                        onValueChange={(itemValue, itemIndex) => this.setState({ category: itemValue})}
+                                    >
+                                        {this.state.categories.map((category) => (
+                                            <Picker.Item key={category.id} label={category.name} value={category.id} />
+                                        ))}
+                                    </Picker>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Picker
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                        style={{ width: undefined }}
+                                        placeholder={strings('add_project.industry')}
+                                        placeholderStyle={{ color: "#bfc6ea" }}
+                                        placeholderIconColor="#007aff"
+                                        selectedValue={this.state.category}
+                                        onValueChange={(itemValue, itemIndex) => this.setState({ category: itemValue})}
+                                    >
+                                        {this.state.categories.map((category) => (
+                                            <Picker.Item key={category.id} label={category.name} value={category.id} />
+                                        ))}
+                                    </Picker>
+                                    <Label>{strings("add_project.industry")}:</Label>
+                                    <Icon name='ios-folder-open' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="FontAwesome" name='money' />
+                                    <Label>{strings("add_project.capitalNeeded")}</Label>
+                                    <Slider
+                                        value={Number(this.state.amount)}
+                                        onValueChange={(amount) => this.setState({amount})}
+                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Slider
+                                        value={Number(this.state.amount)}
+                                        onValueChange={(amount) => this.setState({amount})}
+                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
+                                    <Label>{strings("add_project.capitalNeeded")}</Label>
+                                    <Icon type="FontAwesome" name='money' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem
+                                    onPress={(currency) => {this.setState({currency: "$"})}}
+                                >
+                                    <Left>
+                                        <Text>USD ($)</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={this.state.currency === "$"}
+                                               onPress={(currency) => {this.setState({currency: "$"})}}
+                                        />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem
+                                    onPress={(currency) => {this.setState({currency: "$"})}}
+                                >
+                                    <Left>
+                                        <Radio selected={this.state.currency === "$"}
+                                               onPress={(currency) => {this.setState({currency: "$"})}}
+                                        />
+                                    </Left>
+                                    <Right>
+                                        <Text>USD ($)</Text>
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem
+                                    onPress={(currency) => {this.setState({currency: "SR"})}}
+                                >
+                                    <Left>
+                                        <Text>SR</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={this.state.currency === "SR"}
+                                               onPress={(currency) => {this.setState({currency: "SR"})}}
+                                        />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem
+                                    onPress={(currency) => {this.setState({currency: "SR"})}}
+                                >
+                                    <Left>
+                                        <Radio selected={this.state.currency === "SR"}
+                                               onPress={(currency) => {this.setState({currency: "SR"})}}
+                                        />
+                                    </Left>
+                                    <Right>
+                                        <Text>SR</Text>
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="MaterialCommunityIcons" name='presentation-play' />
+                                    <Label>{strings("add_project.presentation")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectPresentation()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectPresentation()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.presentation")}</Label>
+                                    <Icon type="MaterialCommunityIcons" name='presentation-play' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="FontAwesome" name='file-text' />
+                                    <Label>{strings("add_project.report")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectReport()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectReport()} light>
+                                        <Text>{strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.report")}</Label>
+                                    <Icon type="FontAwesome" name='file-text' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem
+                                    onPress={(visibility) => {this.setState({visibility: 1})}}
+                                >
+                                    <Left>
+                                        <Text>{strings("add_project.public")}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={this.state.visibility === 1}
+                                               onPress={(visibility) => {this.setState({visibility: 1})}}
+                                        />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem
+                                    onPress={(visibility) => {this.setState({visibility: 1})}}
+                                >
+                                    <Left>
+                                        <Radio selected={this.state.visibility === 1}
+                                               onPress={(visibility) => {this.setState({visibility: 1})}}
+                                        />
+                                    </Left>
+                                    <Right>
+                                        <Text>{strings("add_project.public")}</Text>
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem
+                                    onPress={(visibility) => {this.setState({visibility: 2})}}
+                                >
+                                    <Left>
+                                        <Text>{strings("add_project.private")}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={this.state.visibility === 2}
+                                               onPress={(visibility) => {this.setState({visibility: 2})}}
+                                        />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem
+                                    onPress={(visibility) => {this.setState({visibility: 2})}}
+                                >
+                                    <Left>
+                                        <Radio selected={this.state.visibility === 2}
+                                               onPress={(visibility) => {this.setState({visibility: 2})}}
+                                        />
+                                    </Left>
+                                    <Right>
+                                        <Text>{strings("add_project.private")}</Text>
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
                         <Button
                             onPress={() => this.addOrEdit()}
                             style={{flexDirection: "row"}}

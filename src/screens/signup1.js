@@ -5,6 +5,8 @@ import countries from './../countries.json';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Toast} from "native-base";
+import {strings} from "../i18n";
+import I18n from "../i18n";
 
 export default class SignUp1 extends React.Component {
     static navigationOptions = {
@@ -20,20 +22,20 @@ export default class SignUp1 extends React.Component {
     check(){
         if(this.state.data.country == ""){
             Toast.show({
-                text: "Country field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "Country"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else if(this.state.data.city == ""){
             Toast.show({
-                text: "City field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "City"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else if(this.state.data.phone == ""){
             Toast.show({
-                text: "phone field is required.",
-                buttonText: "Ok",
+                text: strings('signup.fieldRequired', {field: "Phone"}),
+                buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else{
@@ -42,7 +44,7 @@ export default class SignUp1 extends React.Component {
     }
     render() {
         return (
-            <AuthTemplate next="SignUp2" title="Sign Up (Step 1)" navigation={this.props.navigation} error={this.state.error}>
+            <AuthTemplate next="SignUp2" title={strings("signup.signup1")} navigation={this.props.navigation} error={this.state.error}>
                 {
                     (Platform.OS === 'ios') ?
                         <Picker
@@ -78,8 +80,8 @@ export default class SignUp1 extends React.Component {
 
                 <TextInput
                     placeholderTextColor="#d2d2d2"
-                    style={styles.input}
-                    placeholder="City"
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
+                    placeholder={strings('profile.city')}
                     onChangeText={(city) => this.setState(prevState => (
                         {
                             data: {
@@ -89,9 +91,9 @@ export default class SignUp1 extends React.Component {
                         }))}
                 />
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
                     placeholderTextColor="#d2d2d2"
-                    placeholder="Phone"
+                    placeholder={strings('profile.phone')}
                     keyboardType='phone-pad'
                     onChangeText={(phone) => this.setState(prevState => (
                         {
@@ -130,8 +132,8 @@ const styles = StyleSheet.create({
     select: {
         height: 50,
         width: "100%",
-
         color: "#FFFFFF",
+        textAlign: "center"
     },
     select2: {
         height: 50,
@@ -142,6 +144,7 @@ const styles = StyleSheet.create({
         ],
         marginLeft: "17%",
         color: "#FFFFFF",
+        textAlign: "center"
     },
     navigation: {
         width: "75%",
@@ -157,6 +160,9 @@ const styles = StyleSheet.create({
         width: "50%",
         alignItems: 'flex-start',
         marginTop: 20,
+    },
+    rtl: {
+        textAlign: "right"
     }
 
 });
