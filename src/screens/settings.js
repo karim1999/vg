@@ -136,7 +136,7 @@ class Settings extends React.Component {
                                         <IonicIcon size={25} name="ios-arrow-back" />
                                     </Left>
                                     <Body>
-                                    <Text>{strings("settings.user")}</Text>
+                                    <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{strings("settings.user")}</Text>
                                     </Body>
                                     <Right>
                                         <Icon size={25} color="#000000" active name="user" />
@@ -170,7 +170,7 @@ class Settings extends React.Component {
                                             <IonicIcon size={25} name="ios-arrow-back" />
                                         </Left>
                                         <Body>
-                                        <Text>{ strings('settings.'+route.text) }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings('settings.'+route.text) }</Text>
                                         </Body>
                                         <Right>
                                             <Icon size={25} color="#000000" active name={route.icon} />
@@ -202,7 +202,7 @@ class Settings extends React.Component {
                                         <IonicIcon size={25} name="ios-arrow-back" />
                                     </Left>
                                     <Body>
-                                    <Text>{strings("settings.logout")}</Text>
+                                    <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{strings("settings.logout")}</Text>
                                     </Body>
                                     <Right>
                                         <IonicIcon size={25} color="#000000" active name="ios-log-out" />

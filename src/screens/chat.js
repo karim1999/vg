@@ -51,8 +51,8 @@ class Chat extends Component {
                                     <Left>
                                     </Left>
                                     <Body>
-                                    <Text>{strings("chat.public")}</Text>
-                                    <Text note>{strings("chat.publicDescription")}</Text>
+                                    <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{strings("chat.public")}</Text>
+                                    <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]} note>{strings("chat.publicDescription")}</Text>
                                     </Body>
                                     <Right>
                                         <Thumbnail square source={require("./../images/logo-edited.png")} />

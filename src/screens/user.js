@@ -213,7 +213,7 @@ export default class User extends React.Component {
                                 <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
                                 >
                                     <Left>
-                                        <Text>{this.state.user.money}</Text>
+                                        <Text>{this.state.user.money} $</Text>
                                     </Left>
                                     <Body>
                                     <Text>{strings("profile.wallet")}</Text>

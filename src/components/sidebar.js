@@ -80,7 +80,7 @@ class SideBar extends React.Component {
                                                 <IonicIcon size={25} name="ios-arrow-back" />
                                             </Left>
                                             <Body>
-                                            <Text>{ strings('sidebar.'+route.text) }</Text>
+                                            <Text style={{textAlign: "right"}}>{ strings('sidebar.'+route.text) }</Text>
                                             </Body>
                                             <Right>
                                                 <Icon size={25} color="#000000" active name={route.icon} />
@@ -113,7 +113,7 @@ class SideBar extends React.Component {
                                         <IonicIcon size={25} name="ios-arrow-back" />
                                     </Left>
                                     <Body>
-                                    <Text>{ strings('sidebar.logout') }</Text>
+                                    <Text style={{textAlign: "right"}}>{ strings('sidebar.logout') }</Text>
                                     </Body>
                                     <Right>
                                         <IonicIcon size={25} color="#000000" active name="ios-log-out" />

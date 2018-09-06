@@ -152,22 +152,22 @@ class AppTemplate extends Component {
                             <List style={{backgroundColor: "#FFFFFF", right: 0}}>
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
                                     <ListItem onPress={() => this.addPeople()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.add_remove") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.add_remove") }</Text>
                                     </ListItem>
                                 )}
 
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project) && (
                                     <ListItem onPress={() => this.props.openChat()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.openChat") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.openChat") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.jointProjects, project => project.id == this.props.project)? (
                                     <ListItem onPress={() => this.changeInvestment()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.changeInvestment") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.changeInvestment") }</Text>
                                     </ListItem>
                                 ) : (
                                     <ListItem onPress={() => this.investInProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.investProject") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.investProject") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
@@ -182,17 +182,17 @@ class AppTemplate extends Component {
                                         visibility: this.props.visibility,
                                         category: this.props.category_id
                                     })}>
-                                        <Text>{ strings("app.editProject") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.editProject") }</Text>
                                     </ListItem>
                                 )}
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
                                     <ListItem onPress={() => this.deleteProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.deleteProject") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.deleteProject") }</Text>
                                     </ListItem>
                                 )}
                                 {(!_.find(this.props.myProjects, project => project.id == this.props.project) && _.find(this.props.jointProjects, project => project.id == this.props.project)) && (
                                     <ListItem onPress={() => this.leaveProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
-                                        <Text>{ strings("app.leaveProject") }</Text>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.leaveProject") }</Text>
                                     </ListItem>
                                 )}
                             </List>

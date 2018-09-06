@@ -187,11 +187,11 @@ class Project extends Component {
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
                         onPress={() => this.openChat()}
-                        style={{width: "100%", alignItems: "center"}} light={true}><Text style={{flex: 1}}> { strings("project.openChat") } </Text>
+                        style={{width: "100%", alignItems: "center"}} light={true}><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("project.openChat") } </Text>
                         <Icon name="ios-chatboxes" style={{color: "#000000", fontSize: 25}}/>
                     </Button>
                 ) : (
-                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} dark><Text style={{flex: 1}}> { strings("project.investProject") } </Text>
+                    <Button onPress={() => this.setState({isInvesting: !this.state.isInvesting})} style={{width: "100%", alignItems: "center"}} dark><Text  style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("project.investProject") } </Text>
                         <Icon name={this.state.isInvesting? "ios-arrow-dropup-circle": "ios-arrow-dropdown-circle"} style={{color: "#FFFFFF", fontSize: 25}}/>
                     </Button>
                 )}
