@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
-import {ActivityIndicator, AsyncStorage, Image, View, Linking} from 'react-native';
+import {ActivityIndicator, AsyncStorage, Image, View, Linking, TouchableOpacity} from 'react-native';
 import {Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Toast} from 'native-base';
 import {SERVER_URL, STORAGE_URL} from "../config";
 import NumericInput from 'react-native-numeric-input'
@@ -250,15 +250,19 @@ class Project extends Component {
                 )}
                 <View style={{padding: 20}}>
                     <Card style={{flex: 0}}>
-                        <CardItem style={{ paddingBottom: 5 }}>
-                            <Left>
-                                <Thumbnail source={{uri: STORAGE_URL+this.state.user_img}} />
-                                <Body>
-                                <Text>{this.state.user_name}</Text>
-                                <Text note>{this.state.created_at}</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
+                        <TouchableOpacity
+                            onPress={()=> this.props.navigation.navigate('User', {id: this.state.user_id})}
+                        >
+                            <CardItem style={{ paddingBottom: 5 }}>
+                                <Left>
+                                    <Thumbnail source={{uri: STORAGE_URL+this.state.user_img}} />
+                                    <Body>
+                                    <Text>{this.state.user_name}</Text>
+                                    <Text note>{this.state.created_at}</Text>
+                                    </Body>
+                                </Left>
+                            </CardItem>
+                        </TouchableOpacity>
                         <CardItem style={{ paddingTop: 0 }}>
                             <Body>
                             <Text style={{ fontSize: 20, marginBottom: 10, fontWeight: "bold" }}>

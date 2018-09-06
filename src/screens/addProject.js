@@ -276,6 +276,9 @@ class AddProject extends Component {
         let j = (j = i.length) > 3 ? j % 3 : 0;
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
+    convertNumber = function(n){
+        return Number(String(n).replace(/\D/g,''));
+    };
     selectPresentation(){
         DocumentPicker.show({
             filetype: [DocumentPickerUtil.allFiles()],
@@ -411,17 +414,17 @@ class AddProject extends Component {
                                 <Item style={{height: 70}}>
                                     <Icon type="FontAwesome" name='money' />
                                     <Label>{strings("add_project.capitalNeeded")}</Label>
-                                    <Slider
-                                        value={Number(this.state.amount)}
-                                        onValueChange={(amount) => this.setState({amount})}
-                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
+                                    <Input onChangeText={(amount) => this.setState({amount})}
+                                           value={this.formatMondey(this.convertNumber(this.state.amount), 0, '.', ',')}
+                                           keyboardType='phone-pad'
+                                    />
                                 </Item>
                             ) : (
                                 <Item style={{height: 70}}>
-                                    <Slider
-                                        value={Number(this.state.amount)}
-                                        onValueChange={(amount) => this.setState({amount})}
-                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
+                                    <Input style={{textAlign: "right"}} onChangeText={(amount) => this.setState({amount})}
+                                           value={this.formatMondey(this.convertNumber(this.state.amount), 0, '.', ',')}
+                                           keyboardType='phone-pad'
+                                    />
                                     <Label>{strings("add_project.capitalNeeded")}</Label>
                                     <Icon type="FontAwesome" name='money' />
                                 </Item>

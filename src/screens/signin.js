@@ -118,18 +118,41 @@ class SignIn extends React.Component {
             console.log(error.message);
         }
     }
-    componentDidMount(){
-        // alert(I18n.locale)
-      // fetch('http://talbatk.net:90/api/all-offers').then(response => {
-      //   alert(JSON.stringify(response.response));
-      // }).catch(error => {
-      //   alert(error);
-      // })
+
+    changeToArabic(){
+        let item= this.storeItem('lang', "ar");
+        Toast.show({
+            text: "تم تغيير اللغة بنجاح. يجب اعادة فتح التطبيق حتي يتم تطبيق الاعدادات الجديدة.",
+            buttonText: strings("messages.ok"),
+            type: "success",
+            duration: 5000
+        })
+    }
+    changeToEnglish(){
+        let item= this.storeItem('lang', "en");
+        Toast.show({
+            text: "تم تغيير اللغة بنجاح. يجب اعادة فتح التطبيق حتي يتم تطبيق الاعدادات الجديدة.",
+            buttonText: strings("messages.ok"),
+            type: "success",
+            duration: 5000
+        })
     }
     render() {
         return (
             <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
                 <View style={styles.container}>
+                    {
+                        (I18n.locale == "en") ? (
+                            <Button dark onPress={() => this.changeToArabic()}>
+                                <Text style={{color: "white", padding: 10}}>العربية</Text>
+                            </Button>
+                        ) : (
+                            <Button dark onPress={() => this.changeToEnglish()}>
+                                <Text style={{color: "white", padding: 10}}>English</Text>
+                            </Button>
+                        )
+                    }
+
                     <Logo title="" error={this.props.error} />
 
                     <TextInput

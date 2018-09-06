@@ -33,8 +33,10 @@
   },
   "settings": {
     "settings": "Settings",
+    "language": "Languages",
     "avatar": "Avatar",
-    "profile": "Profile",
+    "user": "Profile",
+    "profile": "Edit Profile",
     "logout": "Logout",
     "security": "Security"
   },

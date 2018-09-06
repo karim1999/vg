@@ -11,6 +11,7 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import {strings} from "../i18n";
+import I18n from "../i18n";
 
 class SingleChat extends Component {
     constructor(props) {
@@ -108,13 +109,21 @@ class SingleChat extends Component {
         return (
             <Container style={{backgroundColor: "#f3f3f3"}}>
                 <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation} right={this.state.id != 0}>
-                    <Button transparent onPress={() => this.props.navigation.goBack()}>
-                        <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
-                    </Button>
-                </Header>
+                    {
+                        (I18n.locale === "ar") ?(
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name="ios-arrow-forward" style={{color: "#000000", fontSize: 35}}/>
+                            </Button>
+                        ): (
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Icon name="ios-arrow-back" style={{color: "#000000", fontSize: 35}}/>
+                            </Button>
+                        )
+                    }
+                    </Header>
                 {this.state.menu && (
                     <List style={{backgroundColor: "#FFFFFF", right: 0}}>
-                        <ListItem onPress={() => {
+                        <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => {
                             this.setState({menu: false});
                             this.props.navigation.navigate("Project", {...this.props.navigation.state.params});
                         }}>
@@ -124,7 +133,7 @@ class SingleChat extends Component {
                 )}
                 {this.state.total_amount_invested && (
                     <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 13}}>{ strings('chat.totalCapital') }<Text style={{color: "#FFFFFF"}}>{this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
+                        <Text style={{padding: 10, fontSize: 13}}> { strings('chat.totalCapital') } <Text style={{color: "#FFFFFF"}}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
                     </View>
                 )}
                 <GiftedChat

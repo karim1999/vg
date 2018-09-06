@@ -110,7 +110,7 @@ class SideBar extends React.Component {
                                           onPress={() => this.logout()}
                                 >
                                     <Left>
-                                        <IonicIcon size={25} name="ios-arrow-forward" />
+                                        <IonicIcon size={25} name="ios-arrow-back" />
                                     </Left>
                                     <Body>
                                     <Text>{ strings('sidebar.logout') }</Text>

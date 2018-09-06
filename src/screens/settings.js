@@ -16,13 +16,18 @@ import I18n from "../i18n";
 const routes = [
     {
         text: "profile",
-        icon: "user",
+        icon: "pencil-square-o",
         name: "Profile"
     },
     {
         text: "security",
         icon: "key",
         name: "Security"
+    },
+    {
+        text: "language",
+        icon: "language",
+        name: "Language"
     }
 ];
 
@@ -109,6 +114,37 @@ class Settings extends React.Component {
                 <Content style={{ marginTop: 20 }}>
                     <List>
                         {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="user" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                          onPress={() => this.props.navigation.navigate('User', {id: this.props.user.id})}
+                                >
+                                    <Left>
+                                        <Icon size={25} color="#000000" active name="user" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("settings.user")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <IonicIcon size={25} name="ios-arrow-forward" />
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                          onPress={() => this.props.navigation.navigate('User', {id: this.props.user.id})}
+                                >
+                                    <Left>
+                                        <IonicIcon size={25} name="ios-arrow-back" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("settings.user")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon size={25} color="#000000" active name="user" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
                             routes.map((route) => (
                                 (I18n.locale !== "ar") ? (
                                     <ListItem style={{ marginTop: 10, marginBottom: 10 }}
@@ -122,7 +158,7 @@ class Settings extends React.Component {
                                         <Text>{ strings('settings.'+route.text) }</Text>
                                         </Body>
                                         <Right>
-                                            <IonicIcon size={25} name="ios-arrow-back" />
+                                            <IonicIcon size={25} name="ios-arrow-forward" />
                                         </Right>
                                     </ListItem>
                                 ) : (

@@ -226,7 +226,7 @@ class Home extends Component {
                                 renderItem={({item}) => (
                                     <TouchableOpacity
                                         key={item.id}
-                                        onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img})}
+                                        onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img, user_id: item.user.id})}
                                     >
                                         <ProjectCard key={item.id} {...item} user_name={item.user.name} />
                                     </TouchableOpacity>

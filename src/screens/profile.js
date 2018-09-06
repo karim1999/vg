@@ -195,27 +195,27 @@ class Profile extends Component {
                                 </Item>
                             )
                         }
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
-                                    <Icon type="FontAwesome" name='money' />
-                                    <Label>{strings('profile.wallet')}</Label>
-                                    <Slider
-                                        value={Number(this.state.money)}
-                                        onValueChange={(money) => this.setState({money})}
-                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Slider
-                                        value={Number(this.state.money)}
-                                        onValueChange={(money) => this.setState({money})}
-                                        style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>
-                                    <Label>{strings('profile.wallet')}</Label>
-                                    <Icon type="FontAwesome" name='money' />
-                                </Item>
-                            )
-                        }
+                        {/*{*/}
+                            {/*(I18n.locale !== "ar") ? (*/}
+                                {/*<Item style={{height: 70}}>*/}
+                                    {/*<Icon type="FontAwesome" name='money' />*/}
+                                    {/*<Label>{strings('profile.wallet')}</Label>*/}
+                                    {/*<Slider*/}
+                                        {/*value={Number(this.state.money)}*/}
+                                        {/*onValueChange={(money) => this.setState({money})}*/}
+                                        {/*style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>*/}
+                                {/*</Item>*/}
+                            {/*) : (*/}
+                                {/*<Item style={{height: 70}}>*/}
+                                    {/*<Slider*/}
+                                        {/*value={Number(this.state.money)}*/}
+                                        {/*onValueChange={(money) => this.setState({money})}*/}
+                                        {/*style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>*/}
+                                    {/*<Label>{strings('profile.wallet')}</Label>*/}
+                                    {/*<Icon type="FontAwesome" name='money' />*/}
+                                {/*</Item>*/}
+                            {/*)*/}
+                        {/*}*/}
 
                         {
                             (I18n.locale !== "ar") ? (
