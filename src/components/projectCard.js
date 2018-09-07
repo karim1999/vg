@@ -116,7 +116,9 @@ class ProjectCard extends React.Component {
                         </Button>
                     </Left>
                     <Right>
-                        <Button transparent textStyle={{color: '#87838B'}}>
+                        <Button
+                            onPress={()=> this.props.goUser()}
+                            transparent textStyle={{color: '#87838B'}}>
                             <Icon name="user" />
                             <Text>{this.props.user_name}</Text>
                         </Button>

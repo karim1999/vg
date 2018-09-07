@@ -228,7 +228,9 @@ class Home extends Component {
                                         key={item.id}
                                         onPress={() => this.props.navigation.navigate("Project", {...item, user_name: item.user.name, user_img: item.user.img, user_id: item.user.id})}
                                     >
-                                        <ProjectCard key={item.id} {...item} user_name={item.user.name} />
+                                        <ProjectCard
+                                            goUser={()=> this.props.navigation.navigate('User', {id: item.user.id})}
+                                            key={item.id} {...item} user_name={item.user.name} />
                                     </TouchableOpacity>
                                 )}
                                 keyExtractor = { (item, index) => index.toString() }
