@@ -30,11 +30,12 @@ class AppTemplate extends Component {
             menu: !this.state.menu
         })
     }
-    investInProject(){
+    async investInProject(){
         this.setState({
             menu: false
         });
-        this.props.investInProject();
+        await this.props.investInProject();
+        this._onRefresh();
     }
     deleteProject(){
         Alert.alert(
@@ -79,11 +80,12 @@ class AppTemplate extends Component {
         )
 
     }
-    changeInvestment(){
+    async changeInvestment(){
         this.setState({
             menu: false
         });
-        this.props.investInProject();
+        await this.props.investInProject();
+        this._onRefresh();
     }
     _onRefresh(){
         this.setState({

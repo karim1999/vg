@@ -49,7 +49,7 @@ class AddProject extends Component {
                 let data = new FormData();
                 data.append('title', this.state.title);
                 data.append('description', this.state.description);
-                data.append('amount', this.state.amount);
+                data.append('amount', this.convertNumber(this.state.amount));
                 data.append('category_id', this.state.category);
                 data.append('visibility', this.state.visibility);
                 data.append('currency', this.state.currency);
@@ -138,7 +138,7 @@ class AddProject extends Component {
                 let data = new FormData();
                 data.append('title', this.state.title);
                 data.append('description', this.state.description);
-                data.append('amount', this.state.amount);
+                data.append('amount', this.convertNumber(this.state.amount));
                 data.append('category_id', this.state.category);
                 data.append('visibility', this.state.visibility);
                 data.append('currency', this.state.currency);

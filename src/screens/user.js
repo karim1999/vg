@@ -224,6 +224,122 @@ export default class User extends React.Component {
                                 </ListItem>
                             )
                         }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="facebook" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.facebook")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Text>{this.state.user.facebook}</Text>
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Text>{this.state.user.facebook} $</Text>
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.facebook")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="facebook" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="twitter" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.twitter")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Text>{this.state.user.twitter}</Text>
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="twitter" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Text>{this.state.user.twitter} $</Text>
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.twitter")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="twitter" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="linkedin" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="linkedin" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.linkedin")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Text>{this.state.user.linkedin}</Text>
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="linkedin" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Text>{this.state.user.linkedin} $</Text>
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.linkedin")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="linkedin" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.personalInfo")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Text>{this.state.user.description}</Text>
+                                    </Right>
+                                </ListItem>
+                            ) : (
+                                <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }} icon
+                                >
+                                    <Left>
+                                        <Text>{this.state.user.description} $</Text>
+                                    </Left>
+                                    <Body>
+                                    <Text>{strings("profile.personalInfo")}</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
+                                    </Right>
+                                </ListItem>
+                            )
+                        }
                     </List>
                 </Content>
             </AppTemplate>
