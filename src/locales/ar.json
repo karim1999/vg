@@ -64,7 +64,8 @@
     "unknownError": "حدث خطأ ما",
     "image": "صورة",
     "ok": "موافق",
-    "cancel": "الغاء"
+    "cancel": "الغاء",
+    "image_required":"يجب اضافه صوره"
   },
   "add_project": {
     "addDone": "تم اضافة المشروع بنجاح",

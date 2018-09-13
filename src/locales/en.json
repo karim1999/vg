@@ -65,7 +65,9 @@
     "unknownError": "Unknown error has occurred.",
     "image": "image",
     "ok": "Ok",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "image_required":"You need to add an image"
+
   },
   "add_project": {
     "addDone": "You have added a project successfully",

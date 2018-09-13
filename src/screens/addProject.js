@@ -248,11 +248,21 @@ class AddProject extends Component {
         });
     }
     addOrEdit(){
+      if(this.state.imgUri == ""){
+        Toast.show({
+            text: strings("messages.image_required"),
+            buttonText: strings("messages.ok"),
+            type: "danger"
+        })
+      }
+      else {
         if(this.props.navigation.state.params){
             this.submit2();
         }else{
             this.submit();
         }
+      }
+
     }
     componentDidMount(){
         return axios.get(SERVER_URL+"api/categories").then(response => {

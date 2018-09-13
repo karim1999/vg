@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		66E6D8F7CA7F3B50C5EFC3EAB585B45A /* Pods-vgTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FA55A78C9A44B7DFEDAC78A2DE3472 /* Pods-vgTests-dummy.m */; };
-		6D47276FB3C4738F06E0CA2C3021801A /* Pods-vg-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3F597B1B0CC17BA25E2D11ECE519EF /* Pods-vg-tvOS-dummy.m */; };
-		73D453DF0B2245753C86276A82ADA1FB /* Pods-vg-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 07796F1B21EA08825EAA64A938E869AE /* Pods-vg-dummy.m */; };
-		CB49DBAA9C859DEFB98692A22935B749 /* Pods-vg-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 817ECA495830FABB64A297838D7796F2 /* Pods-vg-tvOSTests-dummy.m */; };
+		5D105B660434401B9ED2BD1232A01507 /* Pods-vg-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 817ECA495830FABB64A297838D7796F2 /* Pods-vg-tvOSTests-dummy.m */; };
+		A1D08172BAE89C01184CACB5DEBA745F /* Pods-vgTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4FA55A78C9A44B7DFEDAC78A2DE3472 /* Pods-vgTests-dummy.m */; };
+		BB3FC04998E734DBEEC86A5660AF88AD /* Pods-vg-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3F597B1B0CC17BA25E2D11ECE519EF /* Pods-vg-tvOS-dummy.m */; };
+		E4CB17622BBA0EC874CCF18CF0A45200 /* Pods-vg-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 07796F1B21EA08825EAA64A938E869AE /* Pods-vg-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4D66284A89FCD7FA425402519C3DFA4B /* PBXContainerItemProxy */ = {
+		403BBEF7C833B9ACA0A7B6E6A2C7D492 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7512A929838260EA633C6E9333A53DD4;
+			remoteGlobalIDString = 4D11C9CEDC329EBD66B105D5E6A7700E;
 			remoteInfo = "Pods-vg";
 		};
-		FD0C191106E0B33395175D8BCC0FAB4F /* PBXContainerItemProxy */ = {
+		7591268D1868AB4C437097D40496FDE9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5A0495FFEBE0CD375A05F37593639B9A;
+			remoteGlobalIDString = 31E9CFBEA7704B76C120191EC29E34C8;
 			remoteInfo = "Pods-vg-tvOS";
 		};
 /* End PBXContainerItemProxy section */
@@ -67,28 +67,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		27896B73856A7157C080EF50102A59FE /* Frameworks */ = {
+		597D936242D2EFB27B48AC98086C5BF3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		722BDE06CE98D08AAC63E1F72FF4807F /* Frameworks */ = {
+		839991D0256094C2ABA89A28D2136353 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		73962C71E0279A5793C3454B65ACC8E1 /* Frameworks */ = {
+		E494330F33126DA73E6669FB1004D6B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7EAE5F91663A57D612ABDA90F70F029A /* Frameworks */ = {
+		EC5665CC3AC4E029200178B978336569 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -199,45 +199,13 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		552E3CECECF5A261466D10E808BE8104 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		85B86B3B18B8A78F7E56CBE5DB723506 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BE0C80F657CC9E4EBEAD68C1D15EAF88 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C87E7060148B1AB0C13E4C1C3F2BE927 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		5A0495FFEBE0CD375A05F37593639B9A /* Pods-vg-tvOS */ = {
+		31E9CFBEA7704B76C120191EC29E34C8 /* Pods-vg-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C52B7DFCF5A32CAC9CF06711906E5317 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOS" */;
+			buildConfigurationList = D4442787E388D30532B2239EA33858E5 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOS" */;
 			buildPhases = (
-				552E3CECECF5A261466D10E808BE8104 /* Headers */,
-				8E02017F23C2CF2298CED1EDD7ED3699 /* Sources */,
-				27896B73856A7157C080EF50102A59FE /* Frameworks */,
+				141064755A44E6114CB573771429A972 /* Sources */,
+				EC5665CC3AC4E029200178B978336569 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -248,31 +216,29 @@
 			productReference = 60DD847355CAE54FFAEB140DD41D3B82 /* libPods-vg-tvOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		742651C4060C902BB536ECF70B9F82D4 /* Pods-vg-tvOSTests */ = {
+		3D3F2F2EA43272F7AF1170DF08B53483 /* Pods-vgTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57D07DD0D6C2187FAE172C735CE11987 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOSTests" */;
+			buildConfigurationList = 87ABBA2CC24C682A215A4A85EC6A3650 /* Build configuration list for PBXNativeTarget "Pods-vgTests" */;
 			buildPhases = (
-				C87E7060148B1AB0C13E4C1C3F2BE927 /* Headers */,
-				56617B367D059D31FB297AE273BD8CCF /* Sources */,
-				722BDE06CE98D08AAC63E1F72FF4807F /* Frameworks */,
+				9213470CE1572F7DECBCA4D2153D4A12 /* Sources */,
+				597D936242D2EFB27B48AC98086C5BF3 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				747CB65905B771A1E8FF2F7DC5F3A969 /* PBXTargetDependency */,
+				E8CC090B6BE46BFFEA085259B96CC518 /* PBXTargetDependency */,
 			);
-			name = "Pods-vg-tvOSTests";
-			productName = "Pods-vg-tvOSTests";
-			productReference = FDEBEE91D94EC294034C2A504C306D6F /* libPods-vg-tvOSTests.a */;
+			name = "Pods-vgTests";
+			productName = "Pods-vgTests";
+			productReference = 1AAD52BCB811A66C058B6844E7E7091B /* libPods-vgTests.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		7512A929838260EA633C6E9333A53DD4 /* Pods-vg */ = {
+		4D11C9CEDC329EBD66B105D5E6A7700E /* Pods-vg */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F20F9BD1EAB43218FEC4DF9FCEC67BC9 /* Build configuration list for PBXNativeTarget "Pods-vg" */;
+			buildConfigurationList = 1DA8D0A0849CF2D80A120192EEB3850A /* Build configuration list for PBXNativeTarget "Pods-vg" */;
 			buildPhases = (
-				BE0C80F657CC9E4EBEAD68C1D15EAF88 /* Headers */,
-				BFAA4A9EB610F0B32705C62BD2178D74 /* Sources */,
-				7EAE5F91663A57D612ABDA90F70F029A /* Frameworks */,
+				10E46BA85D5D33439AD4A8E0DC9EC381 /* Sources */,
+				839991D0256094C2ABA89A28D2136353 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -283,22 +249,21 @@
 			productReference = EE45CE1F0B094E581634DA11AD4CA9C9 /* libPods-vg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		EDE1E8B772BC65C39EAE385C564001E0 /* Pods-vgTests */ = {
+		A4B9490B8DD2739359DF8ACF9A6E1932 /* Pods-vg-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5CA26640AAAA73D2E1F76CF8A50AEBF /* Build configuration list for PBXNativeTarget "Pods-vgTests" */;
+			buildConfigurationList = 546FC4B711818254E863633E0AE2AC9F /* Build configuration list for PBXNativeTarget "Pods-vg-tvOSTests" */;
 			buildPhases = (
-				85B86B3B18B8A78F7E56CBE5DB723506 /* Headers */,
-				D1551114F863CDBC79FF1A118E69AD59 /* Sources */,
-				73962C71E0279A5793C3454B65ACC8E1 /* Frameworks */,
+				7EBF90E1D08AED0207D324341ABE2237 /* Sources */,
+				E494330F33126DA73E6669FB1004D6B2 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4A4C64022BD968B35FCC5C844663A033 /* PBXTargetDependency */,
+				F85D0DCF65AB3F246BC6F836073C1537 /* PBXTargetDependency */,
 			);
-			name = "Pods-vgTests";
-			productName = "Pods-vgTests";
-			productReference = 1AAD52BCB811A66C058B6844E7E7091B /* libPods-vgTests.a */;
+			name = "Pods-vg-tvOSTests";
+			productName = "Pods-vg-tvOSTests";
+			productReference = FDEBEE91D94EC294034C2A504C306D6F /* libPods-vg-tvOSTests.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -322,86 +287,66 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7512A929838260EA633C6E9333A53DD4 /* Pods-vg */,
-				5A0495FFEBE0CD375A05F37593639B9A /* Pods-vg-tvOS */,
-				742651C4060C902BB536ECF70B9F82D4 /* Pods-vg-tvOSTests */,
-				EDE1E8B772BC65C39EAE385C564001E0 /* Pods-vgTests */,
+				4D11C9CEDC329EBD66B105D5E6A7700E /* Pods-vg */,
+				31E9CFBEA7704B76C120191EC29E34C8 /* Pods-vg-tvOS */,
+				A4B9490B8DD2739359DF8ACF9A6E1932 /* Pods-vg-tvOSTests */,
+				3D3F2F2EA43272F7AF1170DF08B53483 /* Pods-vgTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		56617B367D059D31FB297AE273BD8CCF /* Sources */ = {
+		10E46BA85D5D33439AD4A8E0DC9EC381 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB49DBAA9C859DEFB98692A22935B749 /* Pods-vg-tvOSTests-dummy.m in Sources */,
+				E4CB17622BBA0EC874CCF18CF0A45200 /* Pods-vg-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8E02017F23C2CF2298CED1EDD7ED3699 /* Sources */ = {
+		141064755A44E6114CB573771429A972 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D47276FB3C4738F06E0CA2C3021801A /* Pods-vg-tvOS-dummy.m in Sources */,
+				BB3FC04998E734DBEEC86A5660AF88AD /* Pods-vg-tvOS-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BFAA4A9EB610F0B32705C62BD2178D74 /* Sources */ = {
+		7EBF90E1D08AED0207D324341ABE2237 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D453DF0B2245753C86276A82ADA1FB /* Pods-vg-dummy.m in Sources */,
+				5D105B660434401B9ED2BD1232A01507 /* Pods-vg-tvOSTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D1551114F863CDBC79FF1A118E69AD59 /* Sources */ = {
+		9213470CE1572F7DECBCA4D2153D4A12 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66E6D8F7CA7F3B50C5EFC3EAB585B45A /* Pods-vgTests-dummy.m in Sources */,
+				A1D08172BAE89C01184CACB5DEBA745F /* Pods-vgTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4A4C64022BD968B35FCC5C844663A033 /* PBXTargetDependency */ = {
+		E8CC090B6BE46BFFEA085259B96CC518 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-vg";
-			target = 7512A929838260EA633C6E9333A53DD4 /* Pods-vg */;
-			targetProxy = 4D66284A89FCD7FA425402519C3DFA4B /* PBXContainerItemProxy */;
+			target = 4D11C9CEDC329EBD66B105D5E6A7700E /* Pods-vg */;
+			targetProxy = 403BBEF7C833B9ACA0A7B6E6A2C7D492 /* PBXContainerItemProxy */;
 		};
-		747CB65905B771A1E8FF2F7DC5F3A969 /* PBXTargetDependency */ = {
+		F85D0DCF65AB3F246BC6F836073C1537 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-vg-tvOS";
-			target = 5A0495FFEBE0CD375A05F37593639B9A /* Pods-vg-tvOS */;
-			targetProxy = FD0C191106E0B33395175D8BCC0FAB4F /* PBXContainerItemProxy */;
+			target = 31E9CFBEA7704B76C120191EC29E34C8 /* Pods-vg-tvOS */;
+			targetProxy = 7591268D1868AB4C437097D40496FDE9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1A8622E5E8B216341D971BD94C35F0FC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38A6C3C0E42806DBFEA56155C021695A /* Pods-vg-tvOS.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		1AE34AA5FA5E55CC3F9B188083A12798 /* Release */ = {
+		024A101E666895103738C7BDB24390F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0E52BD03EC044AD20F5A11BBD9A882C /* Pods-vgTests.release.xcconfig */;
 			buildSettings = {
@@ -423,7 +368,7 @@
 			};
 			name = Release;
 		};
-		26FE2979DD4AB81F1B209D979383F835 /* Release */ = {
+		03824805B346EDB452C58FABB23582FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB6A06263AEAB4E5D8F2F33EA59E6F7D /* Pods-vg.release.xcconfig */;
 			buildSettings = {
@@ -445,48 +390,7 @@
 			};
 			name = Release;
 		};
-		9508E49D6026CE5B50BA5529AF88747D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE5C10254BBC9BC30B4DAE4E2C9F8C06 /* Pods-vg-tvOS.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		98EBEC3F6F4228707439427AA1714E7F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85FABD457EF4181F0DA9A262237602D8 /* Pods-vg-tvOSTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Debug;
-		};
-		AC13E53E5660EFA8A8179FA50315AFF1 /* Debug */ = {
+		3E6156F79D4B49B306D43F8C948D886F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E6F3DC3BCFB18EBF9EEFB410C813A1B9 /* Pods-vg.debug.xcconfig */;
 			buildSettings = {
@@ -507,7 +411,87 @@
 			};
 			name = Debug;
 		};
-		AE5451DD4CA75D9290926F20F7AA52C3 /* Release */ = {
+		5B169F25D0D8ACAB108E8A62F2370FAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE5C10254BBC9BC30B4DAE4E2C9F8C06 /* Pods-vg-tvOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7ED8AB9560252BD6D031C1844756A257 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		952583F1040219E809B0058F4DB6DD0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB649BA968D66BBFF7E646A2BA73FED5 /* Pods-vg-tvOSTests.release.xcconfig */;
 			buildSettings = {
@@ -528,7 +512,27 @@
 			};
 			name = Release;
 		};
-		C4273567D3CF0CEE120DF9BF7BF2B49E /* Debug */ = {
+		C1C995C1570F46D61262364154DC76D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38A6C3C0E42806DBFEA56155C021695A /* Pods-vg-tvOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		C3B9CEA3091AB7986F6073CD1E5DF67C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -582,8 +586,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -593,67 +596,7 @@
 			};
 			name = Debug;
 		};
-		E82DD8EF943B05F814F6AD8092F5F061 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
-		};
-		F82BD510A473F1D2A57F885900785B8B /* Debug */ = {
+		F732E426792E416965A43B40125ABDB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 685E615E5734839CAADE996691DB094F /* Pods-vgTests.debug.xcconfig */;
 			buildSettings = {
@@ -674,50 +617,70 @@
 			};
 			name = Debug;
 		};
+		FCB448FAE4CD5E2432E13B22537C307F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85FABD457EF4181F0DA9A262237602D8 /* Pods-vg-tvOSTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1DA8D0A0849CF2D80A120192EEB3850A /* Build configuration list for PBXNativeTarget "Pods-vg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E6156F79D4B49B306D43F8C948D886F /* Debug */,
+				03824805B346EDB452C58FABB23582FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C4273567D3CF0CEE120DF9BF7BF2B49E /* Debug */,
-				E82DD8EF943B05F814F6AD8092F5F061 /* Release */,
+				C3B9CEA3091AB7986F6073CD1E5DF67C /* Debug */,
+				7ED8AB9560252BD6D031C1844756A257 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57D07DD0D6C2187FAE172C735CE11987 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOSTests" */ = {
+		546FC4B711818254E863633E0AE2AC9F /* Build configuration list for PBXNativeTarget "Pods-vg-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98EBEC3F6F4228707439427AA1714E7F /* Debug */,
-				AE5451DD4CA75D9290926F20F7AA52C3 /* Release */,
+				FCB448FAE4CD5E2432E13B22537C307F /* Debug */,
+				952583F1040219E809B0058F4DB6DD0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C52B7DFCF5A32CAC9CF06711906E5317 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOS" */ = {
+		87ABBA2CC24C682A215A4A85EC6A3650 /* Build configuration list for PBXNativeTarget "Pods-vgTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1A8622E5E8B216341D971BD94C35F0FC /* Debug */,
-				9508E49D6026CE5B50BA5529AF88747D /* Release */,
+				F732E426792E416965A43B40125ABDB8 /* Debug */,
+				024A101E666895103738C7BDB24390F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5CA26640AAAA73D2E1F76CF8A50AEBF /* Build configuration list for PBXNativeTarget "Pods-vgTests" */ = {
+		D4442787E388D30532B2239EA33858E5 /* Build configuration list for PBXNativeTarget "Pods-vg-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F82BD510A473F1D2A57F885900785B8B /* Debug */,
-				1AE34AA5FA5E55CC3F9B188083A12798 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F20F9BD1EAB43218FEC4DF9FCEC67BC9 /* Build configuration list for PBXNativeTarget "Pods-vg" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AC13E53E5660EFA8A8179FA50315AFF1 /* Debug */,
-				26FE2979DD4AB81F1B209D979383F835 /* Release */,
+				C1C995C1570F46D61262364154DC76D7 /* Debug */,
+				5B169F25D0D8ACAB108E8A62F2370FAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
