@@ -44,6 +44,12 @@ export default class SignUp2 extends React.Component {
                 buttonText: strings("messages.ok"),
                 type: "danger"
             })
+        }else if(this.state.data.description == ""){
+            Toast.show({
+                text: strings('signup.fieldRequired', {field: "Description"}),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
         }else{
             this.props.navigation.navigate("SignUp3", this.state.data);
         }

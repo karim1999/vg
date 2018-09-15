@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TextInput, View, TouchableOpacity, Platform, Picker as Picker2} from 'react-native';
-import {Picker} from 'native-base';
+import {Picker, Text} from 'native-base';
 
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -34,6 +34,9 @@ export default class SignUp5 extends React.Component {
                             }
                         }))}
                 />
+                <Text
+                    style={[    (I18n.locale === "ar") && styles.rtl]}
+                >{strings('signup.note1')}</Text>
                 {
                     (Platform.OS === 'ios') ?
                         <Picker

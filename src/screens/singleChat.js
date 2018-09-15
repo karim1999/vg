@@ -140,7 +140,9 @@ class SingleChat extends Component {
                     messages={_.reverse(this.state.logs)}
                     onSend={data => this.addNewMessage(data)}
                     alwaysShowSend={true}
+                    placeholder={strings('chat.placeholder')}
                     isAnimated={true}
+                    onPressAvatar={(user) => this.props.navigation.navigate('User', {id: user._id})}
                     showUserAvatar={true}
                     renderBubble={this.renderBubble}
                     user={{

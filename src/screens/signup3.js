@@ -4,6 +4,7 @@ import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {strings} from "../i18n";
 import I18n from "../i18n";
+import {Toast} from "native-base";
 
 export default class SignUp3 extends React.Component {
     static navigationOptions = {
@@ -14,6 +15,32 @@ export default class SignUp3 extends React.Component {
         this.state = {
             data: this.props.navigation.state.params
         };
+    }
+    check(){
+        let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        let regex = new RegExp(expression);
+
+        if(!this.state.data.facebook.match(regex) && this.state.data.facebook){
+            Toast.show({
+                text: strings('signup.notLink'),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
+        }else if(!this.state.data.twitter.match(regex) && this.state.data.twitter){
+            Toast.show({
+                text: strings('signup.notLink'),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
+        }else if(!this.state.data.linkedin.match(regex) && this.state.data.linkedin){
+            Toast.show({
+                text: strings('signup.notLink'),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
+        }else{
+            this.props.navigation.navigate("SignUp4", this.state.data);
+        }
     }
 
     render() {
@@ -65,7 +92,7 @@ export default class SignUp3 extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.rightArrow}
-                        onPress={() => this.props.navigation.navigate("SignUp4", this.state.data)}
+                        onPress={() => this.check()}
                     >
                         <Icon name="arrow-circle-right" size={50} color="#FFFFFF" />
                     </TouchableOpacity>

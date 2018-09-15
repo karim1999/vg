@@ -65,13 +65,13 @@ const FavoriteStack = createStackNavigator({
 
 const AppStack = createTabNavigator(
     {
-        Home: HomeStack,
-        Favorite: FavoriteStack,
-        Chat: ChatStack,
-        Settings: SettingsStack
+        Tab1: HomeStack,
+        Tab2: FavoriteStack,
+        Tab3: ChatStack,
+        Tab4: SettingsStack
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Tab1',
         tabBarPosition: 'bottom',
         animationEnabled: false,
         swipeEnabled: false,

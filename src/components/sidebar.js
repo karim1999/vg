@@ -43,23 +43,27 @@ class SideBar extends React.Component {
             this.props.navigation.navigate('Auth');
         });
     }
+    action(name){
+        this.props.closeDrawer();
+        this.props.navigation.navigate(name);
+    }
     render() {
         return (
-            <Container style={{ backgroundColor: "#FFFFFF" }}>
+            <View style={{ backgroundColor: "#FFFFFF", flex: 1 }}>
                 <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 200 }}>
                     <View style={{  width: "100%", height: 200, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                         <Thumbnail large source={{uri: STORAGE_URL+this.props.user.img}} />
                         <H2 style={{ color: "#FFFFFF" }}>{this.props.user.name}</H2>
                     </View>
                 </ImageBackground>
-                <Content style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 20, flex: 1 }}>
                     <List>
                         {
                             routes.map((route) => (
                                     (I18n.locale !== "ar") ? (
                                         <ListItem style={{ marginTop: 10, marginBottom: 10 }}
                                                   key={route.name}
-                                                  onPress={() => this.props.navigation.navigate(route.name)}
+                                                  onPress={() => this.action(route.name)}
                                                   icon>
                                             <Left>
                                                 <Icon size={25} color="#000000" active name={route.icon} />
@@ -74,7 +78,7 @@ class SideBar extends React.Component {
                                     ) : (
                                         <ListItem style={{ marginTop: 10, marginBottom: 10 }}
                                                   key={route.name}
-                                                  onPress={() => this.props.navigation.navigate(route.name)}
+                                                  onPress={() => this.action(route.name)}
                                                   icon>
                                             <Left>
                                                 <IonicIcon size={25} name="ios-arrow-back" />
@@ -122,8 +126,8 @@ class SideBar extends React.Component {
                             )
                         }
                     </List>
-                </Content>
-            </Container>
+                </View>
+            </View>
         );
     }
 }

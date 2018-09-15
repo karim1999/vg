@@ -33,7 +33,7 @@ class Chat extends Component {
                                           style={{padding: 10, marginLeft: 0}}
                                 >
                                     <Left>
-                                        <Thumbnail square source={require("./../images/logo-edited.png")} />
+                                        <Thumbnail square source={require("./../images/logo-edited.png")} small />
                                     </Left>
                                     <Body>
                                     <Text>{strings("chat.public")}</Text>
@@ -55,7 +55,7 @@ class Chat extends Component {
                                     <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]} note>{strings("chat.publicDescription")}</Text>
                                     </Body>
                                     <Right>
-                                        <Thumbnail square source={require("./../images/logo-edited.png")} />
+                                        <Thumbnail square source={require("./../images/logo-edited.png")} small />
                                     </Right>
                                 </ListItem>
                             )
@@ -68,7 +68,7 @@ class Chat extends Component {
                                           style={{padding: 10, marginLeft: 0}}
                                 >
                                     <Left>
-                                        <Thumbnail source={{uri: STORAGE_URL+project.img}} />
+                                        <Thumbnail source={{uri: STORAGE_URL+project.img}} small />
                                     </Left>
                                     <Body>
                                     <Text>{project.title}</Text>
@@ -92,7 +92,7 @@ class Chat extends Component {
                                     <Text style={{textAlign: "right"}} note>{strings("chat.created_by")} {project.user.name}</Text>
                                     </Body>
                                     <Right>
-                                        <Thumbnail source={{uri: STORAGE_URL+project.img}} />
+                                        <Thumbnail source={{uri: STORAGE_URL+project.img}} small />
                                     </Right>
                                 </ListItem>
                                 )

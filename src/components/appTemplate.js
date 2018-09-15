@@ -122,7 +122,7 @@ class AppTemplate extends Component {
             <Container>
                 <Drawer
                     ref={(ref) => { this.drawer = ref; }}
-                    content={<SideBar navigation={this.props.navigation} />}
+                    content={<SideBar closeDrawer={() => this.closeDrawer()} navigation={this.props.navigation} />}
                     onClose={() => this.closeDrawer()}
                 >
                     <Header toggleMenu={() => this.toggleMenu()} title={this.props.title} navigation={this.props.navigation} right={this.props.right}>

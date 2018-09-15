@@ -19,6 +19,7 @@ import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import _ from "lodash";
 import { strings } from '../i18n';
+import I18n from "../i18n";
 
 class Home extends Component {
     constructor(props) {
@@ -194,7 +195,7 @@ class Home extends Component {
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
                                     {this.state.categories.map((category) => (
-                                        <Picker.Item key={category.id} label={category.name} value={category.id} />
+                                        <Picker.Item key={category.id} label={(I18n.locale !== "ar") ? category.name : category.name_ar} value={category.id} />
                                     ))}
                                 </Picker>
                             </Form>

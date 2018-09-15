@@ -25,7 +25,7 @@ class Favorite extends Component {
     render() {
 
         return (
-            <AppTemplate title={strings("favorite.favorites")} navigation={this.props.navigation} activeTab="Favorite">
+            <AppTemplate title={strings("sidebar.favorites")} navigation={this.props.navigation} activeTab="Favorite">
                 <View style={{padding: 20}}>
                     <Segment>
                         <Button style={{
@@ -63,7 +63,7 @@ class Favorite extends Component {
                         <View>
                             <FlatList
                                 ListEmptyComponent={
-                                    <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>No elements was found.</Text>
+                                    <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>{strings("favorite.notFound2")}</Text>
                                 }
                                 data={this.props.myProjects}
                                 renderItem={({item}) => (

@@ -18,7 +18,9 @@
     "signup4": "Sign Up (Step 4)",
     "signup5": "Sign Up (Step 5)",
     "fieldRequired": "{{field}} field is required",
-    "notEmail": "Please enter a valid e-mail address"
+    "notEmail": "Please enter a valid e-mail address",
+    "notLink": "Please enter a valid Link",
+    "note1": "*Only if you were referred by someone"
   },
   "home": {
     "home": "Home",
@@ -29,6 +31,7 @@
   "favorite": {
     "favorites": "Favorites",
     "notFound": "No data was found.",
+    "notFound2": "No data was found.",
     "myProjects": "My Projects"
   },
   "settings": {
@@ -55,6 +58,7 @@
     "messages": "Messages",
     "chat": "Chat",
     "public": "Public Chat",
+    "placeholder": "Type a message...",
     "publicDescription": "Chat for everybody",
     "created_by": "Created By",
     "totalCapital": "Total capital available in this project",
