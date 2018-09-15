@@ -119,12 +119,12 @@ class AppTemplate extends Component {
     }
     render() {
         return (
+            <Drawer
+                ref={(ref) => { this.drawer = ref; }}
+                content={<SideBar closeDrawer={() => this.closeDrawer()} navigation={this.props.navigation} />}
+                onClose={() => this.closeDrawer()}
+            >
             <Container>
-                <Drawer
-                    ref={(ref) => { this.drawer = ref; }}
-                    content={<SideBar closeDrawer={() => this.closeDrawer()} navigation={this.props.navigation} />}
-                    onClose={() => this.closeDrawer()}
-                >
                     <Header toggleMenu={() => this.toggleMenu()} title={this.props.title} navigation={this.props.navigation} right={this.props.right}>
                         {this.props.backButton ?
                             (I18n.locale === "ar") ?(
@@ -202,18 +202,18 @@ class AppTemplate extends Component {
 
                         {this.props.children}
                     </Content>
-                </Drawer>
-                {this.props.fab && (
-                    <Fab
-                        active={true}
-                        style={{ backgroundColor: '#000000' }}
-                        position="bottomRight"
-                        onPress={() => this.props.navigation.navigate('AddProject')}>
+                    {this.props.fab && (
+                        <Fab
+                            active={true}
+                            style={{ backgroundColor: '#000000' }}
+                            position="bottomRight"
+                            onPress={() => this.props.navigation.navigate('AddProject')}>
 
-                          <Icon size={25} type="Ionicons" name="ios-add-outline" style={{color:'#FFFFFF'}}  />
-                    </Fab>
-                )}
+                            <Icon size={25} type="Ionicons" name="ios-add-outline" style={{color:'#FFFFFF'}}  />
+                        </Fab>
+                    )}
             </Container>
+            </Drawer>
         );
     }
 }
