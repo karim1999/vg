@@ -41,7 +41,7 @@ class AddProject extends Component {
         };
     }
     submit() {
-        if (this.state.imgUri && this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
+        if (this.state.imgUri != "" && this.state.title != "" && this.state.description != "" && this.state.amount != 0 && this.state.category != 0){
             this.setState({
                 isLoading: true,
             });
@@ -248,20 +248,20 @@ class AddProject extends Component {
         });
     }
     addOrEdit(){
-      if(this.state.imgUri == ""){
-        Toast.show({
-            text: strings("messages.image_required"),
-            buttonText: strings("messages.ok"),
-            type: "danger"
-        })
-      }
-      else {
+
         if(this.props.navigation.state.params){
             this.submit2();
         }else{
+          if(this.state.imgUri == ""){
             this.submit();
+          }else{
+            Toast.show({
+                text: strings("messages.image_required"),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
+          }
         }
-      }
 
     }
     componentDidMount(){
@@ -399,7 +399,7 @@ class AddProject extends Component {
                                     </Picker>
                                 </Item>
                             ) : (
-                                <Item style={{height: 70}}>
+                                <Item style={{height: 70, alignSelf: "flex-end"}}>
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -414,7 +414,7 @@ class AddProject extends Component {
                                             <Picker.Item key={category.id} label={category.name} value={category.id} />
                                         ))}
                                     </Picker>
-                                    <Label>{strings("add_project.industry")}:</Label>
+                                    <Label style={{textAlign: "right"}}>{strings("add_project.industry")}:</Label>
                                     <Icon name='ios-folder-open' />
                                 </Item>
                             )

@@ -56,6 +56,11 @@ const ChatStack = createStackNavigator({
 },{
     headerMode: 'none',
 });
+const FixStack = createStackNavigator({
+  Language
+},{
+    headerMode: 'none',
+});
 
 const FavoriteStack = createStackNavigator({
     Favorite: Favorite,
@@ -65,6 +70,7 @@ const FavoriteStack = createStackNavigator({
 
 const AppStack = createTabNavigator(
     {
+        Tab6: FixStack,
         Tab1: HomeStack,
         Tab2: FavoriteStack,
         Tab3: ChatStack,
@@ -80,28 +86,28 @@ const AppStack = createTabNavigator(
                 <Footer
                 >
                     <FooterTab style={{ backgroundColor: '#FFFFFF' }}>
-                        <Button style={[props.navigationState.index === 0 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Home')}>
+                        <Button style={[props.navigationState.index === 1 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Home')}>
                           {
                             (Platform.OS === 'ios') ?
                             <Icon size={25} type="Entypo" name="home" style={{color:'#000'}}  />:
                             <Icon size={25} name="home" color="#00000" />
                           }
                         </Button>
-                        <Button style={[props.navigationState.index === 1 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Favorite')}>
+                        <Button style={[props.navigationState.index === 2 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Favorite')}>
                         {
                           (Platform.OS === 'ios') ?
                           <Icon size={25} type="Entypo" name="heart" style={{color:'#000'}}  />:
                           <Icon size={25} name="heart" color="#00000" />
                         }
                         </Button>
-                        <Button style={[props.navigationState.index === 2 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Chat')}>
+                        <Button style={[props.navigationState.index === 3 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Chat')}>
                         {
                           (Platform.OS === 'ios') ?
                           <Icon size={25} type="Entypo" name="chat" style={{color:'#000'}}  />:
                           <Icon size={25} name="chatbubbles" color="#00000" />
                         }
                         </Button>
-                        <Button style={[props.navigationState.index === 3 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Settings')}>
+                        <Button style={[props.navigationState.index === 4 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Settings')}>
                         {
                           (Platform.OS === 'ios') ?
                           <Icon size={25} type="Entypo" name="cog" style={{color:'#000'}}  />:

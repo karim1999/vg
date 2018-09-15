@@ -121,7 +121,7 @@ class Profile extends Component {
                                         mode="dropdown"
                                         iosIcon={<Icon name="ios-arrow-down-outline" />}
                                         style={{ width: undefined }}
-                                        placeholder="Select your SIM"
+                                        placeholder={strings('profile.country')}
                                         placeholderStyle={{ color: "#bfc6ea" }}
                                         placeholderIconColor="#007aff"
                                         selectedValue={this.state.country}
@@ -131,12 +131,12 @@ class Profile extends Component {
                                     </Picker>
                                 </Item>
                             ) : (
-                                <Item style={{height: 70}}>
+                                <Item style={{height: 70, alignSelf: "flex-end"}}>
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name="ios-arrow-down-outline" />}
                                         style={{ width: undefined }}
-                                        placeholder="Select your SIM"
+                                        placeholder={strings('profile.country')}
                                         placeholderStyle={{ color: "#bfc6ea" }}
                                         placeholderIconColor="#007aff"
                                         selectedValue={this.state.country}
@@ -144,7 +144,7 @@ class Profile extends Component {
                                     >
                                         {countries.data.map((country)=>{ return(<Picker.Item key={country.name} label={country.name} value={country.name} />) })}
                                     </Picker>
-                                    <Label>{strings('profile.country')}</Label>
+                                    <Label style={{textAlign: "right"}}>{strings('profile.country')}</Label>
                                     <Icon name='ios-folder-open' />
                                 </Item>
                             )
