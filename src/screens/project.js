@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {ActivityIndicator, AsyncStorage, Image, View, Linking, TouchableOpacity} from 'react-native';
 import {Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, Toast} from 'native-base';
-import {SERVER_URL, STORAGE_URL} from "../config";
+import {SERVER_URL, STORAGE_URL, ONESIGNAL_APP_ID, ONESIGNAL_API_KEY} from "../config";
 import NumericInput from 'react-native-numeric-input'
 import {setUser} from "../reducers";
 import {connect} from "react-redux";
@@ -44,6 +44,32 @@ class Project extends Component {
         });
         AsyncStorage.getItem('token').then(userToken => {
             return axios.post(SERVER_URL+'api/invest/'+this.state.id+'?token='+userToken, {amount: this.state.investmentAmount}).then(response => {
+                axios.get(SERVER_URL+"api/project/"+this.state.id+"/users").then(response2 => {
+                    let devices= _.compact(_.map(response2.data, user => user.id !== this.props.user.id && user.device_id));
+                    return devices;
+                }).then(devices => {
+                    let notification= {
+                        app_id: ONESIGNAL_APP_ID,
+                        contents: {"en": "New investment in one of your projects"},
+                        data: {
+                            type : 1,
+                        },
+                        include_player_ids: devices
+                    };
+                    axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": ONESIGNAL_API_KEY
+                        }
+                    }).then(response => {
+                        console.log(response.data.id);
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+
                 this.setState({
                     isLoading: false,
                     isInvesting: false

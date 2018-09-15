@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {Form, Item, Input, Label, Icon, Picker, Toast, Button, Text, Radio, ListItem, Left, Right} from 'native-base';
 import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
-import {SERVER_URL} from "../config";
+import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL} from "../config";
 import axios from "axios";
 import ImagePicker from "react-native-image-picker";
 import {connect} from "react-redux";
@@ -75,6 +75,24 @@ class AddProject extends Component {
                     });
                 }
                 return axios.post(SERVER_URL + 'api/projects?token=' + userToken, data).then(response => {
+                    let notification= {
+                        app_id: ONESIGNAL_APP_ID,
+                        contents: {"en": "New project was added"},
+                        data: {
+                            type : 1,
+                        },
+                        included_segments: ["All"]
+                    };
+                    axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": ONESIGNAL_API_KEY
+                        }
+                    }).then(response => {
+                        console.log(response.data.id);
+                    }).catch(error => {
+                        console.log(error);
+                    });
                     this.props.setUser(response.data);
                     Toast.show({
                         text: strings("add_project.addDone"),
