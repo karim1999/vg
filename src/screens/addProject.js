@@ -116,31 +116,31 @@ class AddProject extends Component {
         }else {
             if(this.state.title == ""){
                 Toast.show({
-                    text: strings("add_project.requiredField", "Title"),
+                    text: strings("add_project.requiredField", {name: "Title"}),
                     buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.description == ""){
                 Toast.show({
-                    text: strings("add_project.requiredField", "Description"),
+                    text: strings("add_project.requiredField", {name: "Description"}),
                     buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.amount == 0){
                 Toast.show({
-                    text: strings("add_project.requiredField", "Amount"),
+                    text: strings("add_project.requiredField", {name: "Amount"}),
                     buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else if(this.state.category == 0){
                 Toast.show({
-                    text: strings("add_project.requiredField", "Category"),
+                    text: strings("add_project.requiredField", {name: "Category"}),
                     buttonText: strings("messages.ok"),
                     type: "danger"
                 })
             }else{
                 Toast.show({
-                    text: strings("add_project.requiredField", "Image"),
+                    text: strings("add_project.requiredField", {name: "Image"}),
                     buttonText: strings("messages.ok"),
                     type: "danger"
                 })
@@ -239,31 +239,13 @@ class AddProject extends Component {
         }
     }
     selectImage(){
-        let options = {
-            title: strings("messages.image"),
-            storageOptions: {
-                skipBackup: true,
-                path: 'images'
-            }
-        };
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                console.log(response.data);
-                this.setState({
-                    imgUri: response.uri
-                });
-            }
-        });
+        DocumentPicker.show({
+            filetype: [DocumentPickerUtil.images()],
+        },(error,res) => {
+            this.setState({
+                imgUri: res.uri
+            });
+        })
     }
     addOrEdit(){
 
@@ -381,7 +363,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectImage()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
                                     </Button>
                                 </Item>
                             ) : (
@@ -389,7 +377,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectImage()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
                                     </Button>
                                     <Label>{strings("add_project.image")}</Label>
                                     <Icon name='md-images' />
@@ -490,28 +484,28 @@ class AddProject extends Component {
                         {
                             (I18n.locale !== "ar") ? (
                                 <ListItem
-                                    onPress={(currency) => {this.setState({currency: "SR"})}}
+                                    onPress={(currency) => {this.setState({currency: "SAR"})}}
                                 >
                                     <Left>
-                                        <Text>SR</Text>
+                                        <Text>SAR</Text>
                                     </Left>
                                     <Right>
-                                        <Radio selected={this.state.currency === "SR"}
-                                               onPress={(currency) => {this.setState({currency: "SR"})}}
+                                        <Radio selected={this.state.currency === "SAR"}
+                                               onPress={(currency) => {this.setState({currency: "SAR"})}}
                                         />
                                     </Right>
                                 </ListItem>
                             ) : (
                                 <ListItem
-                                    onPress={(currency) => {this.setState({currency: "SR"})}}
+                                    onPress={(currency) => {this.setState({currency: "SAR"})}}
                                 >
                                     <Left>
-                                        <Radio selected={this.state.currency === "SR"}
-                                               onPress={(currency) => {this.setState({currency: "SR"})}}
+                                        <Radio selected={this.state.currency === "SAR"}
+                                               onPress={(currency) => {this.setState({currency: "SAR"})}}
                                         />
                                     </Left>
                                     <Right>
-                                        <Text>SR</Text>
+                                        <Text>SAR</Text>
                                     </Right>
                                 </ListItem>
                             )
@@ -524,7 +518,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectPresentation()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.presentationUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
                                     </Button>
                                 </Item>
                             ) : (
@@ -532,7 +532,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectPresentation()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.presentationUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                            {strings("add_project.select")}</Text>
                                     </Button>
                                     <Label>{strings("add_project.presentation")}</Label>
                                     <Icon type="MaterialCommunityIcons" name='presentation-play' />
@@ -547,7 +553,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectReport()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.reportUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
                                     </Button>
                                 </Item>
                             ) : (
@@ -555,7 +567,13 @@ class AddProject extends Component {
                                     <Button
                                         style={{alignSelf: "center"}}
                                         onPress={() => this.selectReport()} light>
-                                        <Text>{strings("add_project.select")}</Text>
+                                        <Text>
+                                            {
+                                                (this.state.reportUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
                                     </Button>
                                     <Label>{strings("add_project.report")}</Label>
                                     <Icon type="FontAwesome" name='file-text' />
