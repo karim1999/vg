@@ -239,20 +239,38 @@ class AddProject extends Component {
         }
     }
     selectImage(){
-        DocumentPicker.show({
-            filetype: [DocumentPickerUtil.images()],
-        },(error,res) => {
-            this.setState({
-                imgUri: res.uri
-            });
-        })
+        let options = {
+            title: strings("messages.image"),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                console.log(response.data);
+                this.setState({
+                    imgUri: response.uri
+                });
+            }
+        });
     }
     addOrEdit(){
 
         if(this.props.navigation.state.params){
             this.submit2();
         }else{
-          if(this.state.imgUri == ""){
+          if(this.state.imgUri != ""){
             this.submit();
           }else{
             Toast.show({
