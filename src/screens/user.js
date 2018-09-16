@@ -46,7 +46,6 @@ export default class User extends React.Component {
                     <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 300 }}>
                         <View style={{  width: "100%", height: 300, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                             <TouchableOpacity
-                                onPress={() => this.getImage()}
                             >
                                 <Thumbnail large source={{uri: STORAGE_URL+this.state.user.img}} />
                             </TouchableOpacity>
