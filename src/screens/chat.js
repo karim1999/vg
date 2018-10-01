@@ -29,7 +29,7 @@ class Chat extends Component {
                         {
                             (I18n.locale !== "ar") ? (
                                 <ListItem avatar
-                                          onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                          onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
                                           style={{padding: 10, marginLeft: 0}}
                                 >
                                     <Left>
@@ -45,7 +45,7 @@ class Chat extends Component {
                                 </ListItem>
                             ) : (
                                 <ListItem avatar
-                                          onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: this.props.user.id, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                          onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
                                           style={{padding: 10, marginLeft: 0}}
                                 >
                                     <Left>

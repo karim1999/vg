@@ -127,7 +127,8 @@
     "investProject": "Invest in this project",
     "editProject": "Edit Project",
     "deleteProject": "Delete Project",
-    "leaveProject": "Leave Project"
+    "leaveProject": "Leave Project",
+    "partners": "Partners"
   },
   "sidebar": {
     "home": "Home",

@@ -125,7 +125,7 @@ class AppTemplate extends Component {
                 onClose={() => this.closeDrawer()}
             >
             <Container>
-                    <Header toggleMenu={() => this.toggleMenu()} title={this.props.title} navigation={this.props.navigation} right={this.props.right}>
+                    <Header edit={this.props.edit} toggleMenu={() => this.toggleMenu()} title={this.props.title} navigation={this.props.navigation} right={this.props.right}>
                         {this.props.backButton ?
                             (I18n.locale === "ar") ?(
                                 <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -152,6 +152,12 @@ class AppTemplate extends Component {
                         style={{ backgroundColor: "#f3f3f3", flex: 1 }}>
                         {this.state.menu && (
                             <List style={{backgroundColor: "#FFFFFF", right: 0}}>
+	                            {(this.props.project) && (
+		                            <ListItem onPress={() => this.props.navigation.navigate('Partners', {id: this.props.project})} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+			                            <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.partners") }</Text>
+		                            </ListItem>
+	                            )}
+
                                 {_.find(this.props.myProjects, project => project.id == this.props.project) && (
                                     <ListItem onPress={() => this.addPeople()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
                                         <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.add_remove") }</Text>

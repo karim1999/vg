@@ -98,11 +98,11 @@ class ProjectCard extends React.Component {
                 <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
                     <Body>
                     <Image source={{uri: STORAGE_URL+this.props.img}} style={{height: 200, width: '100%'}}/>
-                    <View style={{ paddingLeft: 20, paddingRight: 20 }}>
-                        <Text style={{ fontSize: 20, marginTop: 10 }}>
+                    <View style={{ paddingLeft: 20, paddingRight: 20, width: '100%' }}>
+                        <Text style={{ fontSize: 20, marginTop: 10, width: "100%" }}>
                             {this.props.title}
                         </Text>
-                        <Text>
+                        <Text style={{width: '100%'}}>
                             {_.truncate(this.props.description)}
                         </Text>
                     </View>

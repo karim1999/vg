@@ -15,11 +15,6 @@ import I18n from "../i18n";
 
 const routes = [
     {
-        text: "profile",
-        icon: "pencil-square-o",
-        name: "Profile"
-    },
-    {
         text: "security",
         icon: "key",
         name: "Security"

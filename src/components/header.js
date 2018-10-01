@@ -27,6 +27,14 @@ export default class MainHeader extends Component {
                             this.props.children
 
                     }
+	                {
+		                (I18n.locale == "ar") &&
+		                (this.props.edit) && (
+			                <Button transparent onPress={() => this.props.navigation.navigate('Profile')}>
+				                <Icon type="FontAwesome" name="pencil-square-o" style={{color: "#000000", fontSize: 28}}/>
+			                </Button>
+		                )
+	                }
                 </Left>
                 <Body>
                 <Title style={[{ color: "#000000" }, (I18n.locale === "ar") && {justifySelf: "flex-end", alignSelf: "flex-end"}]}>{this.props.title}</Title>
@@ -43,6 +51,14 @@ export default class MainHeader extends Component {
                                     </Button>
                                 )
                         }
+	                    {
+		                    (I18n.locale != "ar") &&
+		                    (this.props.edit) && (
+			                    <Button transparent onPress={() => this.props.navigation.navigate('Profile')}>
+				                    <Icon type="FontAwesome" name="pencil-square-o" style={{color: "#000000", fontSize: 28}}/>
+			                    </Button>
+		                    )
+	                    }
                     </Right>
 
             </Header>

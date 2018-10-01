@@ -194,7 +194,8 @@ class Home extends Component {
                                     placeholderStyle={{ color: "#000" }}
                                     onValueChange={(itemValue, itemIndex) => this.onValueChange(itemValue)}
                                 >
-                                    {this.state.categories.map((category) => (
+	                                <Picker.Item key={0} label={strings('home.all')} value={0} />
+	                                {this.state.categories.map((category) => (
                                         <Picker.Item key={category.id} label={(I18n.locale !== "ar") ? category.name : category.name_ar} value={category.id} />
                                     ))}
                                 </Picker>

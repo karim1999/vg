@@ -26,6 +26,7 @@ import Settings from './src/screens/settings';
 import Language from './src/screens/language';
 import Profile from './src/screens/profile';
 import User from './src/screens/user';
+import Partners from './src/screens/partners';
 import Security from './src/screens/security';
 import Favorite from './src/screens/favorite';
 import {StyleSheet, Platform, AsyncStorage} from "react-native";
@@ -35,7 +36,8 @@ const HomeStack = createStackNavigator({
     Home: Home,
     Project: Project,
     AddProject: AddProject,
-    User: User
+    User: User,
+	Partners
 },{
     headerMode: 'none',
 });

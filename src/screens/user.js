@@ -8,8 +8,10 @@ import axios from "axios";
 import { strings } from '../i18n';
 import I18n from "../i18n";
 import _ from 'lodash';
+import {connect} from "react-redux";
+import {setUser} from "../reducers";
 
-export default class User extends React.Component {
+class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,7 +44,7 @@ export default class User extends React.Component {
                     <ActivityIndicator size="large" color="#000000" />
                 </AppTemplate>
             ):(
-                <AppTemplate backButton title={strings("settings.user")} navigation={this.props.navigation} activeTab="Settings">
+                <AppTemplate edit={this.props.user.id == this.state.id} backButton title={strings("settings.user")} navigation={this.props.navigation} activeTab="Settings">
                     <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 300 }}>
                         <View style={{  width: "100%", height: 300, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                             <TouchableOpacity
@@ -381,3 +383,14 @@ export default class User extends React.Component {
         );
     }
 }
+const mapStateToProps = ({ user }) => ({
+	user,
+});
+
+const mapDispatchToProps = {
+	setUser
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(User);

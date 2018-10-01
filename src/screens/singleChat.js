@@ -28,13 +28,19 @@ class SingleChat extends Component {
         return (
             <Bubble
                 {...props}
+                textStyle={{
+	                left: {
+		                color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
+	                }
+                }}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: "grey",
+	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
                         marginTop: 10
                     },
                     left: {
-                        marginTop: 10
+	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
+	                    marginTop: 10
                     }
                 }}
             />
@@ -144,7 +150,7 @@ class SingleChat extends Component {
                     isAnimated={true}
                     onPressAvatar={(user) => this.props.navigation.navigate('User', {id: user._id})}
                     showUserAvatar={true}
-                    renderBubble={this.renderBubble}
+                    renderBubble={(props) => this.renderBubble(props)}
                     user={{
                         _id: this.props.user.id,
                         name: this.props.user.name,
