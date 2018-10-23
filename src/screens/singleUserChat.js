@@ -20,7 +20,7 @@ class SingleChat extends Component {
             ...this.props.navigation.state.params,
             message: "",
             logs: [],
-            ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id),
+            ref: "/private/messages",
             menu: false
         };
     }
@@ -29,18 +29,18 @@ class SingleChat extends Component {
             <Bubble
                 {...props}
                 textStyle={{
-	                left: {
-		                color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
-	                }
+                    left: {
+                        color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
+                    }
                 }}
                 wrapperStyle={{
                     right: {
-	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
+                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
                         marginTop: 10
                     },
                     left: {
-	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
-	                    marginTop: 10
+                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
+                        marginTop: 10
                     }
                 }}
             />
@@ -52,10 +52,7 @@ class SingleChat extends Component {
         })
     }
     addNewMessage(data){
-        let newPostKey = firebaseDb.ref('/chat/').child(this.state.id).push().key;
-        let updates = {};
-        updates['/chat/'+this.state.id+'/' + newPostKey] = data[0];
-        firebaseDb.ref().update(updates);
+        firebaseDb.ref(this.state.ref).push(data[0]);
         if(this.state.id != 0){
             // OneSignal.getPermissionSubscriptionState((status) => {
             //     let userId= status.userId;
@@ -88,25 +85,53 @@ class SingleChat extends Component {
         }
     }
     componentDidMount(){
-        // this.state.ref.once('value').then(data => {
-        //     this.setState({
-        //         logs: _.values(data.val())
-        //     })
-        // });
-        this.state.ref.on('value', data => {
+        firebaseDb.ref('/private/').once('value', snapshot => {
+            let data= _.chain(snapshot.val()).map((value, key) => {
+                return {...value, key};
+            }).filter(chat => {
+                return (chat.user_id == this.props.user.id && chat.other_id == this.state.id) || (chat.user_id == this.state.id && chat.other_id == this.props.user.id)
+            }).value();
+            if(data.length >= 1){
+                this.setState({
+                    ref: '/private/'+data[0].key+'/messages/'
+                }, ()=>{
+                    this.fireListener();
+                })
+            }else{
+                // let newChatKey = firebaseDb.ref('private').key;
+                let message= firebaseDb.ref('/private/').push({
+                    user_id: this.props.user.id,
+                    user_name: this.props.user.name,
+                    user_img: this.props.user.img,
+                    other_id: this.state.id,
+                    other_name: this.state.title,
+                    other_img: this.state.img,
+                }) .then((snap) => {
+                    const key = snap.key;
+                    this.setState({
+                        ref: '/private/'+key+'/messages/'
+                    }, ()=>{
+                        this.fireListener();
+                    })
+                })
+            }
+        });
+    }
+    fireListener(){
+        firebaseDb.ref(this.state.ref).on('value', data => {
             this.setState({
                 logs: _.values(data.val())
             })
         });
     }
-   formatMondey = function(n, c, d, t){
-       c = isNaN(c = Math.abs(c)) ? 2 : c;
-       d = d == undefined ? "." : d;
-       t = t == undefined ? "," : t;
-       let s = n < 0 ? "-" : "";
-       let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
-       let j = (j = i.length) > 3 ? j % 3 : 0;
-       return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    formatMondey = function(n, c, d, t){
+        c = isNaN(c = Math.abs(c)) ? 2 : c;
+        d = d == undefined ? "." : d;
+        t = t == undefined ? "," : t;
+        let s = n < 0 ? "-" : "";
+        let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
     // componentDidUnMount() {
     //     this.state.ref.off('value');
@@ -114,7 +139,7 @@ class SingleChat extends Component {
     render() {
         return (
             <Container style={{backgroundColor: "#f3f3f3"}}>
-                <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation} right={this.state.id != 0}>
+                <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation}>
                     {
                         (I18n.locale === "ar") ?(
                             <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -126,7 +151,7 @@ class SingleChat extends Component {
                             </Button>
                         )
                     }
-                    </Header>
+                </Header>
                 {this.state.menu && (
                     <List style={{backgroundColor: "#FFFFFF", right: 0}}>
                         <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => {

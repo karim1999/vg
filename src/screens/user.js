@@ -1,6 +1,20 @@
 import React from "react";
 import {View, ImageBackground, AsyncStorage, TouchableOpacity, Linking, ActivityIndicator} from "react-native";
-import {Container, Content, Text, List, ListItem, Left, Body, Right, Icon, Thumbnail, H2, Toast} from "native-base";
+import {
+    Container,
+    Content,
+    Text,
+    List,
+    ListItem,
+    Left,
+    Body,
+    Right,
+    Icon,
+    Thumbnail,
+    H2,
+    Toast,
+    Button
+} from "native-base";
 import {SERVER_URL, STORAGE_URL} from "../config";
 import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
@@ -52,6 +66,14 @@ class User extends React.Component {
                                 <Thumbnail large source={{uri: STORAGE_URL+this.state.user.img}} />
                             </TouchableOpacity>
                             <H2 style={{ color: "#FFFFFF" }}>{this.state.user.name}</H2>
+                            {
+                                this.props.user.id != this.state.id && (
+                                    <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
+                                        <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>Chat</Text></Button>
+                                        <Button primary style={{marginLeft: 10}} iconRight rounded><Text>Follow</Text><Icon style={{color: "white"}} type="FontAwesome" name='user-plus' /></Button>
+                                    </View>
+                                )
+                            }
                         </View>
                     </ImageBackground>
                     <Content style={{ padding: 20, backgroundColor: "white" }}>
