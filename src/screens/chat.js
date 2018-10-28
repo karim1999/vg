@@ -7,8 +7,9 @@ import {connect} from "react-redux";
 import {SERVER_URL, STORAGE_URL} from "../config";
 import { strings } from '../i18n';
 import I18n from "../i18n";
-import firebaseDb from "../firebaseDb";
+import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
+let firebaseDb= firebaseApp.database();
 
 class Chat extends Component {
     constructor(props) {

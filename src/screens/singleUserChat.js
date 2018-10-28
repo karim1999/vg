@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from "react-native";
 import { Button, Container, Icon, List, ListItem } from "native-base";
-import firebaseDb from "./../firebaseDb";
+import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
 import {Bubble, GiftedChat} from 'react-native-gifted-chat';
 import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import {strings} from "../i18n";
 import I18n from "../i18n";
+let firebaseDb= firebaseApp.database();
 
 class SingleChat extends Component {
     constructor(props) {

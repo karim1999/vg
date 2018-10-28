@@ -7,7 +7,5 @@ let config = {
     storageBucket: "vgksa-f20ae.appspot.com",
     messagingSenderId: "675347929204"
 };
-firebase.initializeApp(config);
-
-const firebaseDbh = firebase.database();
-module.exports = firebaseDbh;
+const firebaseApp = firebase.initializeApp(config);
+export default firebaseApp;

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View } from "react-native";
-import { Button, Container, Icon, List, ListItem } from "native-base";
-import firebaseDb from "./../firebaseDb";
+import {Button, Container, Icon, List, ListItem, ActionSheet, Toast} from "native-base";
+// import firebaseDb from "./../firebaseDb";
+// import firebase from "firebase";
+import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
-import {Bubble, GiftedChat} from 'react-native-gifted-chat';
+import {Bubble, GiftedChat, Actions} from 'react-native-gifted-chat';
 import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
 import Header from './../components/header'
 import OneSignal from "react-native-onesignal";
@@ -12,6 +14,9 @@ import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import {strings} from "../i18n";
 import I18n from "../i18n";
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import ImagePicker from "react-native-image-picker";
+let firebaseDb= firebaseApp.database();
 
 class SingleChat extends Component {
     constructor(props) {
@@ -21,8 +26,11 @@ class SingleChat extends Component {
             message: "",
             logs: [],
             ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id),
-            menu: false
+            menu: false,
+            img: ""
         };
+        this.renderCustomActions = this.renderCustomActions.bind(this);
+
     }
     renderBubble (props) {
         return (
@@ -111,6 +119,71 @@ class SingleChat extends Component {
     // componentDidUnMount() {
     //     this.state.ref.off('value');
     // }
+    renderCustomActions(props) {
+        // if (Platform.OS === 'ios') {
+        //     return (
+        //         <CustomActions
+        //             {...props}
+        //         />
+        //     );
+        // }
+        let BUTTONS = ["Image", "Document", "Voice Record", "Cancel"];
+        return (
+            <View style={{alignItems: "center", justifyContent: "center"}}>
+                <Icon style={{padding: 10}} onPress={() =>
+                    ActionSheet.show(
+                        {
+                            options: BUTTONS,
+                            cancelButtonIndex: 3,
+                            title: "Attachments"
+                        },
+                        buttonIndex => {
+                            if(buttonIndex === 0){
+                                let options = {
+                                    title: "Choose Image",
+                                    storageOptions: {
+                                        skipBackup: true,
+                                        path: 'images'
+                                    }
+                                };
+                                ImagePicker.showImagePicker(options, (response) => {
+                                    console.log('Response = ', response);
+                                    if (response.didCancel) {
+                                        console.log('User cancelled image picker');
+                                    }
+                                    else if (response.error) {
+                                        console.log('ImagePicker Error: ', response.error);
+                                    }
+                                    else {
+                                        console.log(response.data);
+                                        this.setState({
+                                            img: response.uri
+                                        });
+                                        firebaseApp.storage().ref("/privateImages/"+this.props.user.uid).putFile(response.uri).then(data => {
+                                            Toast.show({
+                                                text: "You have sent a photo successfully.",
+                                                buttonText: "Ok",
+                                                type: "success"
+                                            })
+                                        }).catch(error => {
+                                            Toast.show({
+                                                text: strings("messages.noInternet"),
+                                                buttonText: "Ok",
+                                                type: "danger"
+                                            })
+                                        })
+                                    }
+                                });
+                            }else if(buttonIndex === 1){
+                                alert("document")
+                            }else if(buttonIndex === 2){
+                                alert("voice")
+                            }
+                        }
+                    )} name="plus-circle" type="FontAwesome" />
+            </View>
+        );
+    }
     render() {
         return (
             <Container style={{backgroundColor: "#f3f3f3"}}>
@@ -151,6 +224,7 @@ class SingleChat extends Component {
                     onPressAvatar={(user) => this.props.navigation.navigate('User', {id: user._id})}
                     showUserAvatar={true}
                     renderBubble={(props) => this.renderBubble(props)}
+                    renderActions={this.renderCustomActions}
                     user={{
                         _id: this.props.user.id,
                         name: this.props.user.name,
