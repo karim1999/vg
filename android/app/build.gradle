@@ -159,6 +159,7 @@ android {
 
 dependencies {
     compile project(':react-native-onesignal')
+    compile project(':react-native-audio-record')
     compile project(':react-native-document-picker')
     compile project(':react-native-image-picker')
     compile project(':react-native-i18n')

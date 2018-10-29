@@ -4563,6 +4563,10 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-audio-record@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-audio-record/-/react-native-audio-record-0.1.2.tgz#49eb417d7f3d4cf01f3009a9801eb5d63ecaaf9f"
+
 react-native-chooser@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/react-native-chooser/-/react-native-chooser-1.7.0.tgz#f0cf5f19cec2677932450711dc81625541607714"

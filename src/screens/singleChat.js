@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from "react-native";
+import {AsyncStorage, Text, View, Linking} from "react-native";
 import {Button, Container, Icon, List, ListItem, ActionSheet, Toast} from "native-base";
-// import firebaseDb from "./../firebaseDb";
-// import firebase from "firebase";
 import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
-import {Bubble, GiftedChat, Actions} from 'react-native-gifted-chat';
+import {Bubble, GiftedChat, Actions, MessageImage, MessageText} from 'react-native-gifted-chat';
 import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
 import Header from './../components/header'
 import OneSignal from "react-native-onesignal";
@@ -16,6 +14,8 @@ import {strings} from "../i18n";
 import I18n from "../i18n";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import ImagePicker from "react-native-image-picker";
+import AudioRecord from 'react-native-audio-record';
+
 let firebaseDb= firebaseApp.database();
 
 class SingleChat extends Component {
@@ -27,10 +27,105 @@ class SingleChat extends Component {
             logs: [],
             ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id),
             menu: false,
-            img: ""
+            img: "",
+            document: "",
+            isRecording: false,
+            seconds: 0,
+            minutes: 0,
+            record: ""
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
+        this.renderCustomMessage = this.renderCustomMessage.bind(this);
+        this.recordingInterval = this.recordingInterval.bind(this);
+    }
+    // getSeconds(){
+    // }
+    recordingInterval(){
+        let current = (this.state.seconds == "00" ? 1 : this.state.seconds+1);
+        let min = Math.floor(current / 60);
+        let sec = current - (min * 60);
+        this.setState({
+            minutes: min,
+            seconds: sec
+        });
+    }
+    startRecording(){
+        const options = {
+            sampleRate: 44100,  // default 44100
+            channels: 1,        // 1 or 2, default 1
+            bitsPerSample: 16,  // 8 or 16, default 16
+            wavFile: 'test.wav' // default 'audio.wav'
+        };
 
+        AudioRecord.init(options);
+
+        AudioRecord.start();
+        this.setState({
+            isRecording: true
+        });
+        this.intervalHandle = setInterval(this.recordingInterval, 1000);
+    }
+    async sendRecording(){
+        audioFile = await AudioRecord.stop();
+        this.setState({
+            record: audioFile,
+            isLoading: true
+        });
+        let uri = res.uri;
+        let data = new FormData();
+        data.append('img', {
+            name: "img",
+            uri,
+            type: 'image/png'
+        });
+        // AsyncStorage.getItem('token').then(userToken => {
+        axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
+            this.setState({
+                isLoading: false,
+            });
+            let result= [
+                {
+                    _id: new Date().getTime(),
+                    text: res.fileName,
+                    document: STORAGE_URL+resp.data,
+                    created_at: new Date(),
+                    user: {
+                        _id: this.props.user.id,
+                        name: this.props.user.name,
+                        avatar: STORAGE_URL+this.props.user.img
+                    }
+                }
+            ];
+            this.addNewMessage(result);
+            Toast.show({
+                text: "You have sent a record successfully.",
+                buttonText: "Ok",
+                type: "success"
+            })
+        }).catch((err) => {
+            this.setState({
+                isLoading: false,
+            });
+            Toast.show({
+                text: strings("messages.noInternet"),
+                buttonText: strings("messages.ok"),
+                type: "danger"
+            })
+        });
+
+        this.stopRecording();
+    }
+    cancelRecording(){
+        AudioRecord.stop();
+        this.stopRecording();
+    }
+    stopRecording(){
+        clearInterval(this.intervalHandle);
+        this.setState({
+            isRecording: false,
+            seconds: 0,
+            minutes: 0
+        });
     }
     renderBubble (props) {
         return (
@@ -119,6 +214,13 @@ class SingleChat extends Component {
     // componentDidUnMount() {
     //     this.state.ref.off('value');
     // }
+    renderCustomMessage(props) {
+        if(props.currentMessage.document){
+            return <Text onPress={() => Linking.openURL(props.currentMessage.document)} style={{color: "blue", textDecorationLine: "underline", padding: 5}}>{props.currentMessage.text}</Text>
+        }else{
+            return <MessageText {...props}/>
+        }
+    }
     renderCustomActions(props) {
         // if (Platform.OS === 'ios') {
         //     return (
@@ -129,7 +231,7 @@ class SingleChat extends Component {
         // }
         let BUTTONS = ["Image", "Document", "Voice Record", "Cancel"];
         return (
-            <View style={{alignItems: "center", justifyContent: "center"}}>
+            <View style={{alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                 <Icon style={{padding: 10}} onPress={() =>
                     ActionSheet.show(
                         {
@@ -157,30 +259,121 @@ class SingleChat extends Component {
                                     else {
                                         console.log(response.data);
                                         this.setState({
-                                            img: response.uri
+                                            img: response.uri,
+                                            isLoading: true
                                         });
-                                        firebaseApp.storage().ref("/privateImages/"+this.props.user.uid).putFile(response.uri).then(data => {
-                                            Toast.show({
-                                                text: "You have sent a photo successfully.",
-                                                buttonText: "Ok",
-                                                type: "success"
+                                        let uri = response.uri;
+                                        let data = new FormData();
+                                        data.append('img', {
+                                            name: "img",
+                                            uri,
+                                            type: 'image/png'
+                                        });
+                                        // AsyncStorage.getItem('token').then(userToken => {
+                                            axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
+                                                this.setState({
+                                                    isLoading: false,
+                                                });
+                                                let result= [
+                                                    {
+                                                        _id: new Date().getTime(),
+                                                        image: STORAGE_URL+resp.data,
+                                                        text: "",
+                                                        type: "img",
+                                                        created_at: new Date(),
+                                                        user: {
+                                                            _id: this.props.user.id,
+                                                            name: this.props.user.name,
+                                                            avatar: STORAGE_URL+this.props.user.img
+                                                        }
+                                                    }
+                                                ];
+                                                this.addNewMessage(result);
+                                                Toast.show({
+                                                    text: "You have sent a photo successfully.",
+                                                    buttonText: "Ok",
+                                                    type: "success"
+                                                })
+                                            }).catch((err) => {
+                                                this.setState({
+                                                    isLoading: false,
+                                                });
+                                                Toast.show({
+                                                    text: strings("messages.noInternet"),
+                                                    buttonText: strings("messages.ok"),
+                                                    type: "danger"
+                                                })
                                             })
-                                        }).catch(error => {
-                                            Toast.show({
-                                                text: strings("messages.noInternet"),
-                                                buttonText: "Ok",
-                                                type: "danger"
-                                            })
-                                        })
+                                        // });
                                     }
                                 });
                             }else if(buttonIndex === 1){
-                                alert("document")
+                                DocumentPicker.show({
+                                    filetype: [DocumentPickerUtil.allFiles()],
+                                },(error,res) => {
+                                    this.setState({
+                                        document: res.uri,
+                                        isLoading: true
+                                    });
+                                    let uri = res.uri;
+                                    let data = new FormData();
+                                    data.append('img', {
+                                        name: "img",
+                                        uri,
+                                        type: 'image/png'
+                                    });
+                                    // AsyncStorage.getItem('token').then(userToken => {
+                                    axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
+                                        this.setState({
+                                            isLoading: false,
+                                        });
+                                        let result= [
+                                            {
+                                                _id: new Date().getTime(),
+                                                text: res.fileName,
+                                                document: STORAGE_URL+resp.data,
+                                                created_at: new Date(),
+                                                user: {
+                                                    _id: this.props.user.id,
+                                                    name: this.props.user.name,
+                                                    avatar: STORAGE_URL+this.props.user.img
+                                                }
+                                            }
+                                        ];
+                                        this.addNewMessage(result);
+                                        Toast.show({
+                                            text: "You have sent a document successfully.",
+                                            buttonText: "Ok",
+                                            type: "success"
+                                        })
+                                    }).catch((err) => {
+                                        this.setState({
+                                            isLoading: false,
+                                        });
+                                        Toast.show({
+                                            text: strings("messages.noInternet"),
+                                            buttonText: strings("messages.ok"),
+                                            type: "danger"
+                                        })
+                                    })
+                                })
                             }else if(buttonIndex === 2){
                                 alert("voice")
                             }
                         }
                     )} name="plus-circle" type="FontAwesome" />
+                {!this.state.isRecording && (
+                    <Icon onPress={()=> this.startRecording()} style={{padding: 10}} name="ios-mic" />
+                )}
+                {this.state.isRecording && (
+                    <Icon onPress={()=> this.cancelRecording()} style={{padding: 10}} name="times-circle" type="FontAwesome" />
+                )}
+                {this.state.isRecording && (
+                    <Text style={{padding: 10}}>{(this.state.minutes < 10)? "0"+this.state.minutes : this.state.minutes}:{(this.state.seconds < 10)? "0"+this.state.seconds : this.state.seconds}</Text>
+                )}
+                {this.state.isRecording && (
+                    <Icon onPress={()=> this.sendRecording()} style={{padding: 10}} name="md-send" />
+                )}
             </View>
         );
     }
@@ -225,6 +418,7 @@ class SingleChat extends Component {
                     showUserAvatar={true}
                     renderBubble={(props) => this.renderBubble(props)}
                     renderActions={this.renderCustomActions}
+                    renderMessageText={this.renderCustomMessage}
                     user={{
                         _id: this.props.user.id,
                         name: this.props.user.name,
