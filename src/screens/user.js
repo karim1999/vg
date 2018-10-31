@@ -31,7 +31,8 @@ class User extends React.Component {
         this.state = {
             isLoading: true,
             id: this.props.navigation.state.params.id,
-            user: []
+            user: [],
+            isFollowed: false
         };
     }
     componentDidMount(){
@@ -51,6 +52,51 @@ class User extends React.Component {
             });
         })
     }
+    addToFollows(){
+        this.setState({
+            isFollowed: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            return axios.post(SERVER_URL+'api/follow/'+this.state.id+'?token='+userToken).then(response => {
+                this.setState({
+                    isFollowed: false,
+                });
+                this.props.setUser(response.data);
+            }).catch(error => {
+                this.setState({
+                    isFollowed: false,
+                });
+                Toast.show({
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.ok"),
+                    type: "danger"
+                })
+            })
+        });
+    }
+    removeFromFollows(){
+        this.setState({
+            isFollowed: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            return axios.delete(SERVER_URL+'api/unfollow/'+this.state.id+'?token='+userToken).then(response => {
+                this.setState({
+                    isFollowed: false,
+                });
+                this.props.setUser(response.data);
+            }).catch(error => {
+                this.setState({
+                    isFollowed: false,
+                });
+                Toast.show({
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.ok"),
+                    type: "danger"
+                })
+            })
+        });
+    }
+
     render() {
         return (
             (this.state.isLoading)? (
@@ -70,7 +116,25 @@ class User extends React.Component {
                                 this.props.user.id != this.state.id && (
                                     <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
                                         <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>Chat</Text></Button>
-                                        <Button primary style={{marginLeft: 10}} iconRight rounded><Text>Follow</Text><Icon style={{color: "white"}} type="FontAwesome" name='user-plus' /></Button>
+                                        {
+                                            !_.find(this.props.user.follows, user => user.id == this.state.id)? (
+                                                <Button onPress={()=> this.addToFollows()} primary style={{marginLeft: 10}} iconRight rounded><Text>Follow</Text>
+                                                    {this.state.isFollowed ? (
+                                                        <ActivityIndicator color="white"/>
+                                                    ) : (
+                                                        <Icon style={{color: "white"}} type="FontAwesome" name='user-plus' />
+                                                    )}
+                                                    </Button>
+                                            ) : (
+                                                <Button onPress={()=> this.removeFromFollows()} warning style={{marginLeft: 10}} iconRight rounded><Text>Unfollow</Text>
+                                                    {this.state.isFollowed ? (
+                                                        <ActivityIndicator color="white"/>
+                                                    ): (
+                                                        <Icon style={{color: "white"}} type="FontAwesome" name='user-times' />
+                                                    )}
+                                                </Button>
+                                            )
+                                        }
                                     </View>
                                 )
                             }

@@ -12,7 +12,7 @@ import {
     List,
     ListItem,
     Left,
-    Body, Thumbnail, Right
+    Body, Thumbnail, Right, Radio
 } from 'native-base';
 import {
     ActivityIndicator,
@@ -49,8 +49,10 @@ class Home extends Component {
             data2: [],
             isLoading: true,
             error: false,
+            isVoting: false,
             tab: 1,
-            users: []
+            users: [],
+            polls: []
         };
     }
     async getData(){
@@ -117,7 +119,7 @@ class Home extends Component {
         })
     }
     onLoad(){
-        axios.get(SERVER_URL+"api/projects").then(response => {
+        return axios.get(SERVER_URL+"api/projects").then(response => {
             this.setState({
                 projects: response.data,
             });
@@ -129,6 +131,11 @@ class Home extends Component {
                     this.setState({
                         users: response3.data,
                     });
+                    return axios.get(SERVER_URL+"api/votings").then(response4 => {
+                        this.setState({
+                            polls: response4.data,
+                        });
+                    })
                 }).then(()=> {
                     this.getData();
                 })
@@ -219,11 +226,65 @@ class Home extends Component {
     onIds(device) {
         alert('Device info: '+ device);
     }
-
+    vote(id){
+        this.setState({
+            isVoting: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            axios.post(SERVER_URL+'api/vote/'+id+'?token='+userToken).then(response => {
+                this.setState({
+                    isVoting: false
+                });
+                this.props.setUser(response.data);
+            }).catch(error => {
+                this.setState({
+                    isVoting: false,
+                });
+                Toast.show({
+                    text: strings("messages.noInternet"),
+                    buttonText: strings("messages.ok"),
+                    type: "danger"
+                })
+            })
+        });
+    }
     render() {
 
         return (
             <AppTemplate pullToRefresh={true} onLoad={() => this.onLoad()} fab={true} title={strings("home.home")} navigation={this.props.navigation} activeTab="Home">
+                <FlatList
+                    data={this.state.polls}
+                    extraData={[this.state.isVoting, this.props.user]}
+                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id)) && (
+                        <View style={{padding: 0, backgroundColor: "white"}}>
+                            <Button
+                                style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>
+                                <Icon name="question-circle" type="FontAwesome" style={{color: "#000000", fontSize: 25}}/>
+                            </Button>
+                            {
+                                this.state.isVoting ? (
+                                    <ActivityIndicator size="large" color="#000000" />
+                                ) : (
+                                    _.map(item.choices, (choice) => (
+                                            <Item
+                                                onPress={() => this.vote(choice.id)}
+                                                style={{height: 40, padding: 5}}
+                                            >
+                                                <Left>
+                                                    <Text>{choice.choice}</Text>
+                                                </Left>
+                                                <Right>
+                                                    <Radio selected={false}/>
+                                                </Right>
+                                            </Item>
+                                        )
+                                    )
+                                )
+                            }
+                        </View>
+                    )}
+                    keyExtractor = { (item, index) => index.toString() }
+                />
                 <View style={{padding: 10}}>
                     <Segment>
                         <Button style={{
