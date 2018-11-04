@@ -32,6 +32,9 @@ import Security from './src/screens/security';
 import Favorite from './src/screens/favorite';
 import {StyleSheet, Platform, AsyncStorage} from "react-native";
 import I18n from "react-native-i18n";
+import Notifications from "./src/screens/notifications"
+import Replies from "./src/screens/replies"
+import AddReply from "./src/screens/addReply"
 
 const HomeStack = createStackNavigator({
     Home: Home,
@@ -56,6 +59,8 @@ const SettingsStack = createStackNavigator({
 const ChatStack = createStackNavigator({
     Chat: Chat,
     SingleChat: SingleChat,
+    Replies,
+    AddReply,
     SingleUserChat
 },{
     headerMode: 'none',
@@ -71,6 +76,11 @@ const FavoriteStack = createStackNavigator({
 },{
     headerMode: 'none',
 });
+const NotificationStack = createStackNavigator({
+    Notifications
+},{
+    headerMode: 'none',
+});
 
 const AppStack = createTabNavigator(
     {
@@ -78,7 +88,8 @@ const AppStack = createTabNavigator(
         Tab1: HomeStack,
         Tab2: FavoriteStack,
         Tab3: ChatStack,
-        Tab4: SettingsStack
+        Tab4: SettingsStack,
+        Tab5: NotificationStack
     },
     {
         initialRouteName: 'Tab1',
@@ -109,6 +120,13 @@ const AppStack = createTabNavigator(
                           (Platform.OS === 'ios') ?
                           <Icon size={25} type="Entypo" name="chat" style={{color:'#000'}}  />:
                           <Icon size={25} name="chatbubbles" color="#00000" />
+                        }
+                        </Button>
+                        <Button style={[props.navigationState.index === 5 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Notifications')}>
+                        {
+                          (Platform.OS === 'ios') ?
+                          <Icon size={25} name="ios-notifications" style={{color:'#000'}}  />:
+                          <Icon size={25} name="ios-notifications" color="#00000" />
                         }
                         </Button>
                         <Button style={[props.navigationState.index === 4 ? styles.activeTab: ""]} onPress={() => props.navigation.navigate('Settings')}>

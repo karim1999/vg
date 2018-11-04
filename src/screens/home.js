@@ -34,6 +34,7 @@ import {setUser} from "../reducers";
 import _ from "lodash";
 import { strings } from '../i18n';
 import I18n from "../i18n";
+var moment = require('moment');
 
 class Home extends Component {
     constructor(props) {
@@ -255,7 +256,7 @@ class Home extends Component {
                 <FlatList
                     data={this.state.polls}
                     extraData={[this.state.isVoting, this.props.user]}
-                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id)) && (
+                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment().isBefore(item.end_date)) && (
                         <View style={{padding: 0, backgroundColor: "white"}}>
                             <Button
                                 style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>

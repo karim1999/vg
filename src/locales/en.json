@@ -1,4 +1,7 @@
 {
+  "notifications": {
+    "title": "notifications"
+  },
   "login": {
     "welcome": "Welcome {{name}} to our localized app!",
     "login_button": "Login",
@@ -62,7 +65,11 @@
     "publicDescription": "Chat for everybody",
     "created_by": "Created By",
     "totalCapital": "Total capital available in this project",
-    "openProject": "Open project"
+    "automatic": "Automatic Replies",
+    "openProject": "Open project",
+    "add": "Add",
+    "message": "Message",
+    "reply": "Reply"
   },
   "messages": {
     "noInternet": "No internet connection.",

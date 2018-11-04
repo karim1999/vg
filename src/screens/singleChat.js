@@ -401,6 +401,16 @@ class SingleChat extends Component {
                         }}>
                             <Text>{ strings('chat.openProject') }</Text>
                         </ListItem>
+                        {
+                            this.props.user.id == this.state.user_id && (
+                                <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => {
+                                    this.setState({menu: false});
+                                    this.props.navigation.navigate("Replies", {...this.props.navigation.state.params});
+                                }}>
+                                    <Text>{ strings('chat.automatic') }</Text>
+                                </ListItem>
+                            )
+                        }
                     </List>
                 )}
                 {this.state.total_amount_invested && (

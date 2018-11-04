@@ -1,4 +1,7 @@
 {
+  "notifications": {
+    "title": "الاشعارات"
+  },
   "login": {
     "login_button": "تسجيل الدخول",
     "signup_button": "التسجيل",
@@ -61,7 +64,11 @@
     "publicDescription": "شات للجميع",
     "created_by": "تم انشاءه بواسطة",
     "totalCapital": "المبلغ الذي تم استثماره",
-    "openProject": "فتح المشروع"
+    "automatic": "الرد التلقائي",
+    "openProject": "فتح المشروع",
+    "add": "اضف",
+    "message": "الرسالة",
+    "reply": "الرد"
   },
   "messages": {
     "noInternet": "لا يوجد اتصال بالانترنت",
