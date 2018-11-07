@@ -29,7 +29,9 @@
     "home": "Home",
     "search": "Search",
     "all": "All",
-    "notFound": "No data was found."
+    "notFound": "No data was found.",
+    "from": "Capital from",
+    "to": "Capital to"
   },
   "favorite": {
     "favorites": "Favorites",

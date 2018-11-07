@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppTemplate from './../components/appTemplate';
 import {Form, Item, Input, Label, Icon, Picker, Toast, Button, Text, Radio, ListItem, Left, Right} from 'native-base';
 import {ActivityIndicator, AsyncStorage, Slider, View} from "react-native";
-import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL} from "../config";
+import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
 import axios from "axios";
 import ImagePicker from "react-native-image-picker";
 import {connect} from "react-redux";
@@ -10,6 +10,8 @@ import {setUser} from "../reducers";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import { strings } from '../i18n';
 import I18n from "../i18n";
+import firebaseApp from "../firebaseDb";
+let firebaseDb= firebaseApp.database();
 
 class AddProject extends Component {
     constructor(props) {
@@ -37,6 +39,10 @@ class AddProject extends Component {
             presentationUri: "",
             reportUri: "",
             imgUri: "",
+            imgUri1: "",
+            imgUri2: "",
+            imgUri3: "",
+            imgUri4: "",
             categories: []
         };
     }
@@ -60,6 +66,34 @@ class AddProject extends Component {
                         type: 'image/png'
                     });
                 }
+                if (this.state.imgUri1) {
+                    data.append('img1', {
+                        name: "img",
+                        uri: this.state.imgUri1,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri2) {
+                    data.append('img2', {
+                        name: "img",
+                        uri: this.state.imgUri2,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri3) {
+                    data.append('img3', {
+                        name: "img",
+                        uri: this.state.imgUri3,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri4) {
+                    data.append('img4', {
+                        name: "img",
+                        uri: this.state.imgUri4,
+                        type: 'image/png'
+                    });
+                }
                 if (this.state.presentationUri) {
                     data.append('presentation', {
                         name: "presentation",
@@ -75,6 +109,16 @@ class AddProject extends Component {
                     });
                 }
                 return axios.post(SERVER_URL + 'api/projects?token=' + userToken, data).then(response => {
+                    firebaseDb.ref('/notifications/').push({
+                        "title": this.props.user.name+" added a new project",
+                        "img": STORAGE_URL+this.props.user.img,
+                        "description": "",
+                        "screen": "User",
+                        "data": {
+                            id: this.props.user.id
+                        }
+                    });
+
                     let notification= {
                         app_id: ONESIGNAL_APP_ID,
                         contents: {"en": "New project was added"},
@@ -164,6 +208,34 @@ class AddProject extends Component {
                     data.append('img', {
                         name: "img",
                         uri: this.state.imgUri,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri1) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri1,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri2) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri2,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri3) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri3,
+                        type: 'image/png'
+                    });
+                }
+                if (this.state.imgUri4) {
+                    data.append('img', {
+                        name: "img",
+                        uri: this.state.imgUri4,
                         type: 'image/png'
                     });
                 }
@@ -261,6 +333,114 @@ class AddProject extends Component {
                 console.log(response.data);
                 this.setState({
                     imgUri: response.uri
+                });
+            }
+        });
+    }
+    selectImage1(){
+        let options = {
+            title: strings("messages.image"),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                console.log(response.data);
+                this.setState({
+                    imgUri1: response.uri
+                });
+            }
+        });
+    }
+    selectImage2(){
+        let options = {
+            title: strings("messages.image"),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                console.log(response.data);
+                this.setState({
+                    imgUri2: response.uri
+                });
+            }
+        });
+    }
+    selectImage3(){
+        let options = {
+            title: strings("messages.image"),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                console.log(response.data);
+                this.setState({
+                    imgUri3: response.uri
+                });
+            }
+        });
+    }
+    selectImage4(){
+        let options = {
+            title: strings("messages.image"),
+            storageOptions: {
+                skipBackup: true,
+                path: 'images'
+            }
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                console.log(response.data);
+                this.setState({
+                    imgUri4: response.uri
                 });
             }
         });
@@ -398,6 +578,146 @@ class AddProject extends Component {
                                         <Text>
                                             {
                                                 (this.state.imgUri) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Icon name='md-images' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='md-images' />
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage1()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri1) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage1()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri1) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Icon name='md-images' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='md-images' />
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage2()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri2) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage2()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri2) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Icon name='md-images' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='md-images' />
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage3()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri3) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage3()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri3) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Icon name='md-images' />
+                                </Item>
+                            )
+                        }
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon name='md-images' />
+                                    <Label>{strings("add_project.image")}</Label>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage4()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri4) && (
+                                                    <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
+                                                )
+                                            }
+                                             {strings("add_project.select")}</Text>
+                                    </Button>
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70, justifySelf: "flex-end", alignSelf: "flex-end"}}>
+                                    <Button
+                                        style={{alignSelf: "center"}}
+                                        onPress={() => this.selectImage4()} light>
+                                        <Text>
+                                            {
+                                                (this.state.imgUri4) && (
                                                     <Icon name="md-checkmark-circle" style={{color: "green", fontSize: 17, marginRight: 10}} />
                                                 )
                                             }

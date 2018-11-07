@@ -48,7 +48,7 @@ class Notifications extends React.Component {
                             ListEmptyComponent={
                                 <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>{strings("home.notFound")}</Text>
                             }
-                            data={this.state.notifications}
+                            data={_.reverse(this.state.notifications)}
                             renderItem={({item}) => (
                                 <TouchableOpacity
                                     key={item.id}
@@ -56,14 +56,14 @@ class Notifications extends React.Component {
                                 >
                                     <ListItem avatar>
                                         <Left>
-                                            <Thumbnail source={{ uri: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png' }} />
+                                            <Thumbnail source={{ uri: item.img }} />
                                         </Left>
                                         <Body>
-                                        <Text>Kumar Pratik</Text>
-                                        <Text note>Doing what you like will always keep you happy . .</Text>
+                                        <Text>{item.title}</Text>
+                                        <Text note>{item.description}</Text>
                                         </Body>
                                         <Right>
-                                            <Text note>3:43 pm</Text>
+                                            {/*<Text note></Text>*/}
                                         </Right>
                                     </ListItem>
                                 </TouchableOpacity>

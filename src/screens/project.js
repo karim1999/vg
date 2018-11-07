@@ -419,6 +419,26 @@ class Project extends Component {
                                 </View>
                             )}
                             <Image source={{uri: STORAGE_URL+this.state.img}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
+                            {
+                                (this.state.project.img1) && (
+                                    <Image source={{uri: STORAGE_URL+this.state.project.img1}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
+                                )
+                            }
+                            {
+                                (this.state.project.img2) && (
+                                    <Image source={{uri: STORAGE_URL+this.state.project.img2}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
+                                )
+                            }
+                            {
+                                (this.state.project.img3) && (
+                                    <Image source={{uri: STORAGE_URL+this.state.project.img3}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
+                                )
+                            }
+                            {
+                                (this.state.project.img4) && (
+                                    <Image source={{uri: STORAGE_URL+this.state.project.img4}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
+                                )
+                            }
                             <Text style={{ fontSize: 15, marginBottom: 10, marginTop: 10 }}>
                                 {this.state.description}
                             </Text>

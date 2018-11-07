@@ -53,9 +53,29 @@ class Home extends Component {
             isVoting: false,
             tab: 1,
             users: [],
-            polls: []
+            polls: [],
+            from: "",
+            to: ""
         };
     }
+    convertNumber = function(n){
+        return Number(String(n).replace(/\D/g,''));
+    };
+
+    formatMondey = function(n, c, d, t){
+        if(c != ""){
+            c = isNaN(c = Math.abs(c)) ? 2 : c;
+            d = d == undefined ? "." : d;
+            t = t == undefined ? "," : t;
+            let s = n < 0 ? "-" : "";
+            let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+            let j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        }else{
+            return c;
+        }
+    };
+
     async getData(){
         if(this.state.selected === 0){
             this.state.data= this.state.projects;
@@ -64,6 +84,12 @@ class Home extends Component {
         }
         if(this.state.search !== ""){
             this.state.data= await _.filter(this.state.data, project => project.title.toLowerCase().indexOf(this.state.search) > -1);
+        }
+        if(this.state.from !== ""){
+            this.state.data= await _.filter(this.state.data, project => project.amount >= this.state.from);
+        }
+        if(this.state.to !== ""){
+            this.state.data= await _.filter(this.state.data, project => project.amount <= this.state.to);
         }
         if(this.state.searchUsers !== ""){
             this.setState({
@@ -90,6 +116,28 @@ class Home extends Component {
     async onSearchChange(search) {
         await this.setState({
             search,
+            isLoading: true
+        });
+        this.getData().then(()=> {
+            this.setState({
+                isLoading: false
+            });
+        });
+    }
+    async onFromChange(from) {
+        await this.setState({
+            from,
+            isLoading: true
+        });
+        this.getData().then(()=> {
+            this.setState({
+                isLoading: false
+            });
+        });
+    }
+    async onToChange(to) {
+        await this.setState({
+            to,
             isLoading: true
         });
         this.getData().then(()=> {
@@ -304,14 +352,16 @@ class Home extends Component {
                 </View>
                 {this.state.tab === 1? (
                     <View style={{padding: 20}}>
-                        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start' }}>
-                                <Form>
+                        <View style={{ flex: 3, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start', flex: 1 }}>
+                                {/*<Form*/}
+                                    {/*style={{flex: 1}}*/}
+                                {/*>*/}
                                     <Picker
                                         mode="dropdown"
                                         iosHeader="Categories"
                                         iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                        style={{ width: 130 }}
+                                        style={{flex: 1, width: "100%"}}
                                         selectedValue={this.state.selected}
                                         placeholder={strings('home.all')}
                                         placeholderStyle={{ color: "#000" }}
@@ -321,12 +371,32 @@ class Home extends Component {
                                             <Picker.Item key={category.id} label={(I18n.locale !== "ar") ? category.name : category.name_ar} value={category.id} />
                                         ))}
                                     </Picker>
-                                </Form>
+                                {/*</Form>*/}
                             </View>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', width: 200 }}>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 2 }}>
                                 <Item rounded>
                                     <Icon style={{fontSize: 35}} name='ios-search' />
                                     <Input onChangeText={(search) => this.onSearchChange(search)} placeholder={strings("home.search")}/>
+                                </Item>
+                            </View>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
+                                <Item rounded>
+                                    <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
+                                    <Input
+                                        value={this.formatMondey(this.convertNumber(this.state.from), 0, '.', ',')}
+                                        keyboardType='phone-pad'
+                                        onChangeText={(from) => this.onFromChange(from)} placeholder={strings("home.from")}/>
+                                </Item>
+                            </View>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
+                                <Item rounded>
+                                    <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
+                                    <Input
+                                        value={this.formatMondey(this.convertNumber(this.state.to), 0, '.', ',')}
+                                        keyboardType='phone-pad'
+                                        onChangeText={(to) => this.onToChange(to)} placeholder={strings("home.to")}/>
                                 </Item>
                             </View>
                         </View>

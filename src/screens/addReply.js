@@ -31,21 +31,28 @@ class Replies extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            message: "",
+            reply: "",
             ...this.props.navigation.state.params,
             replies: [],
             isLoading: false,
-            message: "",
-            reply: ""
         };
     }
     async submit(){
         this.setState({
             isLoading: true
         });
-        await firebaseDb.ref('/replies/'+this.state.id).push({
-            message: this.state.message,
-            reply: this.state.reply
-        });
+        if(this.state.key){
+            await firebaseDb.ref('/replies/'+this.state.id+'/'+this.state.key).set({
+                message: this.state.message,
+                reply: this.state.reply
+            });
+        }else{
+            await firebaseDb.ref('/replies/'+this.state.id).push({
+                message: this.state.message,
+                reply: this.state.reply
+            });
+        }
         this.setState({
             isLoading: false
         });
@@ -53,7 +60,7 @@ class Replies extends React.Component {
     }
     render() {
         return (
-            <AppTemplate back title={strings("chat.automatic")} navigation={this.props.navigation} activeTab="Notifications">
+            <AppTemplate backButton title={strings("chat.automatic")} navigation={this.props.navigation} activeTab="Notifications">
                 <View style={{padding: 5, margin: 20, backgroundColor: "#FFFFFF"}}>
                     <Form>
                         {
@@ -98,7 +105,7 @@ class Replies extends React.Component {
                             onPress={() => this.submit()}
                             style={{flexDirection: "row"}}
                             block light>
-                            <Text>{ strings('password.change') }</Text>
+                            <Text>{ strings('profile.save') }</Text>
                             {this.state.isLoading && (
                                 <ActivityIndicator style={{}} size="small" color="#000000" />
                             )}

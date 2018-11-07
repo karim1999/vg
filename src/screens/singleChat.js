@@ -32,7 +32,8 @@ class SingleChat extends Component {
             isRecording: false,
             seconds: 0,
             minutes: 0,
-            record: ""
+            record: "",
+            replies: []
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
@@ -159,6 +160,18 @@ class SingleChat extends Component {
         let updates = {};
         updates['/chat/'+this.state.id+'/' + newPostKey] = data[0];
         firebaseDb.ref().update(updates);
+        let reply= _.filter(this.state.replies, item => {
+            return item.message.toLowerCase() == data[0].text.toLowerCase();
+        });
+        if(reply.length >= 1){
+            let newPostKey2 = firebaseDb.ref('/chat/').child(this.state.id).push().key;
+            data[0].text= reply[0].reply;
+            data[0]._id= newPostKey2;
+            data[0].user.avatar= "https://img.icons8.com/metro/1600/reply-all-arrow.png";
+            let updates2 = {};
+            updates2['/chat/'+this.state.id+'/' + newPostKey2] = data[0];
+            firebaseDb.ref().update(updates2);
+        }
         if(this.state.id != 0){
             // OneSignal.getPermissionSubscriptionState((status) => {
             //     let userId= status.userId;
@@ -201,6 +214,13 @@ class SingleChat extends Component {
                 logs: _.values(data.val())
             })
         });
+        firebaseDb.ref('/replies/'+this.state.id).on('value', data => {
+            this.setState({
+                replies: _.map(data.val(), (value, key)=> {
+                    return {...value, key};
+                }),
+            })
+        });
     }
    formatMondey = function(n, c, d, t){
        c = isNaN(c = Math.abs(c)) ? 2 : c;
@@ -229,7 +249,7 @@ class SingleChat extends Component {
         //         />
         //     );
         // }
-        let BUTTONS = ["Image", "Document", "Voice Record", "Cancel"];
+        let BUTTONS = ["Image", "Document", "Export to text", "Cancel"];
         return (
             <View style={{alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                 <Icon style={{padding: 10}} onPress={() =>
@@ -358,7 +378,10 @@ class SingleChat extends Component {
                                     })
                                 })
                             }else if(buttonIndex === 2){
-                                alert("voice")
+                                let str= encodeURIComponent(JSON.stringify(this.state.logs));
+                                // let str2= str.replace("%2F", "karim_special_string");
+                                let str2= _.replace(str, /%2F/gm, 'karim_special_string');
+                                Linking.openURL(SERVER_URL+"api/export/"+str2);
                             }
                         }
                     )} name="plus-circle" type="FontAwesome" />

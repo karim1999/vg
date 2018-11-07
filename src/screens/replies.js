@@ -28,14 +28,19 @@ class Replies extends React.Component {
         });
         firebaseDb.ref('/replies/'+this.state.id).on('value', data => {
             this.setState({
-                replies: _.values(data.val()),
+                replies: _.map(data.val(), (value, key)=> {
+                    return {...value, key};
+                }),
                 isLoading: false
             })
         });
     }
+    deleteReply(key){
+        firebaseDb.ref('/replies/'+this.state.id+'/'+key).remove();
+    }
     render() {
         return (
-            <AppTemplate back title={strings("chat.automatic")} navigation={this.props.navigation} activeTab="Notifications">
+            <AppTemplate backButton title={strings("chat.automatic")} navigation={this.props.navigation} activeTab="Notifications">
                 <Button
                     onPress={() => this.props.navigation.navigate('AddReply', {...this.props.navigation.state.params})}
                     style={{width: "100%", alignItems: "center"}} light={true}><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("chat.add") } </Text>
@@ -54,24 +59,22 @@ class Replies extends React.Component {
                                 }
                                 data={this.state.replies}
                                 renderItem={({item}) => (
-                                    <TouchableOpacity
-                                        key={item.id}
-                                        onPress={() => this.props.navigation.navigate(item.screen, item.data)}
+                                    <ListItem avatar
+                                              key={item.id}
+                                              onPress={() => this.props.navigation.navigate("AddReply", {...item, id: this.state.id})}
                                     >
-                                        <ListItem avatar>
-                                            <Left>
-                                                <Icon type="FontAwesome" name="reply"/>
-                                                {/*<Thumbnail source={{ uri: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png' }} />*/}
-                                            </Left>
-                                            <Body>
-                                            <Text>{item.message}</Text>
-                                            <Text note>{item.reply}</Text>
-                                            </Body>
-                                            <Right>
-                                                {/*<Text note>3:43 pm</Text>*/}
-                                            </Right>
-                                        </ListItem>
-                                    </TouchableOpacity>
+                                        <Left>
+                                            <Icon type="FontAwesome" name="reply"/>
+                                            {/*<Thumbnail source={{ uri: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png' }} />*/}
+                                        </Left>
+                                        <Body>
+                                        <Text>{item.message}</Text>
+                                        <Text note>{item.reply}</Text>
+                                        </Body>
+                                        <Right>
+                                            <Icon onPress={()=> this.deleteReply(item.key)} type="FontAwesome" name="times-circle" color="red"/>
+                                        </Right>
+                                    </ListItem>
                                 )}
                                 keyExtractor = { (item, index) => index.toString() }
                             />
