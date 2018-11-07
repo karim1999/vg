@@ -304,7 +304,7 @@ class Home extends Component {
                 <FlatList
                     data={this.state.polls}
                     extraData={[this.state.isVoting, this.props.user]}
-                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment().isBefore(item.end_date)) && (
+                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment().isBefore(moment(item.end_date))) && (
                         <View style={{padding: 0, backgroundColor: "white"}}>
                             <Button
                                 style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>
