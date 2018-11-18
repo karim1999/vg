@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Header, Title, Left, Body, Right, Button, Icon} from 'native-base';
+import {Header, Title, Left, Body, Right, Button, Icon, Text} from 'native-base';
 import I18n from "../i18n";
 
 export default class MainHeader extends Component {
@@ -37,7 +37,7 @@ export default class MainHeader extends Component {
 	                }
                 </Left>
                 <Body>
-                <Title style={[{ color: "#000000" }, (I18n.locale === "ar") && {justifySelf: "flex-end", alignSelf: "flex-end"}]}>{this.props.title}</Title>
+                <Text style={[{ color: "#000000", fontSize: 17 }, (I18n.locale === "ar") && {justifySelf: "flex-end", alignSelf: "flex-end"}]}>{this.props.title}</Text>
                 </Body>
                     <Right>
                         {

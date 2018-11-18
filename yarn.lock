@@ -4686,6 +4686,10 @@ react-native-parsed-text@^0.0.20:
     babel-plugin-check-es2015-constants "6.22.0"
     prop-types "^15.5.10"
 
+react-native-permissions@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
+
 react-native-picker-select@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-4.0.0.tgz#cfcf95badc9a37d423a767e90fccaf7493d6c68d"

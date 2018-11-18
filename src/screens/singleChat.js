@@ -15,6 +15,7 @@ import I18n from "../i18n";
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import ImagePicker from "react-native-image-picker";
 import AudioRecord from 'react-native-audio-record';
+import Permissions from 'react-native-permissions';
 
 let firebaseDb= firebaseApp.database();
 
@@ -33,7 +34,8 @@ class SingleChat extends Component {
             seconds: 0,
             minutes: 0,
             record: "",
-            replies: []
+            replies: [],
+            audioFile: '',
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
@@ -51,14 +53,14 @@ class SingleChat extends Component {
         });
     }
     startRecording(){
-        const options = {
-            sampleRate: 44100,  // default 44100
-            channels: 1,        // 1 or 2, default 1
-            bitsPerSample: 16,  // 8 or 16, default 16
-            wavFile: 'test.wav' // default 'audio.wav'
-        };
-
-        AudioRecord.init(options);
+        // const options = {
+        //     sampleRate: 44100,  // default 44100
+        //     channels: 1,        // 1 or 2, default 1
+        //     bitsPerSample: 16,  // 8 or 16, default 16
+        //     wavFile: 'test.wav' // default 'audio.wav'
+        // };
+        //
+        // AudioRecord.init(options);
 
         AudioRecord.start();
         this.setState({
@@ -67,12 +69,11 @@ class SingleChat extends Component {
         this.intervalHandle = setInterval(this.recordingInterval, 1000);
     }
     async sendRecording(){
-        audioFile = await AudioRecord.stop();
+        let audioFile = await AudioRecord.stop();
         this.setState({
-            record: audioFile,
             isLoading: true
         });
-        let uri = res.uri;
+        let uri = audioFile;
         let data = new FormData();
         data.append('img', {
             name: "img",
@@ -81,23 +82,23 @@ class SingleChat extends Component {
         });
         // AsyncStorage.getItem('token').then(userToken => {
         axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
-            this.setState({
-                isLoading: false,
-            });
-            let result= [
-                {
-                    _id: new Date().getTime(),
-                    text: res.fileName,
-                    document: STORAGE_URL+resp.data,
-                    created_at: new Date(),
-                    user: {
-                        _id: this.props.user.id,
-                        name: this.props.user.name,
-                        avatar: STORAGE_URL+this.props.user.img
-                    }
-                }
-            ];
-            this.addNewMessage(result);
+            // this.setState({
+            //     isLoading: false,
+            // });
+            // let result= [
+            //     {
+            //         _id: new Date().getTime(),
+            //         text: "recording",
+            //         document: STORAGE_URL+resp.data,
+            //         created_at: new Date(),
+            //         user: {
+            //             _id: this.props.user.id,
+            //             name: this.props.user.name,
+            //             avatar: STORAGE_URL+this.props.user.img
+            //         }
+            //     }
+            // ];
+            // this.addNewMessage(result);
             Toast.show({
                 text: "You have sent a record successfully.",
                 buttonText: "Ok",
@@ -107,11 +108,12 @@ class SingleChat extends Component {
             this.setState({
                 isLoading: false,
             });
-            Toast.show({
-                text: strings("messages.noInternet"),
-                buttonText: strings("messages.ok"),
-                type: "danger"
-            })
+            // Toast.show({
+            //     text: strings("messages.noInternet"),
+            //     buttonText: strings("messages.ok"),
+            //     type: "danger"
+            // })
+            alert(JSON.stringify(err));
         });
 
         this.stopRecording();
@@ -203,7 +205,29 @@ class SingleChat extends Component {
             });
         }
     }
-    componentDidMount(){
+    checkPermission = async () => {
+        const p = await Permissions.check('microphone');
+        console.log('permission check', p);
+        if (p === 'authorized') return;
+        this.requestPermission();
+    };
+
+    requestPermission = async () => {
+        const p = await Permissions.request('microphone');
+        console.log('permission request', p);
+    };
+    async componentDidMount(){
+        await this.checkPermission();
+
+        const options = {
+            sampleRate: 16000,
+            channels: 1,
+            bitsPerSample: 16,
+            wavFile: 'test.wav'
+        };
+
+        AudioRecord.init(options);
+
         // this.state.ref.once('value').then(data => {
         //     this.setState({
         //         logs: _.values(data.val())
@@ -283,6 +307,7 @@ class SingleChat extends Component {
                                             isLoading: true
                                         });
                                         let uri = response.uri;
+                                        // alert(uri)
                                         let data = new FormData();
                                         data.append('img', {
                                             name: "img",

@@ -55,7 +55,8 @@ class Home extends Component {
             users: [],
             polls: [],
             from: "",
-            to: ""
+            to: "",
+            advanced: false
         };
     }
     convertNumber = function(n){
@@ -352,8 +353,8 @@ class Home extends Component {
                 </View>
                 {this.state.tab === 1? (
                     <View style={{padding: 20}}>
-                        <View style={{ flex: 3, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start', flex: 1 }}>
+                        <View style={{ flex: 10, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, paddingLeft: 5, paddingRight: 5, alignItems: 'flex-start', flex: 3 }}>
                                 {/*<Form*/}
                                     {/*style={{flex: 1}}*/}
                                 {/*>*/}
@@ -373,33 +374,42 @@ class Home extends Component {
                                     </Picker>
                                 {/*</Form>*/}
                             </View>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 2 }}>
+                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 6 }}>
                                 <Item rounded>
                                     <Icon style={{fontSize: 35}} name='ios-search' />
                                     <Input onChangeText={(search) => this.onSearchChange(search)} placeholder={strings("home.search")}/>
                                 </Item>
                             </View>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
-                                <Item rounded>
-                                    <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
-                                    <Input
-                                        value={this.formatMondey(this.convertNumber(this.state.from), 0, '.', ',')}
-                                        keyboardType='phone-pad'
-                                        onChangeText={(from) => this.onFromChange(from)} placeholder={strings("home.from")}/>
-                                </Item>
-                            </View>
-                            <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
-                                <Item rounded>
-                                    <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
-                                    <Input
-                                        value={this.formatMondey(this.convertNumber(this.state.to), 0, '.', ',')}
-                                        keyboardType='phone-pad'
-                                        onChangeText={(to) => this.onToChange(to)} placeholder={strings("home.to")}/>
+                            <View style={{ alignItems: 'center', justifyContent: "center" }}>
+                                <Item bordered={false} style={{ alignItems: 'center', justifyContent: "center" }} onPress={()=>this.setState({advanced: !this.state.advanced})}>
+                                    <Icon style={{fontSize: 35}} name={this.state.advanced ? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} />
                                 </Item>
                             </View>
                         </View>
+                        {
+                            this.state.advanced && (
+                                <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between' }}>
+                                    <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
+                                        <Item rounded>
+                                            <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
+                                            <Input
+                                                value={this.formatMondey(this.convertNumber(this.state.from), 0, '.', ',')}
+                                                keyboardType='phone-pad'
+                                                onChangeText={(from) => this.onFromChange(from)} placeholder={strings("home.from")}/>
+                                        </Item>
+                                    </View>
+                                    <View style={{ backgroundColor: "#FFFFFF", borderRadius: 30, alignItems: 'flex-end', flex: 1 }}>
+                                        <Item rounded>
+                                            <Icon style={{fontSize: 35}} name='money' type="FontAwesome" />
+                                            <Input
+                                                value={this.formatMondey(this.convertNumber(this.state.to), 0, '.', ',')}
+                                                keyboardType='phone-pad'
+                                                onChangeText={(to) => this.onToChange(to)} placeholder={strings("home.to")}/>
+                                        </Item>
+                                    </View>
+                                </View>
+                            )
+                        }
                         <View>
                             {this.state.isLoading? (
                                 <View>
