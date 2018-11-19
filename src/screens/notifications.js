@@ -56,7 +56,7 @@ class Notifications extends React.Component {
                                 >
                                     <ListItem avatar>
                                         <Left>
-                                            <Thumbnail source={{ uri: item.img }} />
+                                            <Thumbnail small source={{ uri: item.img }} />
                                         </Left>
                                         <Body>
                                         <Text>{item.title}</Text>

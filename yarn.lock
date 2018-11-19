@@ -1424,6 +1424,10 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+
 base64-js@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-0.0.8.tgz#1101e9544f4a76b1bc3b26d452ca96d7a35e7978"
@@ -4608,6 +4612,13 @@ react-native-easy-grid@0.1.17:
   dependencies:
     lodash "^4.11.1"
 
+react-native-fs@^2.12.1:
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.12.1.tgz#55ec15392eb39e9fa9d6628c2c5b60b9f59102b7"
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^2.1.1"
+
 react-native-gifted-chat@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/react-native-gifted-chat/-/react-native-gifted-chat-0.4.3.tgz#25b4da866c802e407c06e589495f421f7dcdf70a"
@@ -4715,6 +4726,10 @@ react-native-safe-area-view@^0.8.0:
 react-native-scrollable-mixin@^1.0.0, react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
+
+react-native-sound@^0.10.9:
+  version "0.10.9"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.9.tgz#6b00b0f4afd017cde09fbb9d171df1b5d5b851a8"
 
 react-native-stars@^1.1.5:
   version "1.1.5"
@@ -5762,6 +5777,10 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.0.tgz#14716bf03fdfefd03040aef58d8b4b85f3a7c544"
   dependencies:
     kind-of "^6.0.2"
+
+utf8@^2.1.1:
+  version "2.1.2"
+  resolved "http://registry.npmjs.org/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
 
 util-deprecate@1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

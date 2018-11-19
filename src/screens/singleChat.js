@@ -16,6 +16,7 @@ import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker
 import ImagePicker from "react-native-image-picker";
 import AudioRecord from 'react-native-audio-record';
 import Permissions from 'react-native-permissions';
+import AudioPlayer from "./../components/audioPlayer";
 
 let firebaseDb= firebaseApp.database();
 
@@ -71,9 +72,10 @@ class SingleChat extends Component {
     async sendRecording(){
         let audioFile = await AudioRecord.stop();
         this.setState({
+            audioFile,
             isLoading: true
         });
-        let uri = audioFile;
+        let uri = 'file://'+audioFile;
         let data = new FormData();
         data.append('img', {
             name: "img",
@@ -82,23 +84,23 @@ class SingleChat extends Component {
         });
         // AsyncStorage.getItem('token').then(userToken => {
         axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
-            // this.setState({
-            //     isLoading: false,
-            // });
-            // let result= [
-            //     {
-            //         _id: new Date().getTime(),
-            //         text: "recording",
-            //         document: STORAGE_URL+resp.data,
-            //         created_at: new Date(),
-            //         user: {
-            //             _id: this.props.user.id,
-            //             name: this.props.user.name,
-            //             avatar: STORAGE_URL+this.props.user.img
-            //         }
-            //     }
-            // ];
-            // this.addNewMessage(result);
+            this.setState({
+                isLoading: false,
+            });
+            let result= [
+                {
+                    _id: new Date().getTime(),
+                    text: "recording",
+                    audio: STORAGE_URL+resp.data,
+                    created_at: new Date(),
+                    user: {
+                        _id: this.props.user.id,
+                        name: this.props.user.name,
+                        avatar: STORAGE_URL+this.props.user.img
+                    }
+                }
+            ];
+            this.addNewMessage(result);
             Toast.show({
                 text: "You have sent a record successfully.",
                 buttonText: "Ok",
@@ -259,8 +261,14 @@ class SingleChat extends Component {
     //     this.state.ref.off('value');
     // }
     renderCustomMessage(props) {
-        if(props.currentMessage.document){
-            return <Text onPress={() => Linking.openURL(props.currentMessage.document)} style={{color: "blue", textDecorationLine: "underline", padding: 5}}>{props.currentMessage.text}</Text>
+        if(props.currentMessage.document) {
+            return <Text onPress={() => Linking.openURL(props.currentMessage.document)} style={{
+                color: "blue",
+                textDecorationLine: "underline",
+                padding: 5
+            }}>{props.currentMessage.text}</Text>
+        }else if(props.currentMessage.audio){
+            return <AudioPlayer url={props.currentMessage.audio} />
         }else{
             return <MessageText {...props}/>
         }
@@ -307,7 +315,7 @@ class SingleChat extends Component {
                                             isLoading: true
                                         });
                                         let uri = response.uri;
-                                        // alert(uri)
+                                        alert(uri);
                                         let data = new FormData();
                                         data.append('img', {
                                             name: "img",
@@ -361,6 +369,8 @@ class SingleChat extends Component {
                                         isLoading: true
                                     });
                                     let uri = res.uri;
+                                    alert(uri);
+
                                     let data = new FormData();
                                     data.append('img', {
                                         name: "img",

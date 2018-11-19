@@ -68,6 +68,7 @@ class Project extends Component {
                 type: "success"
             });
         }).catch(error => {
+            alert(JSON.stringify(error));
             Toast.show({
                 text: strings("messages.noInternet"),
                 buttonText: strings("messages.ok"),

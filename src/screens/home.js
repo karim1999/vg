@@ -56,7 +56,8 @@ class Home extends Component {
             polls: [],
             from: "",
             to: "",
-            advanced: false
+            advanced: false,
+            now: moment().format("YYYY-MM-DD")
         };
     }
     convertNumber = function(n){
@@ -305,7 +306,7 @@ class Home extends Component {
                 <FlatList
                     data={this.state.polls}
                     extraData={[this.state.isVoting, this.props.user]}
-                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment().isBefore(moment(item.end_date))) && (
+                    renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment(this.state.now).isBefore(item.end_at)) && (
                         <View style={{padding: 0, backgroundColor: "white"}}>
                             <Button
                                 style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>
@@ -381,7 +382,7 @@ class Home extends Component {
                                 </Item>
                             </View>
                             <View style={{ alignItems: 'center', justifyContent: "center" }}>
-                                <Item bordered={false} style={{ alignItems: 'center', justifyContent: "center" }} onPress={()=>this.setState({advanced: !this.state.advanced})}>
+                                <Item bordered={false} style={{ alignItems: 'center', justifyContent: "center" }} underline={false} onPress={()=>this.setState({advanced: !this.state.advanced})}>
                                     <Icon style={{fontSize: 35}} name={this.state.advanced ? 'ios-arrow-dropup-circle' : 'ios-arrow-dropdown-circle'} />
                                 </Item>
                             </View>

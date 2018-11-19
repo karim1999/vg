@@ -72,7 +72,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon type="FontAwesome" name='pencil' />
-                                    <Label>{strings('profile.name')}</Label>
+                                    {/*<Label>{strings('profile.name')}</Label>*/}
                                     <Input onChangeText={(name) => this.setState({name})}
                                            value={this.state.name}
                                     />
@@ -83,7 +83,7 @@ class Profile extends Component {
                                            style={{textAlign: "right"}}
                                            value={this.state.name}
                                     />
-                                    <Label>{strings('profile.name')}</Label>
+                                    {/*<Label>{strings('profile.name')}</Label>*/}
                                     <Icon type="FontAwesome" name='pencil' />
                                 </Item>
                             )
@@ -92,7 +92,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon type="FontAwesome" name='info' />
-                                    <Label>{strings('profile.personalInfo')}</Label>
+                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
                                     <Input multiline = {true}
                                            numberOfLines = {10}
                                            onChangeText={(description) => this.setState({description})}
@@ -107,7 +107,7 @@ class Profile extends Component {
                                            onChangeText={(description) => this.setState({description})}
                                            value={this.state.description}
                                     />
-                                    <Label>{strings('profile.personalInfo')}</Label>
+                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
                                     <Icon type="FontAwesome" name='info' />
                                 </Item>
                             )
@@ -116,7 +116,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon name='ios-folder-open' />
-                                    <Label>{strings('profile.country')}</Label>
+                                    {/*<Label>{strings('profile.country')}</Label>*/}
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -144,7 +144,7 @@ class Profile extends Component {
                                     >
                                         {countries.data.map((country)=>{ return(<Picker.Item key={country.name} label={country.name} value={country.name} />) })}
                                     </Picker>
-                                    <Label style={{textAlign: "right"}}>{strings('profile.country')}</Label>
+                                    {/*<Label style={{textAlign: "right"}}>{strings('profile.country')}</Label>*/}
                                     <Icon name='ios-folder-open' />
                                 </Item>
                             )
@@ -153,7 +153,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon name='ios-home' />
-                                    <Label>{strings('profile.city')}</Label>
+                                    {/*<Label>{strings('profile.city')}</Label>*/}
                                     <Input
                                         onChangeText={(city) => this.setState({city})}
                                         value={this.state.city}
@@ -166,7 +166,7 @@ class Profile extends Component {
                                         onChangeText={(city) => this.setState({city})}
                                         value={this.state.city}
                                     />
-                                    <Label>{strings('profile.city')}</Label>
+                                    {/*<Label>{strings('profile.city')}</Label>*/}
                                     <Icon name='ios-home' />
                                 </Item>
                             )
@@ -174,8 +174,8 @@ class Profile extends Component {
                         {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
-                                    <Icon name='ios-home' />
-                                    <Label>{strings('profile.phone')}</Label>
+                                    <Icon type="FontAwesome" name='phone' />
+                                    {/*<Label>{strings('profile.phone')}</Label>*/}
                                     <Input
                                         keyboardType='phone-pad'
                                         onChangeText={(phone) => this.setState({phone})}
@@ -190,8 +190,8 @@ class Profile extends Component {
                                         onChangeText={(phone) => this.setState({phone})}
                                         value={this.state.phone}
                                     />
-                                    <Label>{strings('profile.phone')}</Label>
-                                    <Icon name='ios-home' />
+                                    {/*<Label>{strings('profile.phone')}</Label>*/}
+                                    <Icon type="FontAwesome" name='phone' />
                                 </Item>
                             )
                         }
@@ -221,7 +221,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon name='logo-facebook' />
-                                    <Label>{strings('profile.facebook')}</Label>
+                                    {/*<Label>{strings('profile.facebook')}</Label>*/}
                                     <Input
                                         onChangeText={(facebook) => this.setState({facebook})}
                                         value={this.state.facebook}
@@ -234,7 +234,7 @@ class Profile extends Component {
                                         onChangeText={(facebook) => this.setState({facebook})}
                                         value={this.state.facebook}
                                     />
-                                    <Label>{strings('profile.facebook')}</Label>
+                                    {/*<Label>{strings('profile.facebook')}</Label>*/}
                                     <Icon name='logo-facebook' />
                                 </Item>
                             )
@@ -243,7 +243,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon name='logo-twitter' />
-                                    <Label>{strings('profile.twitter')}</Label>
+                                    {/*<Label>{strings('profile.twitter')}</Label>*/}
                                     <Input
                                         onChangeText={(twitter) => this.setState({twitter})}
                                         value={this.state.twitter}
@@ -256,7 +256,7 @@ class Profile extends Component {
                                         onChangeText={(twitter) => this.setState({twitter})}
                                         value={this.state.twitter}
                                     />
-                                    <Label>{strings('profile.twitter')}</Label>
+                                    {/*<Label>{strings('profile.twitter')}</Label>*/}
                                     <Icon name='logo-twitter' />
                                 </Item>
                             )
@@ -265,7 +265,7 @@ class Profile extends Component {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
                                     <Icon name='logo-linkedin' />
-                                    <Label>{strings('profile.linkedin')}</Label>
+                                    {/*<Label>{strings('profile.linkedin')}</Label>*/}
                                     <Input
                                         onChangeText={(linkedin) => this.setState({linkedin})}
                                         value={this.state.linkedin}
@@ -278,7 +278,7 @@ class Profile extends Component {
                                         onChangeText={(linkedin) => this.setState({linkedin})}
                                         value={this.state.linkedin}
                                     />
-                                    <Label>{strings('profile.linkedin')}</Label>
+                                    {/*<Label>{strings('profile.linkedin')}</Label>*/}
                                     <Icon name='logo-linkedin' />
                                 </Item>
                             )
