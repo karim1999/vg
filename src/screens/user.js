@@ -15,7 +15,7 @@ import {
     Toast,
     Button
 } from "native-base";
-import {SERVER_URL, STORAGE_URL} from "../config";
+import {ONESIGNAL_API_KEY, ONESIGNAL_APP_ID, SERVER_URL, STORAGE_URL} from "../config";
 import AppTemplate from './../components/appTemplate';
 import ImagePicker from 'react-native-image-picker';
 import axios from "axios";
@@ -24,6 +24,8 @@ import I18n from "../i18n";
 import _ from 'lodash';
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
+import firebaseApp from "../firebaseDb";
+let firebaseDb= firebaseApp.database();
 
 class User extends React.Component {
     constructor(props) {
@@ -58,6 +60,35 @@ class User extends React.Component {
         });
         AsyncStorage.getItem('token').then(userToken => {
             return axios.post(SERVER_URL+'api/follow/'+this.state.id+'?token='+userToken).then(response => {
+                firebaseDb.ref('/notifications/').push({
+                    "title": this.props.user.name+" has followed you",
+                    "img": STORAGE_URL+this.props.user.img,
+                    "description": this.props.user.name,
+                    "screen": "User",
+                    "target": this.state.id,
+                    "data": {
+                        ...this.props.navigation.state.params
+                    }
+                });
+
+                let notification= {
+                    app_id: ONESIGNAL_APP_ID,
+                    contents: {"en": this.props.user.name+" has followed you"},
+                    data: {
+                        type : 1,
+                    },
+                    include_player_ids: [this.state.user.device_id]
+                };
+                axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": ONESIGNAL_API_KEY
+                    }
+                }).then(response => {
+                    console.log(response.data.id);
+                }).catch(error => {
+                    console.log(error);
+                });
                 this.setState({
                     isFollowed: false,
                 });
@@ -115,7 +146,7 @@ class User extends React.Component {
                             {
                                 this.props.user.id != this.state.id && (
                                     <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
-                                        <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>Chat</Text></Button>
+                                        <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img, device_id: this.state.user.device_id})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>Chat</Text></Button>
                                         {
                                             !_.find(this.props.user.follows, user => user.id == this.state.id)? (
                                                 <Button onPress={()=> this.addToFollows()} primary style={{marginLeft: 10}} iconRight rounded><Text>Follow</Text>

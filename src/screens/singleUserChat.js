@@ -176,36 +176,36 @@ class SingleChat extends Component {
             updates2[this.state.ref+'/' + newPostKey2] = data[0];
             firebaseDb.ref().update(updates2);
         }
-        // firebaseDb.ref(this.state.ref).push(data[0]);
-        if(this.state.id != 0){
-            // OneSignal.getPermissionSubscriptionState((status) => {
-            //     let userId= status.userId;
-            // });
-            // axios.get(SERVER_URL+"api/project/"+this.state.id+"/users").then(response => {
-            //     let devices= _.compact(_.map(response.data, user => user.id !== this.props.user.id && user.device_id));
-            //     return devices;
-            // }).then(devices => {
-            //     let notification= {
-            //         app_id: ONESIGNAL_APP_ID,
-            //         contents: {"en": "New message was sent to " + this.state.title + " group chat"},
-            //         data: {
-            //             type : 1,
-            //         },
-            //         include_player_ids: devices
-            //     };
-            //     axios.post('https://onesignal.com/api/v1/notifications', notification , {
-            //         headers: {
-            //             "Content-Type": "application/json",
-            //             "Authorization": ONESIGNAL_API_KEY
-            //         }
-            //     }).then(response => {
-            //         console.log(response.data.id);
-            //     }).catch(error => {
-            //         console.log(error);
-            //     });
-            // }).catch(error => {
-            //     console.log(error);
-            // });
+        if(this.state.device_id){
+            firebaseDb.ref('/notifications/').push({
+                "title": this.props.user.name+" sent you a message",
+                "img": STORAGE_URL+this.props.user.img,
+                "description": this.props.user.name,
+                "screen": "SingleUserChat",
+                "target": this.state.id,
+                "data": {
+                    ...this.props.navigation.state.params
+                }
+            });
+
+            let notification= {
+                app_id: ONESIGNAL_APP_ID,
+                contents: {"en": this.props.user.name+" has followed you"},
+                data: {
+                    type : 1,
+                },
+                include_player_ids: [this.state.user.device_id]
+            };
+            axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": ONESIGNAL_API_KEY
+                }
+            }).then(response => {
+                console.log(response.data.id);
+            }).catch(error => {
+                console.log(error);
+            });
         }
     }
     checkPermission = async () => {

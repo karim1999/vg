@@ -29,7 +29,7 @@ class Notifications extends React.Component {
         });
         firebaseDb.ref('/notifications/').on('value', data => {
             this.setState({
-                notifications: _.values(data.val()),
+                notifications: _.reverse(_.filter(_.values(data.val()), notify => {return !notify.target || notify.target == this.props.user.id})),
                 isLoading: false
             })
         });
@@ -48,13 +48,12 @@ class Notifications extends React.Component {
                             ListEmptyComponent={
                                 <Text style={{alignItems: "center", justifyContent: "center", flex: 1, textAlign: "center"}}>{strings("home.notFound")}</Text>
                             }
-                            data={_.reverse(this.state.notifications)}
+                            data={this.state.notifications}
                             renderItem={({item}) => (
-                                <TouchableOpacity
-                                    key={item.id}
-                                    onPress={() => this.props.navigation.navigate(item.screen, item.data)}
-                                >
-                                    <ListItem avatar>
+                                    <ListItem avatar
+                                              key={item.id}
+                                              onPress={() => this.props.navigation.navigate(item.screen, item.data)}
+                                    >
                                         <Left>
                                             <Thumbnail small source={{ uri: item.img }} />
                                         </Left>
@@ -66,7 +65,6 @@ class Notifications extends React.Component {
                                             {/*<Text note></Text>*/}
                                         </Right>
                                     </ListItem>
-                                </TouchableOpacity>
                             )}
                             keyExtractor = { (item, index) => index.toString() }
                         />

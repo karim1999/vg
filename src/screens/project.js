@@ -26,6 +26,8 @@ import MultiSelect from "react-native-quick-select";
 import {strings} from "../i18n";
 import I18n from "../i18n";
 import Stars from 'react-native-stars';
+import firebaseApp from "../firebaseDb";
+let firebaseDb= firebaseApp.database();
 
 class Project extends Component {
     constructor(props) {
@@ -57,6 +59,35 @@ class Project extends Component {
         axios.post(SERVER_URL+"api/project/"+this.state.id+"/comment/add?token="+userToken, {
             comment: this.state.comment
         }).then(response => {
+            firebaseDb.ref('/notifications/').push({
+                "title": this.props.user.name+" added a comment on one of your projects",
+                "img": STORAGE_URL+this.state.img,
+                "description": this.props.user.name,
+                "screen": "Project",
+                "target": this.state.user_id,
+                "data": {
+                    ...this.props.navigation.state.params
+                }
+            });
+
+            let notification= {
+                app_id: ONESIGNAL_APP_ID,
+                contents: {"en": "New comment was added on one of your projects"},
+                data: {
+                    type : 1,
+                },
+                include_player_ids: [this.state.project.user.device_id]
+            };
+            axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": ONESIGNAL_API_KEY
+                }
+            }).then(response => {
+                console.log(response.data.id);
+            }).catch(error => {
+                console.log(error);
+            });
             this.setState({
                 comments: response.data,
                 isCommenting: false,
@@ -89,6 +120,36 @@ class Project extends Component {
         axios.post(SERVER_URL+"api/project/"+this.state.id+"/review/add?token="+userToken, {
             review: this.state.rate
         }).then(response => {
+            firebaseDb.ref('/notifications/').push({
+                "title": this.props.user.name+" reviewed one of your projects",
+                "img": STORAGE_URL+this.state.img,
+                "description": this.props.user.name,
+                "target": this.state.user_id,
+                "screen": "Project",
+                "data": {
+                    ...this.props.navigation.state.params
+                }
+            });
+
+            let notification= {
+                app_id: ONESIGNAL_APP_ID,
+                contents: {"en": "New review was added on one of your projects"},
+                data: {
+                    type : 1,
+                },
+                include_player_ids: [this.state.project.user.device_id]
+            };
+            axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": ONESIGNAL_API_KEY
+                }
+            }).then(response => {
+                console.log(response.data.id);
+            }).catch(error => {
+                console.log(error);
+            });
+
             this.setState({
                 isReviewing: false,
                 disableReviewing: true
@@ -134,13 +195,24 @@ class Project extends Component {
                     let devices= _.compact(_.map(response2.data, user => user.id !== this.props.user.id && user.device_id));
                     return devices;
                 }).then(devices => {
+                    firebaseDb.ref('/notifications/').push({
+                        "title": this.props.user.name+" invested on one of your projects",
+                        "img": STORAGE_URL+this.state.img,
+                        "description": this.props.user.name,
+                        "screen": "Project",
+                        "target": this.state.user_id,
+                        "data": {
+                            ...this.props.navigation.state.params
+                        }
+                    });
+
                     let notification= {
                         app_id: ONESIGNAL_APP_ID,
-                        contents: {"en": "New investment in one of your projects"},
+                        contents: {"en": this.props.user.name+" invested on one of your projects"},
                         data: {
                             type : 1,
                         },
-                        include_player_ids: devices
+                        include_player_ids: [this.state.project.user.device_id]
                     };
                     axios.post('https://onesignal.com/api/v1/notifications', notification , {
                         headers: {
@@ -179,6 +251,35 @@ class Project extends Component {
         });
         AsyncStorage.getItem('token').then(userToken => {
             return axios.delete(SERVER_URL+'api/invest/'+this.state.id+'?token='+userToken).then(response => {
+                firebaseDb.ref('/notifications/').push({
+                    "title": this.props.user.name+" removed his investment on one of your projects",
+                    "img": STORAGE_URL+this.state.img,
+                    "description": this.props.user.name,
+                    "target": this.state.user_id,
+                    "screen": "Project",
+                    "data": {
+                        ...this.props.navigation.state.params
+                    }
+                });
+
+                let notification= {
+                    app_id: ONESIGNAL_APP_ID,
+                    contents: {"en": this.props.user.name+" removed his investment on one of your projects"},
+                    data: {
+                        type : 1,
+                    },
+                    include_player_ids: [this.state.project.user.device_id]
+                };
+                axios.post('https://onesignal.com/api/v1/notifications', notification , {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": ONESIGNAL_API_KEY
+                    }
+                }).then(response => {
+                    console.log(response.data.id);
+                }).catch(error => {
+                    console.log(error);
+                });
                 this.setState({
                     isLoading: false,
                 });
