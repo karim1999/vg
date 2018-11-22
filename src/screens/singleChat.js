@@ -137,18 +137,18 @@ class SingleChat extends Component {
             <Bubble
                 {...props}
                 textStyle={{
-	                left: {
-		                color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
-	                }
+                    left: {
+                        color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
+                    }
                 }}
                 wrapperStyle={{
                     right: {
-	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
+                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
                         marginTop: 10
                     },
                     left: {
-	                    backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
-	                    marginTop: 10
+                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
+                        marginTop: 10
                     }
                 }}
             />
@@ -248,14 +248,14 @@ class SingleChat extends Component {
             })
         });
     }
-   formatMondey = function(n, c, d, t){
-       c = isNaN(c = Math.abs(c)) ? 2 : c;
-       d = d == undefined ? "." : d;
-       t = t == undefined ? "," : t;
-       let s = n < 0 ? "-" : "";
-       let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
-       let j = (j = i.length) > 3 ? j % 3 : 0;
-       return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    formatMondey = function(n, c, d, t){
+        c = isNaN(c = Math.abs(c)) ? 2 : c;
+        d = d == undefined ? "." : d;
+        t = t == undefined ? "," : t;
+        let s = n < 0 ? "-" : "";
+        let i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c)));
+        let j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     };
     // componentDidUnMount() {
     //     this.state.ref.off('value');
@@ -323,40 +323,40 @@ class SingleChat extends Component {
                                             type: 'image/png'
                                         });
                                         // AsyncStorage.getItem('token').then(userToken => {
-                                            axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
-                                                this.setState({
-                                                    isLoading: false,
-                                                });
-                                                let result= [
-                                                    {
-                                                        _id: new Date().getTime(),
-                                                        image: STORAGE_URL+resp.data,
-                                                        text: "",
-                                                        type: "img",
-                                                        created_at: new Date(),
-                                                        user: {
-                                                            _id: this.props.user.id,
-                                                            name: this.props.user.name,
-                                                            avatar: STORAGE_URL+this.props.user.img
-                                                        }
+                                        axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
+                                            this.setState({
+                                                isLoading: false,
+                                            });
+                                            let result= [
+                                                {
+                                                    _id: new Date().getTime(),
+                                                    image: STORAGE_URL+resp.data,
+                                                    text: "",
+                                                    type: "img",
+                                                    created_at: new Date(),
+                                                    user: {
+                                                        _id: this.props.user.id,
+                                                        name: this.props.user.name,
+                                                        avatar: STORAGE_URL+this.props.user.img
                                                     }
-                                                ];
-                                                this.addNewMessage(result);
-                                                Toast.show({
-                                                    text: "You have sent a photo successfully.",
-                                                    buttonText: "Ok",
-                                                    type: "success"
-                                                })
-                                            }).catch((err) => {
-                                                this.setState({
-                                                    isLoading: false,
-                                                });
-                                                Toast.show({
-                                                    text: strings("messages.noInternet"),
-                                                    buttonText: strings("messages.ok"),
-                                                    type: "danger"
-                                                })
+                                                }
+                                            ];
+                                            this.addNewMessage(result);
+                                            Toast.show({
+                                                text: "You have sent a photo successfully.",
+                                                buttonText: "Ok",
+                                                type: "success"
                                             })
+                                        }).catch((err) => {
+                                            this.setState({
+                                                isLoading: false,
+                                            });
+                                            Toast.show({
+                                                text: strings("messages.noInternet"),
+                                                buttonText: strings("messages.ok"),
+                                                type: "danger"
+                                            })
+                                        })
                                         // });
                                     }
                                 });
@@ -450,7 +450,7 @@ class SingleChat extends Component {
                             </Button>
                         )
                     }
-                    </Header>
+                </Header>
                 {this.state.menu && (
                     <List style={{backgroundColor: "#FFFFFF", right: 0}}>
                         <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => {
@@ -471,11 +471,13 @@ class SingleChat extends Component {
                         }
                     </List>
                 )}
-                {this.state.total_amount_invested && (
-                    <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 13}}> { strings('chat.totalCapital') } <Text style={{color: "#FFFFFF"}}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
-                    </View>
-                )}
+                {
+                    this.state.id != 0 && (
+                        <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
+                            <Text style={{padding: 10, fontSize: 13}}> { strings('chat.totalCapital') } <Text style={{color: "#FFFFFF"}}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
+                        </View>
+                    )
+                }
                 <GiftedChat
                     messages={_.reverse(this.state.logs)}
                     onSend={data => this.addNewMessage(data)}

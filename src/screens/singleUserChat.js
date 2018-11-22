@@ -468,21 +468,6 @@ class SingleChat extends Component {
                         )
                     }
                 </Header>
-                {this.state.menu && (
-                    <List style={{backgroundColor: "#FFFFFF", right: 0}}>
-                        <ListItem style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]} onPress={() => {
-                            this.setState({menu: false});
-                            this.props.navigation.navigate("Project", {...this.props.navigation.state.params});
-                        }}>
-                            <Text>{ strings('chat.openProject') }</Text>
-                        </ListItem>
-                    </List>
-                )}
-                {this.state.total_amount_invested && (
-                    <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{padding: 10, fontSize: 13}}> { strings('chat.totalCapital') } <Text style={{color: "#FFFFFF"}}> {this.formatMondey(this.state.total_amount_invested, 0, '.', ',')} {this.state.currency}</Text></Text>
-                    </View>
-                )}
                 <GiftedChat
                     messages={_.reverse(this.state.logs)}
                     onSend={data => this.addNewMessage(data)}
