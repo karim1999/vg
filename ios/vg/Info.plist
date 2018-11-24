@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSCalendarsUsageDescription</key>
+    <string>VgKsa would like to access calendars usage</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>VgKsa would like to access blutooth</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>VgKsa would like to access music usage</string>
+    <key>NSMotionUsageDescription</key>
+    <string>VgKsa would like to access motion usage</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>VgKsa would like to access speech recognition</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
