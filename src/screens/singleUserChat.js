@@ -53,8 +53,8 @@ class SingleChat extends Component {
             seconds: sec
         });
     }
-    startRecording(){
-        await; Permissions.check('microphone', { type: 'always' }).then(async response => {
+    async startRecording(){
+        await Permissions.check('microphone', { type: 'always' }).then(async response => {
             if(response === 'authorized'){
                 AudioRecord.start();
                 this.setState({
