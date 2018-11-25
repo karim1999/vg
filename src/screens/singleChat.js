@@ -53,21 +53,18 @@ class SingleChat extends Component {
             seconds: sec
         });
     }
-    startRecording(){
-        // const options = {
-        //     sampleRate: 44100,  // default 44100
-        //     channels: 1,        // 1 or 2, default 1
-        //     bitsPerSample: 16,  // 8 or 16, default 16
-        //     wavFile: 'test.wav' // default 'audio.wav'
-        // };
-        //
-        // AudioRecord.init(options);
-
-        AudioRecord.start();
-        this.setState({
-            isRecording: true
+    async startRecording(){
+        await Permissions.check('microphone', { type: 'always' }).then(async response => {
+            if(response === 'authorized'){
+                AudioRecord.start();
+                this.setState({
+                    isRecording: true
+                });
+                this.intervalHandle = setInterval(this.recordingInterval, 1000);
+            }else{
+                await this.checkPermission();
+            }
         });
-        this.intervalHandle = setInterval(this.recordingInterval, 1000);
     }
     async sendRecording(){
         let audioFile = await AudioRecord.stop();
@@ -115,7 +112,7 @@ class SingleChat extends Component {
             //     buttonText: strings("messages.ok"),
             //     type: "danger"
             // })
-            alert(JSON.stringify(err));
+            alert("Error");
         });
 
         this.stopRecording();
@@ -315,7 +312,7 @@ class SingleChat extends Component {
                                             isLoading: true
                                         });
                                         let uri = response.uri;
-                                        alert(uri);
+                                        // alert(uri);
                                         let data = new FormData();
                                         data.append('img', {
                                             name: "img",
@@ -369,7 +366,7 @@ class SingleChat extends Component {
                                         isLoading: true
                                     });
                                     let uri = res.uri;
-                                    alert(uri);
+                                    // alert(uri);
 
                                     let data = new FormData();
                                     data.append('img', {
