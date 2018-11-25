@@ -48,7 +48,7 @@ export default class audioPlayer extends React.Component {
         Sound.setCategory('Playback');
         let uri= this.props.url;
         // let uri= "http://app.vgksa.com/storage/app/public/images/b10hefAUQ5wCFWu0z81t4rRDD4OXKCIkNl3zGGjX.wav";
-        this.audio = new Sound(uri, Sound.MAIN_BUNDLE, (error) => {
+        this.audio = new Sound(uri, '', (error) => {
             if (error) {
                 alert('Error, playing the record');
                 return;

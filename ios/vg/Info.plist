@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSCalendarsUsageDescription</key>
-    <string>VgKsa would like to access calendars usage</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>VgKsa would like to access blutooth</string>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>VgKsa would like to access music usage</string>
-    <key>NSMotionUsageDescription</key>
-    <string>VgKsa would like to access motion usage</string>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>VgKsa would like to access speech recognition</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -27,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>7</string>
+	<string>9</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>9</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -39,16 +29,26 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>VgKsa would like to access music usage</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>VgKsa would like to access blutooth</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>VgKsa would like to access calendars usage</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to your microphone (for voice records)</string>
+	<key>NSMotionUsageDescription</key>
+	<string>VgKsa would like to access motion usage</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>VgKsa would like to access speech recognition</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

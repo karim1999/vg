@@ -53,6 +53,7 @@
 		62702E82DA2F3E0F0F532700 /* libPods-vgTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 189D6D711A41CF4345035146 /* libPods-vgTests.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		846ACE7174EB4ED2B49A761D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4C6E287A641239FD7AEAF /* MaterialIcons.ttf */; };
+		8A08580B21AAB932002F7CFA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A08580A21AAB932002F7CFA /* AudioToolbox.framework */; };
 		8A47DB8D2131952A0020CED9 /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A47DB8C213195090020CED9 /* libRNDocumentPicker.a */; };
 		8AFEBE8A214DB31C00DFD149 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFEBE89214DB31C00DFD149 /* NotificationService.m */; };
 		8AFEBE8E214DB31C00DFD149 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8AFEBE86214DB31C00DFD149 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -470,6 +471,7 @@
 		807AA1B341F04B8C813B559D /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		80DE25C7AEC62CFAC2B4E5CE /* Pods-vgTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vgTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-vgTests/Pods-vgTests.release.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8A08580A21AAB932002F7CFA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8A47DB87213195080020CED9 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDocumentPicker.xcodeproj; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; };
 		8A7EB9CC2132A77D0069EFC0 /* vg.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vg.entitlements; path = vg/vg.entitlements; sourceTree = "<group>"; };
 		8AFEBE86214DB31C00DFD149 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -568,6 +570,7 @@
 				8AFEBE97214DB90300DFD149 /* libRCTOneSignal.a in Frameworks */,
 				8AFEBE96214DB8FB00DFD149 /* SystemConfiguration.framework in Frameworks */,
 				8AFEBE94214DB8F200DFD149 /* UIKit.framework in Frameworks */,
+				8A08580B21AAB932002F7CFA /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,6 +758,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A08580A21AAB932002F7CFA /* AudioToolbox.framework */,
 				8AFEBE95214DB8FB00DFD149 /* SystemConfiguration.framework */,
 				8AFEBE93214DB8F200DFD149 /* UIKit.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -1056,6 +1060,12 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
