@@ -262,7 +262,7 @@ class SingleChat extends Component {
     fireListener(){
         firebaseDb.ref(this.state.ref).on('value', data => {
             this.setState({
-                logs: _.values(data.val())
+                logs: _.reverse(_.sortBy(_.values(data.val()), ['createdAt']))
             })
         });
     }
@@ -464,11 +464,12 @@ class SingleChat extends Component {
                     }
                 </Header>
                 <GiftedChat
-                    messages={_.reverse(this.state.logs)}
+                    messages={this.state.logs}
                     onSend={data => this.addNewMessage(data)}
                     alwaysShowSend={true}
                     placeholder={strings('chat.placeholder')}
                     isAnimated={true}
+                    inverted={true}
                     onPressAvatar={(user) => this.props.navigation.navigate('User', {id: user._id})}
                     showUserAvatar={true}
                     renderBubble={(props) => this.renderBubble(props)}
