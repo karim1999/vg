@@ -245,6 +245,11 @@ class SingleChat extends Component {
             })
         });
     }
+    componentWillUnmount() {
+        firebaseDb.ref('/replies/'+this.state.id).off();
+        this.state.ref.off();
+    }
+
     formatMondey = function(n, c, d, t){
         c = isNaN(c = Math.abs(c)) ? 2 : c;
         d = d == undefined ? "." : d;

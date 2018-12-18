@@ -23,6 +23,9 @@ class Notifications extends React.Component {
             isLoading: false
         };
     }
+    componentWillUnmount() {
+        firebaseDb.ref('/notifications/').off();
+    }
     componentDidMount(){
         this.setState({
             isLoading: true

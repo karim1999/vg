@@ -26,6 +26,8 @@
     "note1": "*Only if you were referred by someone"
   },
   "home": {
+    "projects": "Projects",
+    "users": "Users",
     "home": "Home",
     "search": "Search",
     "all": "All",
@@ -57,7 +59,10 @@
     "openChat": "Open this project chat now",
     "save": "Save",
     "investProject": "Invest in this project",
-    "select": "Select"
+    "select": "Select",
+    "add": "Add",
+    "addComment": "Add Comment",
+    "commentMsg": "Write your comment"
   },
   "chat": {
     "messages": "Messages",
@@ -79,7 +84,9 @@
     "image": "image",
     "ok": "Ok",
     "cancel": "Cancel",
-    "image_required":"You need to add an image"
+    "image_required":"You need to add an image",
+    "review": "You have added a review successfully.",
+    "comment": "You have added a comment successfully."
 
   },
   "add_project": {
@@ -124,7 +131,10 @@
     "long": "Long-Term",
     "social": "Social Media",
     "search": "Search Engines",
-    "friends": "Friends"
+    "friends": "Friends",
+    "chat": "Chat",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
   },
   "app": {
     "sure": "Are you sure?",

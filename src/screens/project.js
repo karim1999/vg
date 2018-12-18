@@ -94,7 +94,7 @@ class Project extends Component {
                 comment: ""
             });
             Toast.show({
-                text: "You have added a comment successfully.",
+                text: strings("messages.review"),
                 buttonText: strings("messages.ok"),
                 type: "success"
             });
@@ -156,7 +156,7 @@ class Project extends Component {
             });
             this.props.setUser(response.data);
             Toast.show({
-                text: "You have added a review successfully.",
+                text: strings("messages.review"),
                 buttonText: strings("messages.ok"),
                 type: "success"
             });
@@ -599,7 +599,7 @@ class Project extends Component {
                             <Form style={{flex: 1}}>
                                 <Item style={{height: 70}}>
                                     <Icon type="MaterialIcons" name='rate-review' />
-                                    <Label>Add Comment</Label>
+                                    <Label>{strings("project.addComment")}</Label>
                                 </Item>
                                 {/*<Item style={{height: 70, borderColor: "transparent", paddingBottom: 0, marginBottom: 0}} underline={false}>*/}
                                 {/*<Icon type="FontAwesome" name='info' />*/}
@@ -611,7 +611,7 @@ class Project extends Component {
                                         rowSpan={5}
                                         bordered
                                         onChangeText={(comment) => this.setState({comment})}
-                                        placeholder="Write your comment"
+                                        placeholder={strings("project.commentMsg")}
                                         placeholderTextColor="#ccc5c5"
                                         value={this.state.comment}
                                     />
@@ -621,7 +621,7 @@ class Project extends Component {
                                     style={{flexDirection: "row"}}
                                     block success
                                 >
-                                    <Text>add</Text>
+                                    <Text>{strings("project.add")}</Text>
                                     {this.state.isCommenting && (
                                         <ActivityIndicator size="small" color="#000000" />
                                     )}

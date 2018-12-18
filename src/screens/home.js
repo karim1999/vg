@@ -79,20 +79,24 @@ class Home extends Component {
     };
 
     async getData(){
+        let data= [];
         if(this.state.selected === 0){
-            this.state.data= this.state.projects;
+            data= this.state.projects;
         }else{
-            this.state.data= await _.filter(this.state.projects, project => project.category_id == this.state.selected);
+            data= await _.filter(this.state.projects, project => project.category_id == this.state.selected);
         }
         if(this.state.search !== ""){
-            this.state.data= await _.filter(this.state.data, project => project.title.toLowerCase().indexOf(this.state.search) > -1);
+            data= await _.filter(data, project => project.title.toLowerCase().indexOf(this.state.search) > -1);
         }
         if(this.state.from !== ""){
-            this.state.data= await _.filter(this.state.data, project => project.amount >= this.state.from);
+            data= await _.filter(data, project => project.amount >= this.state.from);
         }
         if(this.state.to !== ""){
-            this.state.data= await _.filter(this.state.data, project => project.amount <= this.state.to);
+            data= await _.filter(data, project => project.amount <= this.state.to);
         }
+        this.setState({
+            data
+        });
         if(this.state.searchUsers !== ""){
             this.setState({
                 data2: await _.filter(this.state.users, user => user.name.toLowerCase().indexOf(this.state.searchUsers) > -1)
@@ -343,13 +347,13 @@ class Home extends Component {
                             borderColor: "#000",
                             padding: 20
                         }}
-                                active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: this.state.tab === 2 ? "white" : '#000'}}>Users</Text></Button>
+                                active={this.state.tab === 2} first onPress={() => this.setState({tab: 2})}><Text style={{color: this.state.tab === 2 ? "white" : '#000'}}>{strings("home.users")}</Text></Button>
                         <Button
                             style={{
                                 backgroundColor: this.state.tab === 1 ? "#000" : undefined,
                                 borderColor: "#000",
                                 padding: 20
-                            }} active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: this.state.tab === 1 ? "white" : '#000'}}>Projects</Text></Button>
+                            }} active={this.state.tab === 1} last  onPress={() => this.setState({tab: 1})}><Text style={{color: this.state.tab === 1 ? "white" : '#000'}}>{strings("home.projects")}</Text></Button>
                     </Segment>
                 </View>
                 {this.state.tab === 1? (

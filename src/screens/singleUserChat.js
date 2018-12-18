@@ -265,6 +265,7 @@ class SingleChat extends Component {
                 logs: _.reverse(_.sortBy(_.values(data.val()), ['createdAt']))
             })
         });
+        firebaseDb.ref('/private/').off();
     }
     formatMondey = function(n, c, d, t){
         c = isNaN(c = Math.abs(c)) ? 2 : c;
@@ -444,9 +445,9 @@ class SingleChat extends Component {
         );
     }
 
-    // componentDidUnMount() {
-    //     this.state.ref.off('value');
-    // }
+    componentDidUnMount() {
+        firebaseDb.ref(this.state.ref).off();
+    }
     render() {
         return (
             <Container style={{backgroundColor: "#f3f3f3"}}>
