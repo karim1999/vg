@@ -91,30 +91,6 @@ class Profile extends Component {
                         {
                             (I18n.locale !== "ar") ? (
                                 <Item style={{height: 70}}>
-                                    <Icon type="FontAwesome" name='info' />
-                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
-                                    <Input multiline = {true}
-                                           numberOfLines = {10}
-                                           onChangeText={(description) => this.setState({description})}
-                                           value={this.state.description}
-                                    />
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Input multiline = {true}
-                                           style={{textAlign: "right"}}
-                                           numberOfLines = {10}
-                                           onChangeText={(description) => this.setState({description})}
-                                           value={this.state.description}
-                                    />
-                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
-                                    <Icon type="FontAwesome" name='info' />
-                                </Item>
-                            )
-                        }
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
                                     <Icon name='ios-folder-open' />
                                     {/*<Label>{strings('profile.country')}</Label>*/}
                                     <Picker
@@ -195,94 +171,31 @@ class Profile extends Component {
                                 </Item>
                             )
                         }
-                        {/*{*/}
-                            {/*(I18n.locale !== "ar") ? (*/}
-                                {/*<Item style={{height: 70}}>*/}
-                                    {/*<Icon type="FontAwesome" name='money' />*/}
-                                    {/*<Label>{strings('profile.wallet')}</Label>*/}
-                                    {/*<Slider*/}
-                                        {/*value={Number(this.state.money)}*/}
-                                        {/*onValueChange={(money) => this.setState({money})}*/}
-                                        {/*style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>*/}
-                                {/*</Item>*/}
-                            {/*) : (*/}
-                                {/*<Item style={{height: 70}}>*/}
-                                    {/*<Slider*/}
-                                        {/*value={Number(this.state.money)}*/}
-                                        {/*onValueChange={(money) => this.setState({money})}*/}
-                                        {/*style={{flex: 1}} step={5000} maximumValue={1000000} minimumValue={5000}/>*/}
-                                    {/*<Label>{strings('profile.wallet')}</Label>*/}
-                                    {/*<Icon type="FontAwesome" name='money' />*/}
-                                {/*</Item>*/}
-                            {/*)*/}
-                        {/*}*/}
+                        {
+                            (I18n.locale !== "ar") ? (
+                                <Item style={{height: 70}}>
+                                    <Icon type="FontAwesome" name='info' />
+                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
+                                    <Input multiline = {true}
+                                           numberOfLines = {10}
+                                           onChangeText={(description) => this.setState({description})}
+                                           value={this.state.description}
+                                    />
+                                </Item>
+                            ) : (
+                                <Item style={{height: 70}}>
+                                    <Input multiline = {true}
+                                           style={{textAlign: "right"}}
+                                           numberOfLines = {10}
+                                           onChangeText={(description) => this.setState({description})}
+                                           value={this.state.description}
+                                    />
+                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
+                                    <Icon type="FontAwesome" name='info' />
+                                </Item>
+                            )
+                        }
 
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
-                                    <Icon name='logo-facebook' />
-                                    {/*<Label>{strings('profile.facebook')}</Label>*/}
-                                    <Input
-                                        onChangeText={(facebook) => this.setState({facebook})}
-                                        value={this.state.facebook}
-                                    />
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Input
-                                        style={{textAlign: "right"}}
-                                        onChangeText={(facebook) => this.setState({facebook})}
-                                        value={this.state.facebook}
-                                    />
-                                    {/*<Label>{strings('profile.facebook')}</Label>*/}
-                                    <Icon name='logo-facebook' />
-                                </Item>
-                            )
-                        }
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
-                                    <Icon name='logo-twitter' />
-                                    {/*<Label>{strings('profile.twitter')}</Label>*/}
-                                    <Input
-                                        onChangeText={(twitter) => this.setState({twitter})}
-                                        value={this.state.twitter}
-                                    />
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Input
-                                        style={{textAlign: "right"}}
-                                        onChangeText={(twitter) => this.setState({twitter})}
-                                        value={this.state.twitter}
-                                    />
-                                    {/*<Label>{strings('profile.twitter')}</Label>*/}
-                                    <Icon name='logo-twitter' />
-                                </Item>
-                            )
-                        }
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
-                                    <Icon name='logo-linkedin' />
-                                    {/*<Label>{strings('profile.linkedin')}</Label>*/}
-                                    <Input
-                                        onChangeText={(linkedin) => this.setState({linkedin})}
-                                        value={this.state.linkedin}
-                                    />
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Input
-                                        style={{textAlign: "right"}}
-                                        onChangeText={(linkedin) => this.setState({linkedin})}
-                                        value={this.state.linkedin}
-                                    />
-                                    {/*<Label>{strings('profile.linkedin')}</Label>*/}
-                                    <Icon name='logo-linkedin' />
-                                </Item>
-                            )
-                        }
                         <Button
                             onPress={() => this.submit()}
                             style={{flexDirection: "row"}}

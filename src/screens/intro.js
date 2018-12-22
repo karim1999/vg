@@ -10,7 +10,6 @@ import {
     Image,
     StyleSheet,
     TextInput,
-    Linking,
     TouchableOpacity,
     AsyncStorage,
     ActivityIndicator
@@ -157,42 +156,41 @@ class SignIn extends React.Component {
 
                     <Logo title="" error={this.props.error} />
 
-                    <TextInput
-                        style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                        placeholderTextColor="#d2d2d2"
-                        placeholder={strings("login.email")}
-                        keyboardType='email-address'
-                        onChangeText={(username) => this.setState({username})}
-                    />
-                    <TextInput
-                        placeholderTextColor="#d2d2d2"
-                        style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                        secureTextEntry={true}
-                        placeholder={strings("login.password")}
-                        onChangeText={(password) => this.setState({password})}
-                    />
-                    <View style={{width: "70%"}}>
+                    {/*<TextInput*/}
+                        {/*style={[styles.input, (I18n.locale === "ar") && styles.rtl]}*/}
+                        {/*placeholderTextColor="#d2d2d2"*/}
+                        {/*placeholder={strings("login.email")}*/}
+                        {/*keyboardType='email-address'*/}
+                        {/*onChangeText={(username) => this.setState({username})}*/}
+                    {/*/>*/}
+                    {/*<TextInput*/}
+                        {/*placeholderTextColor="#d2d2d2"*/}
+                        {/*style={[styles.input, (I18n.locale === "ar") && styles.rtl]}*/}
+                        {/*secureTextEntry={true}*/}
+                        {/*placeholder={strings("login.password")}*/}
+                        {/*onChangeText={(password) => this.setState({password})}*/}
+                    {/*/>*/}
+                    {/*<View style={{width: "70%"}}>*/}
 
-                        <Text onPress={()=> Linking.openURL(SERVER_URL+'password/reset')} style={[{color: "#FFFFFF", fontSize: 17, textAlign: 'left'}, (I18n.locale === "ar") && styles.rtl]}> {strings("login.forget")} </Text>
-                        <Text onPress={()=> this.props.navigation.navigate('Terms', data)} style={[{color: "#FFFFFF", fontSize: 17, textAlign: 'left'}, (I18n.locale === "ar") && styles.rtl]}> {strings("login.signup")} </Text>
-                    </View>
+                    {/*<Text style={{color: "#FFFFFF", fontSize: 20, textAlign: 'left'}}> Forgot your password? </Text>*/}
+                    {/*</View>*/}
 
                     <TouchableOpacity
                         style={[styles.button, {flexDirection: "row"}]}
-                        onPress={this.signIn}
+                        onPress={() => this.props.navigation.navigate('SignIn')}
                     >
                         <Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.login_button")} </Text>
                         {this.state.isLoading && (
                             <ActivityIndicator style={{}} size="small" color="#FFFFFF" />
                         )}
                     </TouchableOpacity>
-                    {/*<Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> {strings("login.or")} </Text>*/}
-                    {/*<TouchableOpacity*/}
-                        {/*onPress={() => this.props.navigation.navigate('Terms', data)}*/}
-                        {/*style={styles.button}*/}
-                    {/*>*/}
-                        {/*<Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.signup_button")} </Text>*/}
-                    {/*</TouchableOpacity>*/}
+                    <Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> {strings("login.or")} </Text>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Terms', data)}
+                        style={styles.button}
+                    >
+                        <Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.signup_button")} </Text>
+                    </TouchableOpacity>
                 </View>
             </ImageBackground>
         );

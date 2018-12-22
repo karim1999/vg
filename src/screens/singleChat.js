@@ -206,14 +206,12 @@ class SingleChat extends Component {
     }
     checkPermission = async () => {
         const p = await Permissions.check('microphone');
-        console.log('permission check', p);
         if (p === 'authorized') return;
         this.requestPermission();
     };
 
     requestPermission = async () => {
         const p = await Permissions.request('microphone');
-        console.log('permission request', p);
     };
     async componentDidMount(){
         await this.checkPermission();

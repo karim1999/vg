@@ -11,7 +11,9 @@
     "password": "Password",
     "done": "You have signed in successfully",
     "activate": "Your account has not been activated yet",
-    "wrong": "Wrong username or password"
+    "wrong": "Wrong username or password",
+    "forget": "Forgot your password?",
+    "signup": "signup?"
   },
   "signup": {
     "title": "Your Profile",
@@ -23,7 +25,12 @@
     "fieldRequired": "{{field}} field is required",
     "notEmail": "Please enter a valid e-mail address",
     "notLink": "Please enter a valid Link",
-    "note1": "*Only if you were referred by someone"
+    "note1": "*Only if you were referred by someone",
+    "q1": "Have you visited our website?",
+    "yes": "Yes",
+    "no": "No",
+    "finalYes": "You have signed up successfully. Please make sure that you have signed up on our website. We will call you to activate your account soon",
+    "finalNo": "You have signed up successfully. Please make sure to visit our website and fill out the registration form. We will call you to activate your account soon"
   },
   "home": {
     "projects": "Projects",

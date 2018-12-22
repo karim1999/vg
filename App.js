@@ -9,6 +9,7 @@ import { Footer, FooterTab, Button, Icon } from 'native-base';
 import i18n, { strings } from './src/i18n';
 import AuthLoadingScreen from './src/screens/loading';
 import SignIn from './src/screens/signin';
+import Intro from './src/screens/intro';
 import Terms from './src/screens/terms';
 import SignUp1 from './src/screens/signup1';
 import SignUp2 from './src/screens/signup2';
@@ -144,19 +145,20 @@ const AppStack = createTabNavigator(
 );
 const AuthStack = createStackNavigator(
     {
-        SignIn: SignIn,
-        Terms: Terms,
-        SignUp1: SignUp1,
-        SignUp2: SignUp2,
-        SignUp3: SignUp3,
-        SignUp4: SignUp4,
-        SignUp5: SignUp5,
-        Forget: Forget,
-        Complete: Complete
+        Intro,
+        SignIn,
+        Terms,
+        SignUp1,
+        SignUp2,
+        SignUp3,
+        SignUp4,
+        SignUp5,
+        Forget,
+        Complete
     },
     {
         headerMode: 'none',
-        initialRouteName: 'SignIn',
+        initialRouteName: 'Intro',
     }
 );
 const RootStack= createSwitchNavigator(

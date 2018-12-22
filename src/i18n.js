@@ -20,7 +20,7 @@ const currentLocale = I18n.currentLocale();
 export const isRTL = currentLocale.indexOf('he') === 0 || currentLocale.indexOf('ar') === 0;
 
 // Allow RTL alignment in RTL languages
-ReactNative.I18nManager.allowRTL(isRTL);
+ReactNative.I18nManager.allowRTL(false);
 
 // The method we'll use instead of a regular string
 export function strings(name, params = {}) {

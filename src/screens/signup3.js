@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity, Picker as Picker2, Platform } from 'react-native';
 import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {strings} from "../i18n";
 import I18n from "../i18n";
-import {Toast} from "native-base";
+import {Toast, Picker, Text} from "native-base";
 
 export default class SignUp3 extends React.Component {
     static navigationOptions = {
@@ -17,72 +17,56 @@ export default class SignUp3 extends React.Component {
         };
     }
     check(){
-        let expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-        let regex = new RegExp(expression);
-
-        if(!this.state.data.facebook.match(regex) && this.state.data.facebook){
+        if(this.state.data.visit == 0){
             Toast.show({
-                text: strings('signup.notLink'),
-                buttonText: strings("messages.ok"),
-                type: "danger"
-            })
-        }else if(!this.state.data.twitter.match(regex) && this.state.data.twitter){
-            Toast.show({
-                text: strings('signup.notLink'),
-                buttonText: strings("messages.ok"),
-                type: "danger"
-            })
-        }else if(!this.state.data.linkedin.match(regex) && this.state.data.linkedin){
-            Toast.show({
-                text: strings('signup.notLink'),
+                text: strings('signup.fieldRequired', {field: "The question"}),
                 buttonText: strings("messages.ok"),
                 type: "danger"
             })
         }else{
-            this.props.navigation.navigate("SignUp4", this.state.data);
+            this.props.navigation.navigate("Complete", this.state.data);
         }
     }
 
     render() {
         return (
             <AuthTemplate next="SignUp4" title={strings("signup.signup3")} navigation={this.props.navigation} error={this.state.error}>
-
-                <TextInput
-                    placeholderTextColor="#d2d2d2"
-                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                    placeholder={strings('profile.facebook')}
-                    onChangeText={(facebook) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                facebook
-                            }
-                        }))}
-                />
-                <TextInput
-                    placeholderTextColor="#d2d2d2"
-                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                    placeholder={strings('profile.twitter')}
-                    onChangeText={(twitter) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                twitter
-                            }
-                        }))}
-                />
-                <TextInput
-                    placeholderTextColor="#d2d2d2"
-                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                    placeholder={strings('profile.linkedin')}
-                    onChangeText={(linkedin) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                linkedin
-                            }
-                        }))}
-                />
+                {
+                    (Platform.OS === 'ios') ?
+                        <Picker
+                            selectedValue={this.state.data.visit}
+                            style={styles.select}
+                            itemStyle={{ fontSize:23 }}
+                            placeholder={strings('signup.q1')}
+                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        visit: itemValue
+                                    }
+                                }))}>
+                            <Picker.Item key={0} label={strings('signup.q1')} value={0} />
+                            <Picker.Item key={1} label={strings('signup.no')} value={1} />
+                            <Picker.Item key={2} label={strings('signup.yes')} value={2} />
+                        </Picker>
+                        :
+                        <Picker2
+                            selectedValue={this.state.data.visit}
+                            style={styles.select2}
+                            placeholder={strings('signup.q1')}
+                            itemStyle={{ fontSize:23 }}
+                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        visit: itemValue
+                                    }
+                                }))}>
+                            <Picker.Item key={0} label={strings('signup.q1')} value={0} />
+                            <Picker.Item key={1} label={strings('signup.no')} value={1} />
+                            <Picker.Item key={2} label={strings('signup.yes')} value={2} />
+                        </Picker2>
+                }
                 <View style={styles.navigation}>
                     <TouchableOpacity
                         style={styles.leftArrow}
@@ -120,6 +104,22 @@ const styles = StyleSheet.create({
         width: "75%",
         flexDirection: 'row',
         marginTop: 30
+    },
+    select: {
+        height: 50,
+        width: "100%",
+
+        color: "#FFFFFF",
+    },
+    select2: {
+        height: 50,
+        width: "70%",
+        transform: [
+            { scaleY: 1.3 },
+            { scaleX: 1.3 },
+        ],
+        marginLeft: "17%",
+        color: "#FFFFFF",
     },
     rightArrow:{
         width: "50%",
