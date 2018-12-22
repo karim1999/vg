@@ -96,6 +96,7 @@ class SignIn extends React.Component {
                     isLoading: false
                 });
             }).catch((error)=>{
+                alert(JSON.stringify(error));
                 Toast.show({
                     text: strings("login.wrong"),
                     buttonText: strings("messages.ok"),
