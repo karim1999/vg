@@ -37,6 +37,7 @@ class SingleChat extends Component {
             record: "",
             replies: [],
             audioFile: '',
+            authorized: false
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
@@ -213,17 +214,34 @@ class SingleChat extends Component {
     requestPermission = async () => {
         const p = await Permissions.request('microphone');
     };
-    async componentDidMount(){
-        await this.checkPermission();
+    componentDidMount(){
+        // this.checkPermission();
+        Permissions.check('microphone').then(response => {
+            if (response === 'authorized'){
+                const options = {
+                    sampleRate: 16000,
+                    channels: 1,
+                    bitsPerSample: 16,
+                    wavFile: 'test.wav'
+                };
 
-        const options = {
-            sampleRate: 16000,
-            channels: 1,
-            bitsPerSample: 16,
-            wavFile: 'test.wav'
-        };
+                AudioRecord.init(options);
+            }else{
+                Permissions.request('microphone').then(response2 => {
+                    if (response2 === 'authorized') {
+                        const options = {
+                            sampleRate: 16000,
+                            channels: 1,
+                            bitsPerSample: 16,
+                            wavFile: 'test.wav'
+                        };
+                        AudioRecord.init(options);
+                    }
+                    this.setState({ authorized: (response2 ===  'authorized') ? true : false})
+                })
+            }
+        });
 
-        AudioRecord.init(options);
 
         // this.state.ref.once('value').then(data => {
         //     this.setState({
