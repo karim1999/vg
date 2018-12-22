@@ -5268,7 +5268,7 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-audio-record@^0.1.3:
+react-native-audio-record@^0.1.2:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/react-native-audio-record/-/react-native-audio-record-0.1.3.tgz#1625e0c6b66f63068879a3d6a557131544bc1bc1"
   integrity sha512-9EI8tuKT7+607NIddyaUyt3cDd2683fs5qHsrJPMI6Gki0VUr8fLidnKH9OZiuFcH7+QoBzNB95ZRL5KGHdsvQ==
@@ -5353,10 +5353,10 @@ react-native-i18n@^2.0.12:
   dependencies:
     i18n-js "^3.0.3"
 
-react-native-image-picker@^0.27.2:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.27.2.tgz#c44195feb1a4855eead36fadacc8b82828329b2a"
-  integrity sha512-1GuPIuQHjnLxmzUkmOHbI6cllETVRhJyrf8UoJXotD38+eX4JdcUSHGqV48XPc3e1u7b4HU7drFgyJcKFfQKRA==
+react-native-image-picker@^0.26.10:
+  version "0.26.10"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.10.tgz#0bb9ab928984948c67aee0b9e64216bee007a9fc"
+  integrity sha512-z6gAbru2E6SyGWm4ZTbiM9hPHZ5Tsl9kXGfRxW6YQXf9us7zybKoS7dKE1fQPsssv/OSvpPDKannJNncE+ATRA==
 
 react-native-infinite-scroll-view@^0.4.3:
   version "0.4.3"
@@ -5404,10 +5404,10 @@ react-native-numeric-input@^1.3.1:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-onesignal@^3.2.11:
-  version "3.2.11"
-  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.2.11.tgz#22f7e27210d56e95ca5af1ee9a124c0e1097f8f7"
-  integrity sha512-bhIGwi5ztXpJaDCGVJMstjnMEFj7sLR3dSiWgCYMUegoQXjtpivo0ft5j6xRCAe7qF2NGaUXbyuOC52k2kN+dA==
+react-native-onesignal@^3.2.5:
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.2.12.tgz#309dc4f65decae28119f46c0f1eef4310742bfb8"
+  integrity sha512-E1x5vNvOrgRRcr3FMdPVSXKtg8pk/XK1dU3aDSs4mwBOzlpFi8AlZd/bfd2bJUJ4BrWw09AsqdSDs+QygKP8sw==
   dependencies:
     invariant "^2.2.2"
 
