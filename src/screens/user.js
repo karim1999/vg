@@ -146,10 +146,10 @@ class User extends React.Component {
                             {
                                 this.props.user.id != this.state.id && (
                                     <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
-                                        <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img, device_id: this.state.user.device_id})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>{strings("user.chat")}</Text></Button>
+                                        <Button onPress={()=>this.props.navigation.navigate("SingleUserChat", {id: this.state.id, title: this.state.user.name, img: this.state.user.img, device_id: this.state.user.device_id})} success style={{marginRight: 10}} iconLeft rounded><Icon style={{color: "white"}} type="Entypo" name='chat' /><Text>{strings("profile.chat")}</Text></Button>
                                         {
                                             !_.find(this.props.user.follows, user => user.id == this.state.id)? (
-                                                <Button onPress={()=> this.addToFollows()} primary style={{marginLeft: 10}} iconRight rounded><Text>{strings("user.follow")}</Text>
+                                                <Button onPress={()=> this.addToFollows()} primary style={{marginLeft: 10}} iconRight rounded><Text>{strings("profile.follow")}</Text>
                                                     {this.state.isFollowed ? (
                                                         <ActivityIndicator color="white"/>
                                                     ) : (
@@ -157,7 +157,7 @@ class User extends React.Component {
                                                     )}
                                                     </Button>
                                             ) : (
-                                                <Button onPress={()=> this.removeFromFollows()} warning style={{marginLeft: 10}} iconRight rounded><Text>{strings("user.unfollow")}</Text>
+                                                <Button onPress={()=> this.removeFromFollows()} warning style={{marginLeft: 10}} iconRight rounded><Text>{strings("profile.unfollow")}</Text>
                                                     {this.state.isFollowed ? (
                                                         <ActivityIndicator color="white"/>
                                                     ): (
