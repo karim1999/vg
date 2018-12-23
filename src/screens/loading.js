@@ -9,6 +9,7 @@ import axios from 'axios';
 import { SERVER_URL } from "../config";
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
+import I18n from "react-native-i18n";
 
 class AuthLoadingScreen extends React.Component {
     constructor(props) {
@@ -18,6 +19,13 @@ class AuthLoadingScreen extends React.Component {
 
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
+        await AsyncStorage.getItem('lang').then(lang => {
+            if(lang){
+                I18n.locale = lang;
+            }else{
+                I18n.locale = "en";
+            }
+        });
         const userToken = await AsyncStorage.getItem('token');
         if(userToken){
             return axios.post(SERVER_URL+'api/auth/me?token='+userToken).then(response => {

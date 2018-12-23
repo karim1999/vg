@@ -50,6 +50,7 @@ class SignIn extends React.Component {
             token: ""
         };
     }
+
     signIn= ()=>{
         let type= "default";
         let text= "Unknown error";
@@ -143,15 +144,18 @@ class SignIn extends React.Component {
             <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
                 <View style={styles.container}>
                     {
-                        (I18n.locale == "en") ? (
-                            <Button dark onPress={() => this.changeToArabic()}>
-                                <Text style={{color: "white", padding: 10}}>العربية</Text>
-                            </Button>
-                        ) : (
+                        (I18n.locale == "ar") &&
                             <Button dark onPress={() => this.changeToEnglish()}>
                                 <Text style={{color: "white", padding: 10}}>English</Text>
                             </Button>
-                        )
+
+                    }
+                    {
+                        (I18n.locale == "en-US" || I18n.locale == "en") &&
+                            <Button dark onPress={() => this.changeToArabic()}>
+                                <Text style={{color: "white", padding: 10}}>العربية</Text>
+                            </Button>
+
                     }
 
                     <Logo title="" error={this.props.error} />

@@ -143,18 +143,6 @@ class SignIn extends React.Component {
         return (
             <ImageBackground source={require("./../images/background.png")} style={{width: "100%", height: "100%"}}>
                 <View style={styles.container}>
-                    {
-                        (I18n.locale == "en") ? (
-                            <Button dark onPress={() => this.changeToArabic()}>
-                                <Text style={{color: "white", padding: 10}}>العربية</Text>
-                            </Button>
-                        ) : (
-                            <Button dark onPress={() => this.changeToEnglish()}>
-                                <Text style={{color: "white", padding: 10}}>English</Text>
-                            </Button>
-                        )
-                    }
-
                     <Logo title="" error={this.props.error} />
 
                     <TextInput
@@ -200,8 +188,8 @@ class SignIn extends React.Component {
 }
 const styles = StyleSheet.create({
     container: {
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         justifyContent: "center",
         alignItems: 'center',
     },
