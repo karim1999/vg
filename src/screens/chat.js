@@ -47,7 +47,7 @@ class Chat extends Component {
     render() {
 
         return (
-            <AppTemplate title={strings("chat.messages")} navigation={this.props.navigation} activeTab="Chat">
+            <AppTemplate drawer title={strings("chat.messages")} navigation={this.props.navigation} activeTab="Chat">
                 <View style={{padding: 10}}>
                     <Segment>
                         <Button style={{

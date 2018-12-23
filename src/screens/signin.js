@@ -15,7 +15,7 @@ import {
     AsyncStorage,
     ActivityIndicator
 } from 'react-native';
-import { Container, Header, Content, Button, Toast } from "native-base";
+import {Container, Header, Content, Button, Toast, Item, Input} from "native-base";
 import Logo from './../components/logo';
 import I18n, {strings} from "../i18n";
 
@@ -188,10 +188,10 @@ class SignIn extends React.Component {
                     </TouchableOpacity>
                     {/*<Text style={{color: "#FFFFFF", fontSize: 20, marginTop: 10}}> {strings("login.or")} </Text>*/}
                     {/*<TouchableOpacity*/}
-                        {/*onPress={() => this.props.navigation.navigate('Terms', data)}*/}
-                        {/*style={styles.button}*/}
+                    {/*onPress={() => this.props.navigation.navigate('Terms', data)}*/}
+                    {/*style={styles.button}*/}
                     {/*>*/}
-                        {/*<Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.signup_button")} </Text>*/}
+                    {/*<Text style={{color: "#FFFFFF", fontSize: 20}}> {strings("login.signup_button")} </Text>*/}
                     {/*</TouchableOpacity>*/}
                 </View>
             </ImageBackground>
@@ -200,8 +200,8 @@ class SignIn extends React.Component {
 }
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
         justifyContent: "center",
         alignItems: 'center',
     },

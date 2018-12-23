@@ -25,7 +25,7 @@ class Favorite extends Component {
     render() {
 
         return (
-            <AppTemplate title={strings("sidebar.favorites")} navigation={this.props.navigation} activeTab="Favorite">
+            <AppTemplate drawer title={strings("sidebar.favorites")} navigation={this.props.navigation} activeTab="Favorite">
                 <View style={{padding: 20}}>
                     <Segment>
                         <Button style={{

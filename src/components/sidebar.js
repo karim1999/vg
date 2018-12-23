@@ -1,5 +1,5 @@
 import React from "react";
-import {View, ImageBackground, AsyncStorage} from "react-native";
+import {View, ImageBackground, AsyncStorage, ScrollView} from "react-native";
 import { Container, Content, Text, List, ListItem, Left, Body, Right, Thumbnail, H2 } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
@@ -49,7 +49,7 @@ class SideBar extends React.Component {
     }
     render() {
         return (
-            <View style={{ backgroundColor: "#FFFFFF", flex: 1 }}>
+            <ScrollView style={{ backgroundColor: "#FFFFFF", flex: 1 }}>
                 <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 200 }}>
                     <View style={{  width: "100%", height: 200, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                         <Thumbnail large source={{uri: STORAGE_URL+this.props.user.img}} />
@@ -127,7 +127,7 @@ class SideBar extends React.Component {
                         }
                     </List>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }

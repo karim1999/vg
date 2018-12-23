@@ -90,7 +90,7 @@ class SingleChat extends Component {
                     _id: new Date().getTime(),
                     text: "recording",
                     audio: STORAGE_URL+resp.data,
-                    created_at: new Date(),
+                    createdAt: new Date(),
                     user: {
                         _id: this.props.user.id,
                         name: this.props.user.name,
@@ -370,7 +370,7 @@ class SingleChat extends Component {
                                                     image: STORAGE_URL+resp.data,
                                                     text: "",
                                                     type: "img",
-                                                    created_at: new Date(),
+                                                    createdAt: new Date(),
                                                     user: {
                                                         _id: this.props.user.id,
                                                         name: this.props.user.name,
@@ -422,7 +422,7 @@ class SingleChat extends Component {
                                                 _id: new Date().getTime(),
                                                 text: res.fileName,
                                                 document: STORAGE_URL+resp.data,
-                                                created_at: new Date(),
+                                                createdAt: new Date(),
                                                 user: {
                                                     _id: this.props.user.id,
                                                     name: this.props.user.name,

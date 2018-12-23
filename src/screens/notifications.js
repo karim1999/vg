@@ -39,7 +39,7 @@ class Notifications extends React.Component {
     }
     render() {
         return (
-            <AppTemplate title={strings("notifications.title")} navigation={this.props.navigation} activeTab="Notifications">
+            <AppTemplate drawer title={strings("notifications.title")} navigation={this.props.navigation} activeTab="Notifications">
                 <View>
                     <List>
                     {this.state.isLoading? (

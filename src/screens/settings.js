@@ -95,7 +95,7 @@ class Settings extends React.Component {
     }
     render() {
         return (
-            <AppTemplate title={strings("settings.settings")} navigation={this.props.navigation} activeTab="Settings">
+            <AppTemplate drawer title={strings("settings.settings")} navigation={this.props.navigation} activeTab="Settings">
                 <ImageBackground source={require("./../images/background.png")} style={{ width: "100%", height: 300 }}>
                     <View style={{  width: "100%", height: 300, backgroundColor: 'rgba(0,0,0,.6)', justifyContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity

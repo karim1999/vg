@@ -306,7 +306,7 @@ class Home extends Component {
     render() {
 
         return (
-            <AppTemplate pullToRefresh={true} onLoad={() => this.onLoad()} fab={true} title={strings("home.home")} navigation={this.props.navigation} activeTab="Home">
+            <AppTemplate drawer pullToRefresh={true} onLoad={() => this.onLoad()} fab={true} title={strings("home.home")} navigation={this.props.navigation} activeTab="Home">
                 <FlatList
                     data={this.state.polls}
                     extraData={[this.state.isVoting, this.props.user]}
