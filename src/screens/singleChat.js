@@ -158,7 +158,6 @@ class SingleChat extends Component {
         })
     }
     addNewMessage(data){
-        alert(this.state.logs);
         let newPostKey = firebaseDb.ref('/chat/').child(this.state.id).push().key;
         let updates = {};
         updates['/chat/'+this.state.id+'/' + newPostKey] = data[0];

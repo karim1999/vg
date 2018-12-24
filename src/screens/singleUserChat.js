@@ -192,7 +192,7 @@ class SingleChat extends Component {
                 data: {
                     type : 1,
                 },
-                include_player_ids: [this.state.user.device_id]
+                include_player_ids: [this.state.device_id]
             };
             axios.post('https://onesignal.com/api/v1/notifications', notification , {
                 headers: {

@@ -94,7 +94,7 @@ export default class audioPlayer extends React.Component {
     }
     render() {
         return (
-            <View style={{flex: 1, flexDirection: "row", paddingLeft: 5, paddingRight: 5, justifyContent: "center", alignItems: "center"}}>
+            <View style={{flexDirection: "row", paddingLeft: 5, paddingRight: 5, justifyContent: "center", alignItems: "center"}}>
                 {
                     this.state.playing ?(
                         <Icon onPress={()=> this.pause()} type="MaterialCommunityIcons" name="pause-circle-outline" color="#ffffff"/>
