@@ -122,7 +122,7 @@ class SingleChat extends Component {
             //     buttonText: strings("messages.ok"),
             //     type: "danger"
             // })
-            alert(err);
+            alert(JSON.stringify(err));
         });
 
         this.stopRecording();
