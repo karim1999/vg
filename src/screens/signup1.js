@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Toast} from "native-base";
 import {strings} from "../i18n";
 import I18n from "../i18n";
+import PhoneInput from 'react-native-phone-input';
 
 export default class SignUp1 extends React.Component {
     static navigationOptions = {
@@ -16,8 +17,9 @@ export default class SignUp1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.navigation.state.params
+            data: this.props.navigation.state.params,
         };
+
     }
     check(){
         if(this.state.data.country == ""){
@@ -90,19 +92,36 @@ export default class SignUp1 extends React.Component {
                             }
                         }))}
                 />
-                <TextInput
-                    style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
-                    placeholderTextColor="#d2d2d2"
-                    placeholder={strings('signup.phone')}
-                    keyboardType='phone-pad'
-                    onChangeText={(phone) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                phone
-                            }
-                        }))}
-                />
+                {/*<TextInput*/}
+                    {/*style={[styles.input, (I18n.locale === "ar") && styles.rtl]}*/}
+                    {/*placeholderTextColor="#d2d2d2"*/}
+                    {/*placeholder={strings('signup.phone')}*/}
+                    {/*keyboardType='phone-pad'*/}
+                    {/*onChangeText={(phone) => this.setState(prevState => (*/}
+                        {/*{*/}
+                            {/*data: {*/}
+                                {/*...prevState.data,*/}
+                                {/*phone*/}
+                            {/*}*/}
+                        {/*}))}*/}
+                {/*/>*/}
+                {/*<View style={styles.container}>*/}
+                    <PhoneInput
+                        style={styles.input}
+                        ref={(ref) => {
+                            this.phone = ref;
+                        }}
+                        textStyle={{fontSize: 20, color: "#fff"}}
+                        onChangePhoneNumber={(phone) => this.setState(prevState => (
+                            {
+                                data: {
+                                    ...prevState.data,
+                                    phone
+                                }
+                            }))}
+                    />
+
+                {/*</View>*/}
                 <View style={styles.navigation}>
                     <TouchableOpacity
                         style={styles.leftArrow}
@@ -123,6 +142,12 @@ export default class SignUp1 extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        padding: 20,
+        paddingTop: 60,
+    },
     input: {
         height: 60,
         width: "70%",
