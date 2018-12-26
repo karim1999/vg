@@ -93,7 +93,7 @@ export default class SignUp1 extends React.Component {
                 <TextInput
                     style={[styles.input, (I18n.locale === "ar") && styles.rtl]}
                     placeholderTextColor="#d2d2d2"
-                    placeholder={strings('profile.phone')}
+                    placeholder={strings('signup.phone')}
                     keyboardType='phone-pad'
                     onChangeText={(phone) => this.setState(prevState => (
                         {

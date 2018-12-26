@@ -313,7 +313,7 @@ class Home extends Component {
                     renderItem={({item}) => (!_.find(this.props.user.answers, answer => answer.voting_id == item.id) && moment(this.state.now).isBefore(item.end_at)) && (
                         <View style={{padding: 0, backgroundColor: "white"}}>
                             <Button
-                                style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>
+                                style={{width: "100%", alignItems: "center"}} light><Text style={[{flex: 1, color: "#f00", marginLeft: 5, marginRight: 5}, (I18n.locale === "ar") && {textAlign: "right"}]}> { item.question } </Text>
                                 <Icon name="question-circle" type="FontAwesome" style={{color: "#000000", fontSize: 25}}/>
                             </Button>
                             {
@@ -323,7 +323,7 @@ class Home extends Component {
                                     _.map(item.choices, (choice) => (
                                             <Item
                                                 onPress={() => this.vote(choice.id)}
-                                                style={{height: 40, padding: 5}}
+                                                style={{height: 40, padding: 5, marginLeft: 5, marginRight: 5}}
                                             >
                                                 <Left>
                                                     <Text>{choice.choice}</Text>

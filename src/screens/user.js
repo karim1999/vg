@@ -318,35 +318,6 @@ class User extends React.Component {
                                     </ListItem>
                                 )
                             }
-                            {
-                                (I18n.locale !== "ar") ? (
-                                    <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }}
-                                    >
-                                        <Left style={{flex: 1}}>
-                                            <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
-                                        </Left>
-                                        <Body style={{flex: 99, marginLeft: 10}}>
-                                        <Text>{this.state.user.description}</Text>
-                                        </Body>
-                                        {/*<Right>*/}
-                                            {/*<Text>{this.state.user.description}</Text>*/}
-                                        {/*</Right>*/}
-                                    </ListItem>
-                                ) : (
-                                    <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }}
-                                    >
-                                        {/*<Left>*/}
-                                            {/*<Text>{this.state.user.description}</Text>*/}
-                                        {/*</Left>*/}
-                                        <Body>
-                                        <Text>{this.state.user.description}</Text>
-                                        </Body>
-                                        <Right>
-                                            <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
-                                        </Right>
-                                    </ListItem>
-                                )
-                            }
                         </List>
                     </Content>
                 </AppTemplate>

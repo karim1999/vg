@@ -44,12 +44,6 @@ export default class SignUp2 extends React.Component {
                 buttonText: strings("messages.ok"),
                 type: "danger"
             })
-        }else if(this.state.data.description == ""){
-            Toast.show({
-                text: strings('signup.fieldRequired', {field: "Description"}),
-                buttonText: strings("messages.ok"),
-                type: "danger"
-            })
         }else{
             this.props.navigation.navigate("SignUp3", this.state.data);
         }
@@ -100,20 +94,20 @@ export default class SignUp2 extends React.Component {
                         }))}
                 />
 
-                <TextInput
-                    style={[styles.textarea, (I18n.locale === "ar") && styles.rtl]}
-                    placeholderTextColor="#d2d2d2"
-                    placeholder={strings('profile.something')}
-                    multiline = {true}
-                    numberOfLines = {4}
-                    onChangeText={(description) => this.setState(prevState => (
-                        {
-                            data: {
-                                ...prevState.data,
-                                description
-                            }
-                        }))}
-                />
+                {/*<TextInput*/}
+                    {/*style={[styles.textarea, (I18n.locale === "ar") && styles.rtl]}*/}
+                    {/*placeholderTextColor="#d2d2d2"*/}
+                    {/*placeholder={strings('profile.something')}*/}
+                    {/*multiline = {true}*/}
+                    {/*numberOfLines = {4}*/}
+                    {/*onChangeText={(description) => this.setState(prevState => (*/}
+                        {/*{*/}
+                            {/*data: {*/}
+                                {/*...prevState.data,*/}
+                                {/*description*/}
+                            {/*}*/}
+                        {/*}))}*/}
+                {/*/>*/}
                 <View style={styles.navigation}>
                     <TouchableOpacity
                         style={styles.leftArrow}

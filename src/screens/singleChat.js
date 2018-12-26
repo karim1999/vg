@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AsyncStorage, Text, View, Linking} from "react-native";
+import {AsyncStorage, Text, View, Linking, ActivityIndicator} from "react-native";
 import {Button, Container, Icon, List, ListItem, ActionSheet, Toast} from "native-base";
 import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
@@ -37,7 +37,11 @@ class SingleChat extends Component {
             record: "",
             replies: [],
             audioFile: '',
-            authorized: false
+            authorized: false,
+            isSendingRecord: false,
+            isSendingImage: false,
+            isSendingVideo: false,
+            isSendingDocument: false
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
@@ -71,7 +75,8 @@ class SingleChat extends Component {
         let audioFile = await AudioRecord.stop();
         this.setState({
             audioFile,
-            isLoading: true
+            isLoading: true,
+            isSendingRecord: true
         });
         let uri = 'file://'+audioFile;
         let data = new FormData();
@@ -81,7 +86,7 @@ class SingleChat extends Component {
             type: 'image/png'
         });
         // AsyncStorage.getItem('token').then(userToken => {
-        axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
+        axios.post(SERVER_URL+'api/upload/img', data).then(async resp => {
             this.setState({
                 isLoading: false,
             });
@@ -98,22 +103,26 @@ class SingleChat extends Component {
                     }
                 }
             ];
-            this.addNewMessage(result);
+            await this.addNewMessage(result);
+            this.setState({
+                isSendingRecord: false
+            });
             Toast.show({
                 text: "You have sent a record successfully.",
                 buttonText: "Ok",
                 type: "success"
-            })
+            });
         }).catch((err) => {
             this.setState({
                 isLoading: false,
+                isSendingRecord: false
             });
             // Toast.show({
             //     text: strings("messages.noInternet"),
             //     buttonText: strings("messages.ok"),
             //     type: "danger"
             // })
-            alert("Error");
+            alert(err);
         });
 
         this.stopRecording();
@@ -330,7 +339,7 @@ class SingleChat extends Component {
                                         console.log(response.data);
                                         this.setState({
                                             img: response.uri,
-                                            isLoading: true
+                                            isSendingImage: true
                                         });
                                         let uri = response.uri;
                                         // alert(uri);
@@ -341,10 +350,7 @@ class SingleChat extends Component {
                                             type: 'image/png'
                                         });
                                         // AsyncStorage.getItem('token').then(userToken => {
-                                        axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
-                                            this.setState({
-                                                isLoading: false,
-                                            });
+                                        axios.post(SERVER_URL+'api/upload/img', data).then(async resp => {
                                             let result= [
                                                 {
                                                     _id: new Date().getTime(),
@@ -359,15 +365,18 @@ class SingleChat extends Component {
                                                     }
                                                 }
                                             ];
-                                            this.addNewMessage(result);
+                                            await this.addNewMessage(result);
                                             Toast.show({
                                                 text: "You have sent a photo successfully.",
                                                 buttonText: "Ok",
                                                 type: "success"
-                                            })
+                                            });
+                                            this.setState({
+                                                isSendingImage: false
+                                            });
                                         }).catch((err) => {
                                             this.setState({
-                                                isLoading: false,
+                                                isSendingImage: false,
                                             });
                                             Toast.show({
                                                 text: strings("messages.noInternet"),
@@ -384,7 +393,7 @@ class SingleChat extends Component {
                                 },(error,res) => {
                                     this.setState({
                                         document: res.uri,
-                                        isLoading: true
+                                        isSendingDocument: true
                                     });
                                     let uri = res.uri;
                                     // alert(uri);
@@ -396,10 +405,7 @@ class SingleChat extends Component {
                                         type: 'image/png'
                                     });
                                     // AsyncStorage.getItem('token').then(userToken => {
-                                    axios.post(SERVER_URL+'api/upload/img', data).then((resp) => {
-                                        this.setState({
-                                            isLoading: false,
-                                        });
+                                    axios.post(SERVER_URL+'api/upload/img', data).then(async resp => {
                                         let result= [
                                             {
                                                 _id: new Date().getTime(),
@@ -413,7 +419,10 @@ class SingleChat extends Component {
                                                 }
                                             }
                                         ];
-                                        this.addNewMessage(result);
+                                        await this.addNewMessage(result);
+                                        this.setState({
+                                            isSendingDocument: false,
+                                        });
                                         Toast.show({
                                             text: "You have sent a document successfully.",
                                             buttonText: "Ok",
@@ -421,7 +430,7 @@ class SingleChat extends Component {
                                         })
                                     }).catch((err) => {
                                         this.setState({
-                                            isLoading: false,
+                                            isSendingDocument: false,
                                         });
                                         Toast.show({
                                             text: strings("messages.noInternet"),
@@ -489,6 +498,38 @@ class SingleChat extends Component {
                         }
                     </List>
                 )}
+                {
+                    this.state.isSendingImage && (
+                        <Button
+                            style={{width: "100%", alignItems: "center"}} primary><Text style={[{flex: 1, color: "#fff"}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("chat.sendingImage") } </Text>
+                            <ActivityIndicator style={{}} size="small" color="#000000" />
+                        </Button>
+                    )
+                }
+                {
+                    this.state.isSendingDocument && (
+                        <Button
+                            style={{width: "100%", alignItems: "center"}} primary><Text style={[{flex: 1, color: "#fff"}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("chat.sendingDocument") } </Text>
+                            <ActivityIndicator style={{}} size="small" color="#000000" />
+                        </Button>
+                    )
+                }
+                {
+                    this.state.isSendingVideo && (
+                        <Button
+                            style={{width: "100%", alignItems: "center"}} primary><Text style={[{flex: 1, color: "#fff"}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("chat.sendingVideo") } </Text>
+                            <ActivityIndicator style={{}} size="small" color="#000000" />
+                        </Button>
+                    )
+                }
+                {
+                    this.state.isSendingRecord && (
+                        <Button
+                            style={{width: "100%", alignItems: "center"}} primary><Text style={[{flex: 1, color: "#fff"}, (I18n.locale === "ar") && {textAlign: "right"}]}> { strings("chat.sendingRecord") } </Text>
+                            <ActivityIndicator style={{}} size="small" color="#000000" />
+                        </Button>
+                    )
+                }
                 {
                     this.state.id != 0 && (
                         <View style={{backgroundColor: "grey", width: "100%", justifyContent: "center", alignItems: "center" }}>

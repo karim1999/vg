@@ -25,7 +25,7 @@ let data= {
     name: '',
     email: '',
     password: '',
-    description: '',
+    // description: '',
     // facebook: '',
     // twitter: '',
     // linkedin: '',

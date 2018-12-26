@@ -171,30 +171,6 @@ class Profile extends Component {
                                 </Item>
                             )
                         }
-                        {
-                            (I18n.locale !== "ar") ? (
-                                <Item style={{height: 70}}>
-                                    <Icon type="FontAwesome" name='info' />
-                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
-                                    <Input multiline = {true}
-                                           numberOfLines = {10}
-                                           onChangeText={(description) => this.setState({description})}
-                                           value={this.state.description}
-                                    />
-                                </Item>
-                            ) : (
-                                <Item style={{height: 70}}>
-                                    <Input multiline = {true}
-                                           style={{textAlign: "right"}}
-                                           numberOfLines = {10}
-                                           onChangeText={(description) => this.setState({description})}
-                                           value={this.state.description}
-                                    />
-                                    {/*<Label>{strings('profile.personalInfo')}</Label>*/}
-                                    <Icon type="FontAwesome" name='info' />
-                                </Item>
-                            )
-                        }
 
                         <Button
                             onPress={() => this.submit()}

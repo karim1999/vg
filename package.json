@@ -29,6 +29,8 @@
     "react-native-quick-select": "^0.0.5",
     "react-native-sound": "^0.10.9",
     "react-native-stars": "^1.1.5",
+    "react-native-video": "^4.2.0",
+    "react-native-video-controls": "^2.2.3",
     "react-navigation": "^2.5.5",
     "react-navigation-fluid-transitions": "^0.2.2",
     "react-redux": "^5.0.7",

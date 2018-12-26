@@ -4013,6 +4013,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+keymirror@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -4157,6 +4162,11 @@ lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.17.10, 
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
   integrity sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
+
+lodash@^4.16.4:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
 lodash@~4.11.1:
   version "4.11.2"
@@ -5268,7 +5278,7 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-audio-record@^0.1.2:
+react-native-audio-record@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/react-native-audio-record/-/react-native-audio-record-0.1.3.tgz#1625e0c6b66f63068879a3d6a557131544bc1bc1"
   integrity sha512-9EI8tuKT7+607NIddyaUyt3cDd2683fs5qHsrJPMI6Gki0VUr8fLidnKH9OZiuFcH7+QoBzNB95ZRL5KGHdsvQ==
@@ -5487,6 +5497,22 @@ react-native-vector-icons@~4.5.0:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
+
+react-native-video-controls@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-video-controls/-/react-native-video-controls-2.2.3.tgz#f0927e11aeb2cbbb03935e21bac0caa1d46d8a67"
+  integrity sha512-jC7wazPUx8TxZZAp52dOkHUOEGyUb294NI3PIZp+IjsaG1KYkZ84rxUBLMvGiTPno2Jxw19nl8cgQSv6sMGpPQ==
+  dependencies:
+    lodash "^4.16.4"
+
+react-native-video@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-4.2.0.tgz#75d30a593498e2618ba05ef13ee8eb8de69561d4"
+  integrity sha512-4Tkuiu0QzpjKEsZL8IGmHYiAM7LfsJ1aD+mPAbijH/UaMqlLikeZP6uDNab9+8t+SDadvXvMkwlP57IlgcFZNA==
+  dependencies:
+    keymirror "0.1.1"
+    prop-types "^15.5.10"
+    shaka-player "2.4.4"
 
 react-native@0.55.4:
   version "0.55.4"
@@ -6091,6 +6117,11 @@ setprototypeof@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
   integrity sha512-BvE/TwpZX4FXExxOxZyRGQQv651MSwmWKZGqvmPcRIjDqWub67kTKuIMx43cZZrS/cBBzwBcNDWoFxt2XEFIpQ==
+
+shaka-player@2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.4.4.tgz#bade8ff6b9a4bb649899d10cd4ffd05781dd79ab"
+  integrity sha512-bX470MvIHLJ1a/lwNVVOj3tjFk8Q8u22KIpo1dR9hSkjTwkaUk4k6GCBX0VyahgwzSwnp3w2E/5m4E4i5YlquQ==
 
 shallowequal@1.0.2:
   version "1.0.2"

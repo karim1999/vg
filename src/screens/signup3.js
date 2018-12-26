@@ -4,7 +4,7 @@ import AuthTemplate from './../components/authTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {strings} from "../i18n";
 import I18n from "../i18n";
-import {Toast, Picker, Text} from "native-base";
+import {Toast, Picker, Text, ListItem, Left, Right, Radio} from "native-base";
 
 export default class SignUp3 extends React.Component {
     static navigationOptions = {
@@ -31,41 +31,121 @@ export default class SignUp3 extends React.Component {
     render() {
         return (
             <AuthTemplate next="SignUp4" title={strings("signup.signup3")} navigation={this.props.navigation} error={this.state.error}>
+                <Text style={{color: "#fff", width: "80%", fontSize: 19}}>{strings("signup.q1")}</Text>
                 {
-                    (Platform.OS === 'ios') ?
-                        <Picker
-                            selectedValue={this.state.data.visit}
-                            style={styles.select}
-                            itemStyle={{ fontSize:23 }}
-                            placeholder={strings('signup.q1')}
-                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                    (I18n.locale !== "ar") ? (
+                        <ListItem
+                            style={{width: "80%"}}
+                            onPress={() => this.setState(prevState => (
                                 {
                                     data: {
                                         ...prevState.data,
-                                        visit: itemValue
+                                        visit: 1
                                     }
-                                }))}>
-                            <Picker.Item key={0} label={strings('signup.q1')} value={0} />
-                            <Picker.Item key={1} label={strings('signup.no')} value={1} />
-                            <Picker.Item key={2} label={strings('signup.yes')} value={2} />
-                        </Picker>
-                        :
-                        <Picker2
-                            selectedValue={this.state.data.visit}
-                            style={styles.select2}
-                            placeholder={strings('signup.q1')}
-                            itemStyle={{ fontSize:23 }}
-                            onValueChange={(itemValue, itemIndex) => this.setState(prevState => (
+                                }))}
+                        >
+                            <Left>
+                                <Text style={{color: "#fff"}}>{strings("signup.no")}</Text>
+                            </Left>
+                            <Right>
+                                <Radio
+                                    color="#fff"
+                                    selected={this.state.data.visit === 1}
+                                       onPress={() => this.setState(prevState => (
+                                           {
+                                               data: {
+                                                   ...prevState.data,
+                                                   visit: 1
+                                               }
+                                           }))}
+                                />
+                            </Right>
+                        </ListItem>
+                    ) : (
+                        <ListItem
+                            style={{width: "80%"}}
+                            onPress={() => this.setState(prevState => (
                                 {
                                     data: {
                                         ...prevState.data,
-                                        visit: itemValue
+                                        visit: 1
                                     }
-                                }))}>
-                            <Picker.Item key={0} label={strings('signup.q1')} value={0} />
-                            <Picker.Item key={1} label={strings('signup.no')} value={1} />
-                            <Picker.Item key={2} label={strings('signup.yes')} value={2} />
-                        </Picker2>
+                                }))}
+                        >
+                            <Left>
+                                <Radio selected={this.state.data.visit === 1}
+                                       color="#fff"
+                                       onPress={() => this.setState(prevState => (
+                                           {
+                                               data: {
+                                                   ...prevState.data,
+                                                   visit: 1
+                                               }
+                                           }))}
+                                />
+                            </Left>
+                            <Right>
+                                <Text style={{color: "#fff"}}>{strings("signup.no")}</Text>
+                            </Right>
+                        </ListItem>
+                    )
+                }
+                {
+                    (I18n.locale !== "ar") ? (
+                        <ListItem
+                            style={{width: "80%"}}
+                            onPress={() => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        visit: 2
+                                    }
+                                }))}
+                        >
+                            <Left>
+                                <Text style={{color: "#fff"}}>{strings("signup.yes")}</Text>
+                            </Left>
+                            <Right>
+                                <Radio selected={this.state.data.visit === 2}
+                                       color="#fff"
+                                       onPress={() => this.setState(prevState => (
+                                           {
+                                               data: {
+                                                   ...prevState.data,
+                                                   visit: 2
+                                               }
+                                           }))}
+                                />
+                            </Right>
+                        </ListItem>
+                    ) : (
+                        <ListItem
+                            style={{width: "80%"}}
+                            onPress={() => this.setState(prevState => (
+                                {
+                                    data: {
+                                        ...prevState.data,
+                                        visit: 2
+                                    }
+                                }))}
+                        >
+                            <Left>
+                                <Radio selected={this.state.data.visit === 2}
+                                       color="#fff"
+                                       onPress={() => this.setState(prevState => (
+                                           {
+                                               data: {
+                                                   ...prevState.data,
+                                                   visit: 2
+                                               }
+                                           }))}
+                                />
+                            </Left>
+                            <Right>
+                                <Text style={{color: "#fff"}}>{strings("signup.yes")}</Text>
+                            </Right>
+                        </ListItem>
+                    )
                 }
                 <View style={styles.navigation}>
                     <TouchableOpacity
