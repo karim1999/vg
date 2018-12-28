@@ -52,10 +52,10 @@ class SingleChat extends Component {
     }
     // getSeconds(){
     // }
-    recordingInterval(){
-        let current = (this.state.seconds == "00" ? 1 : this.state.seconds+1);
-        let min = Math.floor(current / 60);
-        let sec = current - (min * 60);
+    recordingInterval(time){
+        // let current = (this.state.seconds == "00" ? 1 : this.state.seconds+1);
+        let min = Math.floor(time / 60);
+        let sec = Math.floor(time % 60);
         this.setState({
             minutes: min,
             seconds: sec
@@ -76,10 +76,14 @@ class SingleChat extends Component {
                 // AudioRecord.start();
                 this.prepareRecordingPath();
                 await AudioRecorder.startRecording();
+                AudioRecorder.onProgress = (data) => {
+                    this.recordingInterval(data.currentTime)
+                    // this.setState({currentTime: Math.floor(data.currentTime)});
+                };
                 this.setState({
                     isRecording: true
                 });
-                this.intervalHandle = setInterval(this.recordingInterval, 1000);
+                // this.intervalHandle = setInterval(this.recordingInterval, 1000);
             }else{
                 await this.checkPermission();
             }
