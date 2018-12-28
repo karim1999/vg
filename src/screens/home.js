@@ -291,6 +291,11 @@ class Home extends Component {
                     isVoting: false
                 });
                 this.props.setUser(response.data);
+                Toast.show({
+                    text: "Thanks for voting",
+                    buttonText: "Ok",
+                    type: "success"
+                });
             }).catch(error => {
                 this.setState({
                     isVoting: false,

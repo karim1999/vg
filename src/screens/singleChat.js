@@ -17,6 +17,9 @@ import ImagePicker from "react-native-image-picker";
 import AudioRecord from 'react-native-audio-record';
 import Permissions from 'react-native-permissions';
 import AudioPlayer from "./../components/audioPlayer";
+import VideoPlayer from "react-native-video-controls";
+import {AudioRecorder, AudioUtils} from 'react-native-audio';
+let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
 let firebaseDb= firebaseApp.database();
 
@@ -58,10 +61,21 @@ class SingleChat extends Component {
             seconds: sec
         });
     }
+    prepareRecordingPath(){
+        AudioRecorder.prepareRecordingAtPath(audioPath, {
+            SampleRate: 22050,
+            Channels: 1,
+            AudioQuality: "Low",
+            AudioEncoding: "aac",
+            AudioEncodingBitRate: 32000
+        });
+    }
     async startRecording(){
         await Permissions.check('microphone', { type: 'always' }).then(async response => {
             if(response === 'authorized'){
-                AudioRecord.start();
+                // AudioRecord.start();
+                this.prepareRecordingPath();
+                await AudioRecorder.startRecording();
                 this.setState({
                     isRecording: true
                 });
@@ -72,8 +86,9 @@ class SingleChat extends Component {
         });
     }
     async sendRecording(){
-        let audioFile = await AudioRecord.stop();
-        this.setState({
+        // let audioFile = await AudioRecord.stop();
+        let audioFile =await AudioRecorder.stopRecording();
+            this.setState({
             audioFile,
             isLoading: true,
             isSendingRecord: true
@@ -127,8 +142,9 @@ class SingleChat extends Component {
 
         this.stopRecording();
     }
-    cancelRecording(){
-        AudioRecord.stop();
+    async cancelRecording(){
+        // AudioRecord.stop();
+        const filePath = await AudioRecorder.stopRecording();
         this.stopRecording();
     }
     stopRecording(){
@@ -227,24 +243,36 @@ class SingleChat extends Component {
         // this.checkPermission();
         Permissions.check('microphone').then(response => {
             if (response === 'authorized'){
-                const options = {
-                    sampleRate: 16000,
-                    channels: 1,
-                    bitsPerSample: 16,
-                    wavFile: 'test.wav'
-                };
-
-                AudioRecord.init(options);
+                // AudioRecorder.prepareRecordingAtPath(audioPath, {
+                //     SampleRate: 22050,
+                //     Channels: 1,
+                //     AudioQuality: "Low",
+                //     AudioEncoding: "aac"
+                // });
+                // // const options = {
+                // //     sampleRate: 16000,
+                // //     channels: 1,
+                // //     bitsPerSample: 16,
+                // //     wavFile: 'test.wav'
+                // // };
+                // //
+                // // AudioRecord.init(options);
             }else{
                 Permissions.request('microphone').then(response2 => {
                     if (response2 === 'authorized') {
-                        const options = {
-                            sampleRate: 16000,
-                            channels: 1,
-                            bitsPerSample: 16,
-                            wavFile: 'test.wav'
-                        };
-                        AudioRecord.init(options);
+                        // AudioRecorder.prepareRecordingAtPath(audioPath, {
+                        //     SampleRate: 22050,
+                        //     Channels: 1,
+                        //     AudioQuality: "Low",
+                        //     AudioEncoding: "aac"
+                        // });
+                        // const options = {
+                        //     sampleRate: 16000,
+                        //     channels: 1,
+                        //     bitsPerSample: 16,
+                        //     wavFile: 'test.wav'
+                        // };
+                        // AudioRecord.init(options);
                     }
                     this.setState({ authorized: (response2 ===  'authorized') ? true : false})
                 })
@@ -296,6 +324,12 @@ class SingleChat extends Component {
             }}>{props.currentMessage.text}</Text>
         }else if(props.currentMessage.audio){
             return <AudioPlayer url={props.currentMessage.audio} />
+        }else if(props.currentMessage.video){
+            return <VideoPlayer
+                style={{height: 200}}
+                source={{ uri: props.currentMessage.video }}
+                navigator={ this.props.navigation }
+            />
         }else{
             return <MessageText {...props}/>
         }
@@ -308,7 +342,7 @@ class SingleChat extends Component {
         //         />
         //     );
         // }
-        let BUTTONS = ["Image", "Document", "Export to text", "Cancel"];
+        let BUTTONS = ["Image", "Video", "Document", "Export to text", "Cancel"];
         return (
             <View style={{alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                 <Icon style={{padding: 10}} onPress={() =>
@@ -319,7 +353,7 @@ class SingleChat extends Component {
                             title: "Attachments"
                         },
                         buttonIndex => {
-                            if(buttonIndex === 0){
+                            if(buttonIndex === 0) {
                                 let options = {
                                     title: "Choose Image",
                                     storageOptions: {
@@ -350,18 +384,18 @@ class SingleChat extends Component {
                                             type: 'image/png'
                                         });
                                         // AsyncStorage.getItem('token').then(userToken => {
-                                        axios.post(SERVER_URL+'api/upload/img', data).then(async resp => {
-                                            let result= [
+                                        axios.post(SERVER_URL + 'api/upload/img', data).then(async resp => {
+                                            let result = [
                                                 {
                                                     _id: new Date().getTime(),
-                                                    image: STORAGE_URL+resp.data,
+                                                    image: STORAGE_URL + resp.data,
                                                     text: "",
                                                     type: "img",
                                                     createdAt: new Date(),
                                                     user: {
                                                         _id: this.props.user.id,
                                                         name: this.props.user.name,
-                                                        avatar: STORAGE_URL+this.props.user.img
+                                                        avatar: STORAGE_URL + this.props.user.img
                                                     }
                                                 }
                                             ];
@@ -388,6 +422,76 @@ class SingleChat extends Component {
                                     }
                                 });
                             }else if(buttonIndex === 1){
+                                let options = {
+                                    title: "Choose Video",
+                                    mediaType: "video",
+                                    takePhotoButtonTitle: "Record Video",
+                                    storageOptions: {
+                                        skipBackup: true,
+                                    }
+                                };
+                                ImagePicker.showImagePicker(options, (response) => {
+                                    console.log('Response = ', response);
+                                    if (response.didCancel) {
+                                        console.log('User cancelled image picker');
+                                    }
+                                    else if (response.error) {
+                                        console.log('ImagePicker Error: ', response.error);
+                                    }
+                                    else {
+                                        console.log(response.data);
+                                        this.setState({
+                                            img: response.uri,
+                                            isSendingVideo: true
+                                        });
+                                        let uri = response.uri;
+                                        // alert(uri);
+                                        let data = new FormData();
+                                        data.append('img', {
+                                            name: "img",
+                                            uri,
+                                            type: 'image/png'
+                                        });
+                                        // AsyncStorage.getItem('token').then(userToken => {
+                                        axios.post(SERVER_URL + 'api/upload/img', data).then(async resp => {
+                                            let result = [
+                                                {
+                                                    _id: new Date().getTime(),
+                                                    video: STORAGE_URL + resp.data,
+                                                    text: "Video",
+                                                    type: "video",
+                                                    createdAt: new Date(),
+                                                    user: {
+                                                        _id: this.props.user.id,
+                                                        name: this.props.user.name,
+                                                        avatar: STORAGE_URL + this.props.user.img
+                                                    }
+                                                }
+                                            ];
+                                            await this.addNewMessage(result);
+                                            Toast.show({
+                                                text: "You have sent a video successfully.",
+                                                buttonText: "Ok",
+                                                type: "success"
+                                            });
+                                            this.setState({
+                                                isSendingVideo: false
+                                            });
+                                        }).catch((err) => {
+                                            this.setState({
+                                                isSendingVideo: false,
+                                            });
+                                            Toast.show({
+                                                text: strings("messages.noInternet"),
+                                                buttonText: strings("messages.ok"),
+                                                type: "danger"
+                                            })
+                                        })
+                                        // });
+                                    }
+                                });
+
+                            }else if(buttonIndex === 2){
                                 DocumentPicker.show({
                                     filetype: [DocumentPickerUtil.allFiles()],
                                 },(error,res) => {
