@@ -438,6 +438,7 @@ class SingleChat extends Component {
                                     takePhotoButtonTitle: "Record Video",
                                     storageOptions: {
                                         skipBackup: true,
+                                        path: 'images'
                                     }
                                 };
                                 ImagePicker.showImagePicker(options, (response) => {
