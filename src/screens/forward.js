@@ -11,14 +11,36 @@ import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
 let firebaseDb= firebaseApp.database();
 
-class Chat extends Component {
+class Forward extends Component {
     constructor(props) {
         super(props);
+        let forwardType= "text";
+        let forwardValue= this.props.navigation.state.params.text;
+        if(this.props.navigation.state.params.audio){
+            forwardType= "audio";
+            forwardValue= this.props.navigation.state.params.audio;
+        }
+        if(this.props.navigation.state.params.image){
+            forwardType= "image";
+            forwardValue= this.props.navigation.state.params.image;
+        }
+        if(this.props.navigation.state.params.document){
+            forwardType= "document";
+            forwardValue= this.props.navigation.state.params.document;
+        }
+        if(this.props.navigation.state.params.video){
+            forwardType= "video";
+            forwardValue= this.props.navigation.state.params.video;
+        }
+
         this.state = {
             selected: "key1",
             tab: 1,
             users: [],
-            isLoading: false
+            isLoading: false,
+            forwardType,
+            forwardValue,
+            forwardText: this.props.navigation.state.params.text
         };
     }
     onValueChange(value: string) {
@@ -27,6 +49,8 @@ class Chat extends Component {
         });
     }
     componentDidMount(){
+        // alert(this.state.forwardType+ '//////'+ this.state.forwardText+ '/////////////'+ this.state.forwardValue)
+        // alert(JSON.stringify(this.props.navigation.state.params))
         this.setState({
             isLoading: true
         });
@@ -47,11 +71,30 @@ class Chat extends Component {
     componentWillUnmount() {
         firebaseDb.ref('/private/').off();
     }
-
     render() {
+        let forwardType= "text";
+        let forwardValue= this.props.navigation.state.params.text;
+        let forwardText= this.props.navigation.state.params.text;
+        if(this.props.navigation.state.params.audio){
+            forwardType= "audio";
+            forwardValue= this.props.navigation.state.params.audio;
+        }
+        if(this.props.navigation.state.params.image){
+            forwardType= "image";
+            forwardValue= this.props.navigation.state.params.image;
+        }
+        if(this.props.navigation.state.params.document){
+            forwardType= "document";
+            forwardValue= this.props.navigation.state.params.document;
+        }
+        if(this.props.navigation.state.params.video){
+            forwardType= "video";
+            forwardValue= this.props.navigation.state.params.video;
+        }
+        let forward = Math.random() * 1000000 + 1;
 
         return (
-            <AppTemplate drawer title={strings("chat.messages")} navigation={this.props.navigation} activeTab="Chat">
+            <AppTemplate drawer title={strings("chat.forward")} navigation={this.props.navigation} activeTab="Chat">
                 <View style={{padding: 10}}>
                     <Segment>
                         <Button style={{
@@ -70,7 +113,7 @@ class Chat extends Component {
                             {
                                 (I18n.locale !== "ar") ? (
                                     <ListItem avatar
-                                              onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                              onPress={() => this.props.navigation.navigate("SingleChat", {forwardText: forwardText, forward: forward, forwardType: forwardType, forwardValue: forwardValue, id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
                                               style={{padding: 10, marginLeft: 0}}
                                     >
                                         <Left>
@@ -86,7 +129,7 @@ class Chat extends Component {
                                     </ListItem>
                                 ) : (
                                     <ListItem avatar
-                                              onPress={() => this.props.navigation.navigate("SingleChat", {id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
+                                              onPress={() => this.props.navigation.navigate("SingleChat", {forwardText: forwardText, forward: forward, forwardType: forwardType, forwardValue: forwardValue, id: 0, title: strings("chat.public"), user_id: 0, user_name: this.props.user.name, user_img: this.props.user.img})}
                                               style={{padding: 10, marginLeft: 0}}
                                     >
                                         <Left>
@@ -105,7 +148,7 @@ class Chat extends Component {
                                 (I18n.locale !== "ar") ? (
                                     <ListItem avatar
                                               key={project.id}
-                                              onPress={() => this.props.navigation.navigate("SingleChat", {...project, user_name: project.user.name, user_img: project.user.img, user_id: project.user.id})}
+                                              onPress={() => this.props.navigation.navigate("SingleChat", {forwardText: forwardText, forward: forward, forwardType: forwardType, forwardValue: forwardValue, ...project, user_name: project.user.name, user_img: project.user.img, user_id: project.user.id})}
                                               style={{padding: 10, marginLeft: 0}}
                                     >
                                         <Left>
@@ -122,7 +165,7 @@ class Chat extends Component {
                                 ) : (
                                     <ListItem avatar
                                               key={project.id}
-                                              onPress={() => this.props.navigation.navigate("SingleChat", {...project, user_name: project.user.name, user_img: project.user.img, user_id: project.user.id})}
+                                              onPress={() => this.props.navigation.navigate("SingleChat", {forwardText: forwardText, forward: forward, forwardType: forwardType, forwardValue: forwardValue, ...project, user_name: project.user.name, user_img: project.user.img, user_id: project.user.id})}
                                               style={{padding: 10, marginLeft: 0}}
                                     >
                                         <Left>
@@ -150,7 +193,7 @@ class Chat extends Component {
                                 renderItem={({item}) => (
                                     <ListItem
                                         noBorder
-                                        onPress={()=> this.props.navigation.navigate("SingleUserChat", {id: (this.props.user.id == item.user_id) ? item.other_id : item.user_id, title: (this.props.user.id == item.user_id) ? item.other_name : item.user_name, img: (this.props.user.id == item.user_id) ? item.other_img : item.user_img})}
+                                        onPress={()=> this.props.navigation.navigate("SingleUserChat", {forwardText: forwardText, forward: forward, forwardType: forwardType, forwardValue: forwardValue, id: (this.props.user.id == item.user_id) ? item.other_id : item.user_id, title: (this.props.user.id == item.user_id) ? item.other_name : item.user_name, img: (this.props.user.id == item.user_id) ? item.other_img : item.user_img})}
                                         avatar>
                                         <Left>
                                             <Thumbnail small source={{uri: (this.props.user.id == item.user_id) ? STORAGE_URL+item.other_img : STORAGE_URL+item.user_img}} />
@@ -184,4 +227,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Chat);
+)(Forward);

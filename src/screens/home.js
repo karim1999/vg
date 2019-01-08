@@ -174,36 +174,12 @@ class Home extends Component {
         })
     }
     onLoad(){
-        return axios.get(SERVER_URL+"api/projects").then(response => {
+        return axios.get(SERVER_URL+"api/home/all").then(response => {
             this.setState({
-                projects: response.data,
-            });
-            return axios.get(SERVER_URL+"api/categories").then(response2 => {
-                this.setState({
-                    categories: response2.data,
-                });
-                return axios.get(SERVER_URL+"api/users").then(response3 => {
-                    this.setState({
-                        users: response3.data,
-                    });
-                    return axios.get(SERVER_URL+"api/votings").then(response4 => {
-                        this.setState({
-                            polls: response4.data,
-                        });
-                    })
-                }).then(()=> {
-                    this.getData();
-                })
-            }).catch(error => {
-                Toast.show({
-                    text: strings("messages.noInternet"),
-                    buttonText: strings("messages.noInternet"),
-                    type: "danger"
-                })
-            }).finally(() => {
-                this.setState({
-                    isLoading: false,
-                });
+                projects: response.data.projects,
+                users: response.data.users,
+                votings: response.data.votings,
+                categories: response.data.categories,
             });
         }).catch(error => {
             this.setState({
@@ -214,6 +190,11 @@ class Home extends Component {
                 buttonText: strings("messages.ok"),
                 type: "danger"
             })
+        }).then(() => {
+            this.getData();
+            this.setState({
+                isLoading: false,
+            });
         });
     }
 

@@ -22,6 +22,7 @@ import Home from './src/screens/home';
 import Project from './src/screens/project';
 import AddProject from './src/screens/addProject';
 import Chat from './src/screens/chat';
+import Forward from './src/screens/forward';
 import SingleUserChat from './src/screens/singleUserChat';
 import SingleChat from './src/screens/singleChat';
 import Settings from './src/screens/settings';
@@ -61,6 +62,7 @@ const ChatStack = createStackNavigator({
     Chat: Chat,
     SingleChat: SingleChat,
     Replies,
+    Forward,
     AddReply,
     SingleUserChat
 },{

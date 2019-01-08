@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Linking, Text, View} from "react-native";
+import {ActivityIndicator, Clipboard, Linking, Text, View} from "react-native";
 import {ActionSheet, Button, Container, Icon, List, ListItem, Toast} from "native-base";
 import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
@@ -17,7 +17,7 @@ import ImagePicker from "react-native-image-picker";
 import AudioRecord from 'react-native-audio-record';
 import Permissions from 'react-native-permissions';
 import AudioPlayer from "./../components/audioPlayer";
-import VideoPlayer from "react-native-video-controls";
+import VideoPlayer from "./../components/videoPlayer";
 import {AudioRecorder, AudioUtils} from 'react-native-audio';
 let audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
@@ -49,6 +49,7 @@ class SingleChat extends Component {
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
         this.recordingInterval = this.recordingInterval.bind(this);
+        this.onLongPress = this.onLongPress.bind(this);
     }
     // getSeconds(){
     // }
@@ -165,16 +166,16 @@ class SingleChat extends Component {
                 {...props}
                 textStyle={{
                     left: {
-                        color: (props.currentMessage.user._id == this.state.user_id) ? "white" : "black",
+                        color: (props.currentMessage.user._id == this.props.navigation.state.params.user_id) ? "white" : "black",
                     }
                 }}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "grey",
+                        backgroundColor: (props.currentMessage.user._id == this.props.navigation.state.params.user_id) ? "#0084ff" : "grey",
                         marginTop: 10
                     },
                     left: {
-                        backgroundColor: (props.currentMessage.user._id == this.state.user_id) ? "#0084ff" : "#f0f0f0",
+                        backgroundColor: (props.currentMessage.user._id == this.props.navigation.state.params.user_id) ? "#0084ff" : "#f0f0f0",
                         marginTop: 10
                     }
                 }}
@@ -209,7 +210,7 @@ class SingleChat extends Component {
                 "img": STORAGE_URL+this.props.user.img,
                 "description": this.props.user.name,
                 "screen": "SingleUserChat",
-                "target": this.state.id,
+                "target": this.props.navigation.state.params.id,
                 "data": {
                     ...this.props.navigation.state.params
                 }
@@ -235,6 +236,7 @@ class SingleChat extends Component {
             });
         }
     }
+
     checkPermission = async () => {
         const p = await Permissions.check('microphone');
         console.log('permission check', p);
@@ -246,7 +248,136 @@ class SingleChat extends Component {
         const p = await Permissions.request('microphone');
         console.log('permission request', p);
     };
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if (this.props.navigation.state.params.forward !== prevProps.navigation.state.params.forward) {
+            // this.setState({
+            //     ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id)
+            // });
+            // alert(this.props.navigation.state.params.id);
+            firebaseDb.ref('/private/').once('value', snapshot => {
+                let data= _.chain(snapshot.val()).map((value, key) => {
+                    return {...value, key};
+                }).filter(chat => {
+                    return (chat.user_id == this.props.user.id && chat.other_id == this.props.navigation.state.params.id) || (chat.user_id == this.props.navigation.state.params.id && chat.other_id == this.props.user.id)
+                }).value();
+                if(data.length >= 1){
+                    this.setState({
+                        ref: '/private/'+data[0].key+'/messages/'
+                    }, ()=>{
+                        this.fireListener();
+                    })
+                }else{
+                    // let newChatKey = firebaseDb.ref('private').key;
+                    let message= firebaseDb.ref('/private/').push({
+                        user_id: this.props.user.id,
+                        user_name: this.props.user.name,
+                        user_img: this.props.user.img,
+                        other_id: this.props.navigation.state.params.id,
+                        other_name: this.props.navigation.state.params.title,
+                        other_img: this.props.navigation.state.params.img,
+                    }) .then((snap) => {
+                        const key = snap.key;
+                        this.setState({
+                            ref: '/private/'+key+'/messages/'
+                        }, ()=>{
+                            this.fireListener();
+                        })
+                    })
+                }
+            });
+        }
+        // this.componentDidMount();
+        // this.setState({
+        //     ref: firebaseDb.ref('/chat/' + this.props.navigation.state.params.id)
+        // })
+        // this.componentDidMount();
+    }
+    forward(){
+        if(this.props.navigation.state.params.forward){
+            Toast.show({
+                text: "Sending...",
+                buttonText: "Ok",
+                type: "primary"
+            })
+            let result= [];
+            if(this.props.navigation.state.params.forwardType == "audio"){
+                result= [
+                    {
+                        _id: new Date().getTime(),
+                        text: this.props.navigation.state.params.forwardText,
+                        audio: this.props.navigation.state.params.forwardValue,
+                        createdAt: new Date(),
+                        user: {
+                            _id: this.props.user.id,
+                            name: this.props.user.name,
+                            avatar: STORAGE_URL+this.props.user.img
+                        }
+                    }
+                ];
+            }else if(this.props.navigation.state.params.forwardType == "image"){
+                result= [
+                    {
+                        _id: new Date().getTime(),
+                        image: this.props.navigation.state.params.forwardValue,
+                        text: this.props.navigation.state.params.forwardText,
+                        type: "img",
+                        createdAt: new Date(),
+                        user: {
+                            _id: this.props.user.id,
+                            name: this.props.user.name,
+                            avatar: STORAGE_URL + this.props.user.img
+                        }
+                    }
+                ];
+            }else if(this.props.navigation.state.params.forwardType == "document"){
+                result= [
+                    {
+                        _id: new Date().getTime(),
+                        text: this.props.navigation.state.params.forwardText,
+                        document: this.props.navigation.state.params.forwardValue,
+                        createdAt: new Date(),
+                        user: {
+                            _id: this.props.user.id,
+                            name: this.props.user.name,
+                            avatar: STORAGE_URL+this.props.user.img
+                        }
+                    }
+                ];
+            }else if(this.props.navigation.state.params.forwardType == "video"){
+                result= [
+                    {
+                        _id: new Date().getTime(),
+                        video: this.props.navigation.state.params.forwardValue,
+                        text: this.props.navigation.state.params.forwardText,
+                        type: "video",
+                        createdAt: new Date(),
+                        user: {
+                            _id: this.props.user.id,
+                            name: this.props.user.name,
+                            avatar: STORAGE_URL + this.props.user.img
+                        }
+                    }
+                ];
+            }else{
+                result= [
+                    {
+                        _id: new Date().getTime(),
+                        text: this.props.navigation.state.params.forwardText,
+                        createdAt: new Date(),
+                        user: {
+                            _id: this.props.user.id,
+                            name: this.props.user.name,
+                            avatar: STORAGE_URL+this.props.user.img
+                        }
+                    }
+                ];
+            }
+            this.addNewMessage(result);
+        }
+
+    }
     async componentDidMount(){
+
         // this.checkPermission();
         Permissions.check('microphone').then(response => {
             if (response === 'authorized'){
@@ -286,7 +417,7 @@ class SingleChat extends Component {
             let data= _.chain(snapshot.val()).map((value, key) => {
                 return {...value, key};
             }).filter(chat => {
-                return (chat.user_id == this.props.user.id && chat.other_id == this.state.id) || (chat.user_id == this.state.id && chat.other_id == this.props.user.id)
+                return (chat.user_id == this.props.user.id && chat.other_id == this.props.navigation.state.params.id) || (chat.user_id == this.props.navigation.state.params.id && chat.other_id == this.props.user.id)
             }).value();
             if(data.length >= 1){
                 this.setState({
@@ -300,9 +431,9 @@ class SingleChat extends Component {
                     user_id: this.props.user.id,
                     user_name: this.props.user.name,
                     user_img: this.props.user.img,
-                    other_id: this.state.id,
-                    other_name: this.state.title,
-                    other_img: this.state.img,
+                    other_id: this.props.navigation.state.params.id,
+                    other_name: this.props.navigation.state.params.title,
+                    other_img: this.props.navigation.state.params.img,
                 }) .then((snap) => {
                     const key = snap.key;
                     this.setState({
@@ -313,6 +444,7 @@ class SingleChat extends Component {
                 })
             }
         });
+
     }
     fireListener(){
         firebaseDb.ref(this.state.ref).on('value', data => {
@@ -320,6 +452,7 @@ class SingleChat extends Component {
                 logs: _.reverse(_.sortBy(_.values(data.val()), ['createdAt']))
             })
         });
+        this.forward();
         firebaseDb.ref('/private/').off();
     }
     formatMondey = function(n, c, d, t){
@@ -338,8 +471,7 @@ class SingleChat extends Component {
             return <AudioPlayer url={props.currentMessage.audio} />
         }else if(props.currentMessage.video){
             return <VideoPlayer
-                style={{height: 200}}
-                source={{ uri: props.currentMessage.video }}
+                source={props.currentMessage.video}
                 navigator={ this.props.navigation }
             />
         }else{
@@ -585,10 +717,54 @@ class SingleChat extends Component {
     componentDidUnMount() {
         firebaseDb.ref(this.state.ref).off();
     }
+    onLongPress(context, message) {
+        // alert(JSON.stringify(message))
+        const options= [];
+        if (!message.audio && !message.video && !message.image) {
+            const options = [
+                'Copy Text',
+                'Forward',
+                'Cancel'
+            ];
+            const cancelButtonIndex = options.length - 1;
+            context.actionSheet().showActionSheetWithOptions({
+                    options,
+                    cancelButtonIndex,
+                },
+                (buttonIndex) => {
+                    switch (buttonIndex) {
+                        case 0:
+                            Clipboard.setString(message.text);
+                            break;
+                        case 1:
+                            this.props.navigation.navigate('Forward', message);
+                            break;
+                    }
+                });
+        }else{
+            const options = [
+                'Forward',
+                'Cancel'
+            ];
+            const cancelButtonIndex = options.length - 1;
+            context.actionSheet().showActionSheetWithOptions({
+                    options,
+                    cancelButtonIndex,
+                },
+                (buttonIndex) => {
+                    switch (buttonIndex) {
+                        case 0:
+                            this.props.navigation.navigate('Forward', message);
+                            break;
+                    }
+                });
+        }
+    }
+
     render() {
         return (
             <Container style={{backgroundColor: "#f3f3f3"}}>
-                <Header toggleMenu={() => this.toggleMenu()} title={this.state.title} navigation={this.props.navigation}>
+                <Header toggleMenu={() => this.toggleMenu()} title={this.props.navigation.state.params.title} navigation={this.props.navigation}>
                     {
                         (I18n.locale === "ar") ?(
                             <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -633,13 +809,20 @@ class SingleChat extends Component {
                         </Button>
                     )
                 }
+                {
+                    this.state.fullscreen && (
+                        <View style={{position: 'absolute', left: 0, top: 0, bottom: 0, zIndex: 1232, flex: 1, height: "100%", width: "100%"}}>
 
+                        </View>
+                    )
+                }
                 <GiftedChat
                     messages={this.state.logs}
                     onSend={data => this.addNewMessage(data)}
                     alwaysShowSend={true}
                     placeholder={strings('chat.placeholder')}
                     isAnimated={true}
+                    onLongPress={this.onLongPress}
                     inverted={true}
                     onPressAvatar={(user) => this.props.navigation.navigate('User', {id: user._id})}
                     showUserAvatar={true}
