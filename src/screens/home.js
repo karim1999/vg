@@ -236,6 +236,7 @@ class Home extends Component {
 
     onReceived(notification) {
         console.log("Notification received: ", notification);
+        // alert(JSON.stringify(notification.notification.payload));
         // Toast.show({
         //     text: "onReceived: " + notification.payload.body+" from "+notification.payload.title,
         //     buttonText: "Ok",
@@ -244,6 +245,16 @@ class Home extends Component {
     }
 
     onOpened(openResult) {
+        // alert(JSON.stringify(openResult.notification.payload.additionalData));
+        if(openResult.notification){
+            if(openResult.notification.payload){
+                if(openResult.notification.payload.additionalData){
+                    if(openResult.notification.payload.additionalData.screen){
+                        this.props.navigation.navigate(openResult.notification.payload.additionalData.screen, openResult.notification.payload.additionalData);
+                    }
+                }
+            }
+        }
         // console.log('Message: ', openResult.notification.payload.body);
         // console.log('Data: ', openResult.notification.payload.additionalData);
         // console.log('isActive: ', openResult.notification.isAppInFocus);

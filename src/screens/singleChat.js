@@ -219,7 +219,11 @@ class SingleChat extends Component {
                     app_id: ONESIGNAL_APP_ID,
                     contents: {"en": "New message was sent to " + this.props.navigation.state.params.title + " group chat"},
                     data: {
+
                         type : 1,
+                        screen: 'SingleChat',
+                        ...this.props.navigation.state.params,
+                        forward: false
                     },
                     include_player_ids: devices
                 };

@@ -204,7 +204,7 @@ class SingleChat extends Component {
             updates2[this.state.ref+'/' + newPostKey2] = data[0];
             firebaseDb.ref().update(updates2);
         }
-        if(this.state.device_id){
+        // if(this.state.device_id){
             firebaseDb.ref('/notifications/').push({
                 "title": this.props.user.name+" sent you a message",
                 "img": STORAGE_URL+this.props.user.img,
@@ -212,17 +212,33 @@ class SingleChat extends Component {
                 "screen": "SingleUserChat",
                 "target": this.props.navigation.state.params.id,
                 "data": {
-                    ...this.props.navigation.state.params
+                    ...this.props.navigation.state.params,
+                    id: this.props.user.id,
+                    title: this.props.user.name,
+                    img: this.props.user.img,
+                    forward: false
                 }
             });
+            let device_id= '';
+            if(!this.state.device_id){
+                device_id= this.getDeviceId();
+            }else{
+                device_id= this.state.device_id;
+            }
 
             let notification= {
                 app_id: ONESIGNAL_APP_ID,
                 contents: {"en": "New message was sent from " +this.props.user.name},
                 data: {
                     type : 1,
+                    screen: 'SingleUserChat',
+                    ...this.props.navigation.state.params,
+                    id: this.props.user.id,
+                    title: this.props.user.name,
+                    img: this.props.user.img,
+                    forward: false
                 },
-                include_player_ids: [this.state.device_id]
+                include_player_ids: [device_id]
             };
             axios.post('https://onesignal.com/api/v1/notifications', notification , {
                 headers: {
@@ -234,7 +250,25 @@ class SingleChat extends Component {
             }).catch(error => {
                 console.log(error);
             });
-        }
+        // }
+    }
+    async getDeviceId(){
+        let device_id= "";
+        await axios.get(SERVER_URL+'api/users/'+this.state.id).then(response => {
+            // alert(JSON.stringify(response.data))
+            device_id= response.data.device_id;
+            this.setState({
+                device_id: response.data.device_id
+            })
+        }).catch(error => {
+            // alert(JSON.stringify(error))
+            // Toast.show({
+            //     text: strings("messages.noInternet"),
+            //     buttonText: strings("messages.ok"),
+            //     type: "danger"
+            // })
+        })
+        return device_id;
     }
 
     checkPermission = async () => {
