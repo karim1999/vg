@@ -34,9 +34,37 @@ class User extends React.Component {
             isLoading: true,
             id: this.props.navigation.state.params.id,
             user: [],
-            isFollowed: false
+            isFollowed: false,
+            isReporting: false
         };
     }
+    reportUser(){
+        this.setState({
+            isReporting: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            return axios.post(SERVER_URL+'api/users/'+this.state.id+'/report?token='+userToken).then(response => {
+                this.setState({
+                    isReporting: false,
+                });
+                Toast.show({
+                    text: strings("messages.reportDone"),
+                    buttonText: strings("messages.ok"),
+                    type: "success"
+                });
+            }).catch(error => {
+                this.setState({
+                    isReporting: false,
+                });
+                Toast.show({
+                    text: strings("messages.unknownError"),
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            })
+        });
+    }
+
     componentDidMount(){
         return axios.get(SERVER_URL+'api/users/'+this.state.id).then(response => {
             this.setState({
@@ -319,6 +347,16 @@ class User extends React.Component {
                                 )
                             }
                         </List>
+                        <Button
+                            onPress={() => this.reportUser()}
+                            style={{flexDirection: "row"}}
+                            block danger
+                        >
+                            <Text>{strings("user.reportUser")}</Text>
+                            {this.state.isReporting && (
+                                <ActivityIndicator size="small" color="#000000" />
+                            )}
+                        </Button>
                     </Content>
                 </AppTemplate>
             )

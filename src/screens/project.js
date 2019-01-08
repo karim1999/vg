@@ -319,6 +319,32 @@ class Project extends Component {
             })
         });
     }
+    reportProject(){
+        this.setState({
+            isLoading: true,
+        });
+        AsyncStorage.getItem('token').then(userToken => {
+            return axios.post(SERVER_URL+'api/projects/'+this.state.id+'/report?token='+userToken).then(response => {
+                this.setState({
+                    isLoading: false,
+                });
+                Toast.show({
+                    text: strings("messages.reportDone"),
+                    buttonText: strings("messages.ok"),
+                    type: "success"
+                });
+            }).catch(error => {
+                this.setState({
+                    isLoading: false,
+                });
+                Toast.show({
+                    text: strings("messages.unknownError"),
+                    buttonText: "Ok",
+                    type: "danger"
+                })
+            })
+        });
+    }
 
     openChat(){
         this.props.navigation.navigate("SingleChat", {...this.props.navigation.state.params});
@@ -417,7 +443,7 @@ class Project extends Component {
     }
     render() {
         return (
-            <AppTemplate right={true} {...this.props.navigation.state.params} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()} addPeople={() => this.showAddPanel()}>
+            <AppTemplate reportProject={() => this.reportProject()} right={true} {...this.props.navigation.state.params} backButton={true} navigation={this.props.navigation} activeTab="Home" investInProject={() => this.showInvestmentPanel()} cancelInvestmentInProject={() => this.cancelInvestmentInProject()} deleteProject={() => this.deleteProject()} project={this.state.id} openChat={() => this.openChat()} addPeople={() => this.showAddPanel()}>
                 {_.find(this.props.jointProjects, project => project.id == this.state.id)? (
                     <Button
                         onPress={() => this.openChat()}

@@ -54,6 +54,38 @@ class AppTemplate extends Component {
             { cancelable: false }
         )
     }
+    reportProject(){
+        Alert.alert(
+            strings('app.reportSure'),
+            strings('app.reportNote'),
+            [
+                {text: strings('messages.cancel'), onPress: () => console.log('Cancel Pressed')},
+                {text: strings('messages.ok'), onPress: () => {
+                        this.setState({
+                            menu: false
+                        });
+                        this.props.reportProject();
+                    }},
+            ],
+            { cancelable: false }
+        )
+    }
+    reportUser(){
+        Alert.alert(
+            strings('app.reportSure'),
+            strings('app.reportNote'),
+            [
+                {text: strings('messages.cancel'), onPress: () => console.log('Cancel Pressed')},
+                {text: strings('messages.ok'), onPress: () => {
+                        this.setState({
+                            menu: false
+                        });
+                        this.props.reportUser();
+                    }},
+            ],
+            { cancelable: false }
+        )
+    }
     addPeople(){
         this.setState({
             menu: false
@@ -160,6 +192,11 @@ class AppTemplate extends Component {
                                             <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.partners") }</Text>
                                         </ListItem>
                                     )}
+                                    {(this.props.project) && (
+                                        <ListItem onPress={() => this.reportProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                            <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.report") }</Text>
+                                        </ListItem>
+                                    )}
 
                                     {_.find(this.props.myProjects, project => project.id == this.props.project) && (
                                         <ListItem onPress={() => this.addPeople()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
@@ -257,6 +294,11 @@ class AppTemplate extends Component {
                                 {(this.props.project) && (
                                     <ListItem onPress={() => this.props.navigation.navigate('Partners', {id: this.props.project})} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
                                         <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.partners") }</Text>
+                                    </ListItem>
+                                )}
+                                {(this.props.project) && (
+                                    <ListItem onPress={() => this.reportProject()} style={[(I18n.locale === "ar") && {justifyContent: "flex-end"}]}>
+                                        <Text style={[(I18n.locale === "ar") && {textAlign: "right"}]}>{ strings("app.report") }</Text>
                                     </ListItem>
                                 )}
 
