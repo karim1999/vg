@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>10</string>
+	<string>13</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>13</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -36,17 +36,17 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>VgKsa would like to access calendars usage</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<string>$(PRODUCT_NAME) would like to access your camera to upload images directly from your camera to your profile or your projects</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to your microphone (for voice records)</string>
+	<string>$(PRODUCT_NAME) would like to your microphone (for voice records in chat)</string>
 	<key>NSMotionUsageDescription</key>
 	<string>VgKsa would like to access motion usage</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery to use photos from your device in your projects and profile</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>VgKsa would like to access speech recognition</string>
 	<key>UIAppFonts</key>
