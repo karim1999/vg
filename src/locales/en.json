@@ -3,7 +3,6 @@
     "title": "notifications"
   },
   "login": {
-    "welcome": "Welcome {{name}} to our localized app!",
     "login_button": "Login",
     "signup_button": "Sign Up",
     "or": "OR",
@@ -88,7 +87,14 @@
     "sendingImage": "Uploading your image",
     "sendingDocument": "Uploading your document",
     "sendingRecord": "Sending your voice record",
-    "sendingVideo": "Uploading your video"
+    "sendingVideo": "Uploading your video",
+    "users": "Users",
+    "groups": "Groups",
+    "image": "Image",
+    "video": "Video",
+    "document": "Document",
+    "export": "Export to text",
+    "cancel": "Cancel"
   },
   "messages": {
     "noInternet": "No internet connection.",
@@ -99,7 +105,6 @@
     "image_required":"You need to add an image",
     "review": "You have added a review successfully.",
     "comment": "You have added a comment successfully."
-
   },
   "add_project": {
     "addDone": "You have added a project successfully",
@@ -159,7 +164,10 @@
     "editProject": "Edit Project",
     "deleteProject": "Delete Project",
     "leaveProject": "Leave Project",
-    "partners": "Partners"
+    "partners": "Partners",
+    "report": "Illegal Content",
+    "reportSure": "are you sure?",
+    "reportNote": "If you think the content in this screen is not appropriate, click ok and we will contact you ASAP."
   },
   "sidebar": {
     "home": "Home",

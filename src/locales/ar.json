@@ -87,7 +87,14 @@
     "sendingImage": "جاري الارسال ....",
     "sendingDocument": "جاري الارسال ....",
     "sendingRecord": "جاري الارسال ....",
-    "sendingVideo": "جاري الارسال ...."
+    "sendingVideo": "جاري الارسال ....",
+    "users": "الاعضاء",
+    "groups": "الجروبات",
+    "image": "صورة",
+    "video": "فيديو",
+    "document": "PDF, Word",
+    "export": "الاستيراد",
+    "cancel": "الغاء"
   },
   "messages": {
     "noInternet": "لا يوجد اتصال بالانترنت",
@@ -157,7 +164,10 @@
     "editProject": "تعديل المشروع",
     "deleteProject": "حذف المشروع",
     "leaveProject": "الخروج من المشروع",
-    "partners": "المستثمرين"
+    "partners": "المستثمرين",
+    "report": "التبليغ عن محتوي",
+    "reportSure": "هل انت متأكد؟",
+    "reportNote": "اذا كنت تعتقد ان هذا المحتوي غير مناسب قم بالضغط علي موافق. حتي نقوم بالتحقق من صلاحية المحتوي."
   },
   "sidebar": {
     "home": "الرئيسية",
