@@ -94,7 +94,8 @@
     "video": "Video",
     "document": "Document",
     "export": "Export to text",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "forward": "Forward"
   },
   "messages": {
     "noInternet": "No internet connection.",

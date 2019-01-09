@@ -94,7 +94,8 @@
     "video": "فيديو",
     "document": "PDF, Word",
     "export": "الاستيراد",
-    "cancel": "الغاء"
+    "cancel": "الغاء",
+    "forward": "ارسال الي"
   },
   "messages": {
     "noInternet": "لا يوجد اتصال بالانترنت",
