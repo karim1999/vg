@@ -663,7 +663,7 @@ class SingleChat extends Component {
                                         })
                                     })
                                 })
-                            }else if(buttonIndex === 2){
+                            }else if(buttonIndex === 3){
                                 let str= encodeURIComponent(JSON.stringify(this.state.logs));
                                 // let str2= str.replace("%2F", "karim_special_string");
                                 let str2= _.replace(str, /%2F/gm, 'karim_special_string');

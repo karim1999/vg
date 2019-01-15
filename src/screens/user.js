@@ -347,16 +347,21 @@ class User extends React.Component {
                                 )
                             }
                         </List>
-                        <Button
-                            onPress={() => this.reportUser()}
-                            style={{flexDirection: "row"}}
-                            block danger
-                        >
-                            <Text>{strings("user.reportUser")}</Text>
-                            {this.state.isReporting && (
-                                <ActivityIndicator size="small" color="#000000" />
-                            )}
-                        </Button>
+                        {
+
+                            this.props.user.id != this.state.id && (
+                                <Button
+                                    onPress={() => this.reportUser()}
+                                    style={{flexDirection: "row"}}
+                                    block danger
+                                >
+                                    <Text>{strings("user.reportUser")}</Text>
+                                    {this.state.isReporting && (
+                                        <ActivityIndicator size="small" color="#000000" />
+                                    )}
+                                </Button>
+                            )
+                        }
                     </Content>
                 </AppTemplate>
             )
