@@ -94,7 +94,7 @@ class Forward extends Component {
         let forward = Math.random() * 1000000 + 1;
 
         return (
-            <AppTemplate drawer title={strings("chat.forward")} navigation={this.props.navigation} activeTab="Chat">
+            <AppTemplate backButton title={strings("chat.forward")} navigation={this.props.navigation} activeTab="Chat">
                 <View style={{padding: 10}}>
                     <Segment>
                         <Button style={{
