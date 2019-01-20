@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Clipboard, Linking, Text, View} from "react-native";
+import {ActivityIndicator, Clipboard, Linking, Platform, Text, View} from "react-native";
 import {ActionSheet, Button, Container, Icon, List, ListItem, Toast} from "native-base";
 import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
@@ -98,7 +98,11 @@ class SingleChat extends Component {
             isLoading: true,
             isSendingRecord: true
         });
-        let uri = 'file://'+audioFile;
+        if(Platform.OS === 'ios'){
+            let uri = audioFile;
+        }else{
+            let uri = 'file://'+audioFile;
+        }
         let data = new FormData();
         data.append('img', {
             name: "img",

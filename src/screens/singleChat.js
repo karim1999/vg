@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AsyncStorage, Text, View, Linking, ActivityIndicator, Clipboard} from "react-native";
+import {AsyncStorage, Text, View, Linking, ActivityIndicator, Clipboard, Platform} from "react-native";
 import {Button, Container, Icon, List, ListItem, ActionSheet, Toast} from "native-base";
 import firebaseApp from "./../firebaseDb";
 import _ from "lodash";
@@ -96,12 +96,16 @@ class SingleChat extends Component {
     async sendRecording(){
         // let audioFile = await AudioRecord.stop();
         let audioFile =await AudioRecorder.stopRecording();
-            this.setState({
+        this.setState({
             audioFile,
             isLoading: true,
             isSendingRecord: true
         });
-        let uri = 'file://'+audioFile;
+        if(Platform.OS === 'ios'){
+            let uri = audioFile;
+        }else{
+            let uri = 'file://'+audioFile;
+        }
         let data = new FormData();
         data.append('img', {
             name: "img",
