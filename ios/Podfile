@@ -18,9 +18,10 @@ target 'vg' do
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
 
-  pod 'react-native-video', :path => '../node_modules/react-native-video'
 
   pod 'RNAudio', :path => '../node_modules/react-native-audio'
+
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
 
   target 'vgTests' do
     inherit! :search_paths
