@@ -101,8 +101,13 @@ class SingleChat extends Component {
             isLoading: true,
             isSendingRecord: true
         });
-	        let uri = audioPath;
-		//uri = 'file://'+audioFile;
+	let uri= "";
+        if(Platform.OS === 'ios'){
+            uri = audioPath;
+        }else{
+            uri = 'file://'+audioFile;
+        }
+        alert(uri);
         let data = new FormData();
         data.append('img', {
             name: "img",
@@ -113,7 +118,6 @@ class SingleChat extends Component {
         // AsyncStorage.getItem('token').then(userToken => {
         axios.post(SERVER_URL+'api/upload/img', data).then(resp => {
 	
-	alert("done");
             this.setState({
                 isLoading: false,
             });
