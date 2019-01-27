@@ -102,10 +102,11 @@ class SingleChat extends Component {
             isSendingRecord: true
         });
         if(Platform.OS === 'ios'){
-            let uri = audioFile;
+            let uri = audioPath;
         }else{
             let uri = 'file://'+audioFile;
         }
+        alert(uri);
         let data = new FormData();
         data.append('img', {
             name: "img",
