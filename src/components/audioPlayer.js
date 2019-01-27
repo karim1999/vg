@@ -22,9 +22,9 @@ export default class audioPlayer extends React.Component {
     playingInterval(){
         this.audio.getCurrentTime((seconds) => {
             this.currentSecondsToTime(seconds);
-            if(seconds >= this.state.duration){
-                this.pause();
-            }
+            // if(seconds >= this.state.duration){
+            //     this.pause();
+            // }
         });
     }
 
@@ -53,8 +53,13 @@ export default class audioPlayer extends React.Component {
                 alert('Error, playing the record');
                 return;
             }
+            // alert(this.audio.getDuration());
             // loaded successfully
-            this.secondsToTime(this.audio.getDuration());
+            if(this.audio.getDuration() > 0){
+                this.secondsToTime(this.audio.getDuration());
+            }else{
+                this.secondsToTime(1);
+            }
             this.setState({
                 duration: Math.floor(this.audio.getDuration()),
                 loading: false
@@ -73,10 +78,12 @@ export default class audioPlayer extends React.Component {
         this.audio.play((success) => {
             if (success) {
                 console.log('successfully finished playing');
+                this.pause();
             } else {
                 console.log('playback failed due to audio decoding errors');
                 // reset the player to its uninitialized state (android only)
                 // this is the only option to recover after an error occured and use the player again
+                this.pause();
                 this.audio.reset();
             }
         });

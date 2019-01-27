@@ -47,7 +47,8 @@ class SingleChat extends Component {
             isSendingRecord: false,
             isSendingImage: false,
             isSendingVideo: false,
-            isSendingDocument: false
+            isSendingDocument: false,
+            allowSend: false
         };
         this.renderCustomActions = this.renderCustomActions.bind(this);
         this.renderCustomMessage = this.renderCustomMessage.bind(this);
@@ -84,6 +85,68 @@ class SingleChat extends Component {
                     this.recordingInterval(data.currentTime)
                     // this.setState({currentTime: Math.floor(data.currentTime)});
                 };
+                AudioRecorder.onFinished = async (res) => {
+                    // alert(JSON.stringify(res));
+                    if(this.state.allowSend){
+                        let uri= "";
+                        if(Platform.OS === 'ios'){
+                            uri = res.audioFileURL;
+                        }else{
+                            uri = 'file://'+res.audioFileURL;
+                        }
+                        // alert(uri);
+                        let data = new FormData();
+                        data.append('img', {
+                            name: "img",
+                            uri,
+                            type: 'image/png'
+                        });
+                        // alert(uri);
+                        // AsyncStorage.getItem('token').then(userToken => {
+                        axios.post(SERVER_URL+'api/upload/img', data).then(resp => {
+
+                            this.setState({
+                                isLoading: false,
+                            });
+                            let result= [
+                                {
+                                    _id: new Date().getTime(),
+                                    text: "recording",
+                                    audio: STORAGE_URL+resp.data,
+                                    createdAt: new Date(),
+                                    user: {
+                                        _id: this.props.user.id,
+                                        name: this.props.user.name,
+                                        avatar: STORAGE_URL+this.props.user.img
+                                    }
+                                }
+                            ];
+                            this.addNewMessage(result);
+                            this.setState({
+                                isSendingRecord: false
+                            });
+                            Toast.show({
+                                text: "You have sent a record successfully.",
+                                buttonText: "Ok",
+                                type: "success"
+                            });
+                        }).catch((err) => {
+                            this.setState({
+                                isLoading: false,
+                                isSendingRecord: false
+                            });
+                            // Toast.show({
+                            //     text: strings("messages.noInternet"),
+                            //     buttonText: strings("messages.ok"),
+                            //     type: "danger"
+                            // })
+                            alert(JSON.stringify(err));
+                        });
+
+                    }
+
+                    this.stopRecording();
+                };
                 this.setState({
                     isRecording: true
                 });
@@ -95,73 +158,26 @@ class SingleChat extends Component {
     }
     async sendRecording(){
         // let audioFile = await AudioRecord.stop();
-        let audioFile =await AudioRecorder.stopRecording();
         this.setState({
-            audioFile,
-            isLoading: true,
-            isSendingRecord: true
-        });
-	let uri= "";
-        if(Platform.OS === 'ios'){
-            uri = audioPath;
-        }else{
-            uri = 'file://'+audioFile;
-        }
-        alert(uri);
-        let data = new FormData();
-        data.append('img', {
-            name: "img",
-            uri,
-            type: 'image/png'
-        });
-	alert(uri);
-        // AsyncStorage.getItem('token').then(userToken => {
-        axios.post(SERVER_URL+'api/upload/img', data).then(resp => {
-	
+            allowSend: true
+        }, async ()=> {
+            let audioFile =await AudioRecorder.stopRecording();
             this.setState({
-                isLoading: false,
+                audioFile,
+                isLoading: true,
+                isSendingRecord: true
             });
-            let result= [
-                {
-                    _id: new Date().getTime(),
-                    text: "recording",
-                    audio: STORAGE_URL+resp.data,
-                    createdAt: new Date(),
-                    user: {
-                        _id: this.props.user.id,
-                        name: this.props.user.name,
-                        avatar: STORAGE_URL+this.props.user.img
-                    }
-                }
-            ];
-            this.addNewMessage(result);
-            this.setState({
-                isSendingRecord: false
-            });
-            Toast.show({
-                text: "You have sent a record successfully.",
-                buttonText: "Ok",
-                type: "success"
-            });
-        }).catch((err) => {
-            this.setState({
-                isLoading: false,
-                isSendingRecord: false
-            });
-            // Toast.show({
-            //     text: strings("messages.noInternet"),
-            //     buttonText: strings("messages.ok"),
-            //     type: "danger"
-            // })
-            alert(JSON.stringify(err));
-        });
-
-        this.stopRecording();
+        })
     }
     async cancelRecording(){
         // AudioRecord.stop();
         const filePath = await AudioRecorder.stopRecording();
-        this.stopRecording();
+        this.setState({
+            allowSend: false
+        }, async ()=> {
+            const filePath = await AudioRecorder.stopRecording();
+            this.stopRecording();
+        })
     }
     stopRecording(){
         clearInterval(this.intervalHandle);

@@ -25,6 +25,8 @@ import _ from 'lodash';
 import {connect} from "react-redux";
 import {setUser} from "../reducers";
 import firebaseApp from "../firebaseDb";
+import Hyperlink from 'react-native-hyperlink'
+
 let firebaseDb= firebaseApp.database();
 
 class User extends React.Component {
@@ -344,6 +346,41 @@ class User extends React.Component {
                                             <Icon type="FontAwesome" size={25} color="#000000" active name="phone" />
                                         </Right>
                                     </ListItem>
+                                )
+                            }
+                            {
+                                (this.state.user.description) && (
+                                    (I18n.locale !== "ar") ? (
+                                        <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }}
+                                        >
+                                            <Left style={{flex: 1}}>
+                                                <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
+                                            </Left>
+                                            <Body style={{flex: 99, marginLeft: 10}}>
+                                            <Hyperlink linkStyle={ { color: 'blue' } } linkDefault={ true }>
+                                                <Text>{this.state.user.description}</Text>
+                                            </Hyperlink>
+                                            </Body>
+                                            {/*<Right>*/}
+                                            {/*<Text>{this.state.user.description}</Text>*/}
+                                            {/*</Right>*/}
+                                        </ListItem>
+                                    ) : (
+                                        <ListItem key="logout" style={{ marginTop: 10, marginBottom: 10 }}
+                                        >
+                                            {/*<Left>*/}
+                                            {/*<Text>{this.state.user.description}</Text>*/}
+                                            {/*</Left>*/}
+                                            <Body>
+                                            <Hyperlink linkStyle={ { color: 'blue' } } linkDefault={ true }>
+                                                <Text>{this.state.user.description}</Text>
+                                            </Hyperlink>
+                                            </Body>
+                                            <Right>
+                                                <Icon type="FontAwesome" size={25} color="#000000" active name="info" />
+                                            </Right>
+                                        </ListItem>
+                                    )
                                 )
                             }
                         </List>

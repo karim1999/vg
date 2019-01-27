@@ -27,6 +27,8 @@ import {strings} from "../i18n";
 import I18n from "../i18n";
 import Stars from 'react-native-stars';
 import firebaseApp from "../firebaseDb";
+import Hyperlink from 'react-native-hyperlink'
+
 let firebaseDb= firebaseApp.database();
 
 class Project extends Component {
@@ -567,9 +569,12 @@ class Project extends Component {
                                     <Image source={{uri: STORAGE_URL+this.state.project.img4}} style={{height: 250, width: "100%", flex: 1, marginTop: 10}}/>
                                 )
                             }
-                            <Text style={{ fontSize: 15, marginBottom: 10, marginTop: 10 }}>
-                                {this.state.description}
-                            </Text>
+                            <Hyperlink linkStyle={ { color: 'blue' } } linkDefault={ true }>
+                                <Text style={{ fontSize: 15, marginBottom: 10, marginTop: 10 }}>
+                                    {this.state.description}
+                                </Text>
+                            </Hyperlink>
+
                             {
                                 (I18n.locale === "ar") ? (
                                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 10, alignSelf: "flex-end", justifySelf: "flex-end" }}>
