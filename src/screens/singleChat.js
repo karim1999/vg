@@ -101,19 +101,19 @@ class SingleChat extends Component {
             isLoading: true,
             isSendingRecord: true
         });
-        if(Platform.OS === 'ios'){
-            let uri = audioFile;
-        }else{
-            let uri = 'file://'+audioFile;
-        }
+	        let uri = audioPath;
+		//uri = 'file://'+audioFile;
         let data = new FormData();
         data.append('img', {
             name: "img",
             uri,
             type: 'image/png'
         });
+	alert(uri);
         // AsyncStorage.getItem('token').then(userToken => {
-        axios.post(SERVER_URL+'api/upload/img', data).then(async resp => {
+        axios.post(SERVER_URL+'api/upload/img', data).then(resp => {
+	
+	alert("done");
             this.setState({
                 isLoading: false,
             });
@@ -130,7 +130,7 @@ class SingleChat extends Component {
                     }
                 }
             ];
-            await this.addNewMessage(result);
+            this.addNewMessage(result);
             this.setState({
                 isSendingRecord: false
             });
