@@ -327,7 +327,7 @@ class User extends React.Component {
                                             <Icon type="FontAwesome" size={25} color="#000000" active name="phone" />
                                         </Left>
                                         <Body style={{flex: 99, marginLeft: 10}}>
-                                        <Text>{this.state.user.phone}</Text>
+                                        <Text style={{color: "blue"}} onPress={() => Linking.openURL("tel:"+this.state.user.phone)}>{this.state.user.phone}</Text>
                                         </Body>
                                         {/*<Right>*/}
                                             {/*<Text>{this.state.user.phone}</Text>*/}
@@ -340,7 +340,7 @@ class User extends React.Component {
                                             {/*<Text>{this.state.user.phone}</Text>*/}
                                         {/*</Left>*/}
                                         <Body>
-                                        <Text>{this.state.user.phone}</Text>
+                                        <Text style={{color: "blue"}} onPress={() => Linking.openURL("tel:"+this.state.user.phone)}>{this.state.user.phone}</Text>
                                         </Body>
                                         <Right>
                                             <Icon type="FontAwesome" size={25} color="#000000" active name="phone" />

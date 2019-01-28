@@ -180,6 +180,7 @@ class Profile extends Component {
                                            numberOfLines = {10}
                                            onChangeText={(description) => this.setState({description})}
                                            value={this.state.description}
+                                           placeholder={strings('profile.personalInfo')}
                                     />
                                 </Item>
                             ) : (
@@ -189,6 +190,7 @@ class Profile extends Component {
                                            numberOfLines = {10}
                                            onChangeText={(description) => this.setState({description})}
                                            value={this.state.description}
+                                           placeholder={strings('profile.personalInfo')}
                                     />
                                     {/*<Label>{strings('profile.personalInfo')}</Label>*/}
                                     <Icon type="FontAwesome" name='info' />

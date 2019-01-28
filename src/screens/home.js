@@ -178,7 +178,7 @@ class Home extends Component {
             this.setState({
                 projects: response.data.projects,
                 users: response.data.users,
-                votings: response.data.votings,
+                polls: response.data.votings,
                 categories: response.data.categories,
             });
         }).catch(error => {
